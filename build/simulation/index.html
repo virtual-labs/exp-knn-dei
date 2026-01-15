@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>K-Nearest Neighbors (KNN) Experiment</title>
+	<link rel="stylesheet" href="./css/main.css?v=5.0">
+	<link rel="stylesheet" href="./css/selector.css">
+	<link rel="stylesheet" href="./css/highlight.css">
+	<!-- Google Fonts for premium typography -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="./css/main.css">
+	<link rel="stylesheet" href="./css/knn_animation.css">
+</head>
+
+<body>
+	<!-- Main Container -->
+	<div class="container">
+		<div class="main-layout">
+			<!-- SIDEBAR -->
+			<div class="sidebar">
+				<div class="sidebar-header">
+					<div class="corner-triangle-top-left"></div>
+					<h2 class="sidebar-title">STEPS</h2>
+				</div>
+				<div class="steps-container" id="stepsContainer">
+					<!-- Steps will be injected here by JS -->
+				</div>
+			</div>
+
+			<!-- RIGHT CONTENT AREA -->
+			<div class="content-area">
+
+				<!-- Header Section Removed -->
+
+
+				<!-- TOP PANE: Code Display -->
+				<div class="pane top-pane">
+					<div class="code-box-container">
+						<div id="codeHeaderBar" class="code-header-bar"></div>
+						<div class="code-box">
+							<pre id="codeDisplay">// Code will appear here</pre>
+							<button id="runBtn" class="run-button">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+									fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+									stroke-linejoin="round">
+									<polygon points="5 3 19 12 5 21 5 3"></polygon>
+								</svg>
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- BOTTOM PANE: Output Display -->
+				<div class="pane bottom-pane">
+					<div class="output-content" id="outputDisplay">
+						<!-- Output will appear here -->
+					</div>
+				</div>
+
+				<!-- METRIC SELECTOR PANE (Hidden) -->
+				<div class="metric-selector-pane" id="metricSelectorPane" style="display: none;">
+					<div class="selector-card">
+						<h2>Select Distance Metric</h2>
+						<p>Choose the formula to calculate distance between data points.</p>
+						<div class="metric-options">
+							<div class="metric-option" onclick="selectDistanceMetric('euclidean')">
+								<h3>Euclidean Distance</h3>
+								<p>Straight-line distance between two points in space.</p>
+							</div>
+							<div class="metric-option" onclick="selectDistanceMetric('manhattan')">
+								<h3>Manhattan Distance</h3>
+								<p>Distance between points measured along axes at right angles.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- K-VALUE SELECTOR PANE (Hidden) -->
+				<div class="k-selector-pane" id="kSelectorPane" style="display: none;">
+					<div class="selector-card">
+						<h2>Select K Value</h2>
+						<p>Choose the number of nearest neighbors to consider for classification.</p>
+						<div class="k-options">
+							<div class="k-option" onclick="selectKValue(3)">
+								<h3>K = 3</h3>
+								<p>Highly sensitive</p>
+							</div>
+							<div class="k-option" onclick="selectKValue(5)">
+								<h3>K = 5</h3>
+								<p>Standard balance</p>
+							</div>
+							<div class="k-option" onclick="selectKValue(7)">
+								<h3>K = 7</h3>
+								<p>More robust</p>
+							</div>
+							<div class="k-option" onclick="selectKValue(10)">
+								<h3>K = 10</h3>
+								<p>High smoothing</p>
+							</div>
+							<div class="k-option" onclick="selectKValue(15)">
+								<h3>K = 15</h3>
+								<p>Global view</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+	<!-- KNN ANIMATION - Fullscreen Overlay (Ported from React App) -->
+	<div class="knn-animation" id="knnAnimationContainer" style="display: none;">
+		<!-- Header -->
+		<header>
+			<h1>KNN Visualizer Playground</h1>
+			<button class="back-btn" id="knnBackBtn">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+					stroke="currentColor" stroke-width="2">
+					<path d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+				</svg>
+				Back to Experiment
+			</button>
+		</header>
+
+		<!-- Content: Sidebar + Main -->
+		<div class="content">
+			<!-- Sidebar -->
+			<aside class="sidebar">
+				<!-- Feature Pairs Button -->
+				<div class="control-section">
+					<button class="feature-btn" id="featureBtn">Feature Pair Visualization</button>
+				</div>
+
+				<!-- Auto-Pilot Control -->
+				<div class="control-section auto-pilot">
+					<h3>Auto-Pilot</h3>
+					<p style="font-size: 0.8em; opacity: 0.7; margin-bottom: 10px;">Auto-increment samples</p>
+					<button class="run-btn" id="autoRunBtn">▶ Play</button>
+				</div>
+
+				<!-- K Value Selection -->
+				<div class="control-section">
+					<h3>K Value</h3>
+					<div class="k-buttons">
+						<button class="k-btn" data-k="6">6</button>
+						<button class="k-btn" data-k="8">8</button>
+						<button class="k-btn" data-k="10">10</button>
+					</div>
+				</div>
+
+				<!-- Training Samples Slider -->
+				<div class="control-section">
+					<h3>Training Samples</h3>
+					<div class="slider-container">
+						<div class="slider-label">
+							<span>Sample Count</span>
+							<span class="slider-value"><span id="sampleValue">0</span>/<span
+									id="trainTotal">105</span></span>
+						</div>
+						<div class="slider-with-controls">
+							<button class="slider-control-btn" id="decSamplesBtn">◀</button>
+							<input type="range" id="sampleSlider" min="0" max="10" value="0">
+							<button class="slider-control-btn" id="incSamplesBtn">▶</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- Metrics Panel -->
+				<div class="control-section">
+					<h3>Live Testing Metrics</h3>
+					<div class="metrics-panel">
+						<div class="metric-item">
+							<span class="metric-name">Accuracy</span>
+							<span class="metric-value" id="metricAcc">-</span>
+						</div>
+						<div class="metric-item">
+							<span class="metric-name">Precision</span>
+							<span class="metric-value" id="metricPrec">-</span>
+						</div>
+						<div class="metric-item">
+							<span class="metric-name">Recall</span>
+							<span class="metric-value" id="metricRec">-</span>
+						</div>
+						<div class="metric-item">
+							<span class="metric-name">F1 Score</span>
+							<span class="metric-value" id="metricF1">-</span>
+						</div>
+						<div class="metric-item">
+							<span class="metric-name">ROC-AUC</span>
+							<span class="metric-value" id="metricAUC">-</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Dataset Info -->
+				<div class="control-section">
+					<h3>Overview</h3>
+					<div class="dataset-info">
+						<p><strong>Dataset:</strong> Fisher's Iris</p>
+						<p><strong>Domain:</strong> Botanical multivariate</p>
+						<p><strong>Features:</strong> 4 morphological (cm)</p>
+						<p><strong>Classes:</strong> 3 species</p>
+						<p><strong>Split:</strong> 70-30</p>
+					</div>
+				</div>
+			</aside>
+
+			<!-- Main Content -->
+			<main class="main-content">
+				<div class="visualization-grid">
+					<!-- PCA Decision Boundary (Large) -->
+					<div class="viz-panel large">
+						<div class="panel-header">
+							<span>PCA Decision Boundary</span>
+							<div class="panel-controls">
+								<div class="blur-toggles">
+									<button class="toggle-btn active" id="blurTrainBtn">
+										<span class="toggle-dot train"></span> Train
+									</button>
+									<button class="toggle-btn active" id="blurTestBtn">
+										<span class="toggle-dot test"></span> Test
+									</button>
+								</div>
+								<button class="zoom-btn" data-panel="pca">🔍</button>
+							</div>
+						</div>
+						<div class="canvas-wrapper">
+							<div class="canvas-with-legend">
+								<canvas id="boundaryCanvas" class="viz-canvas clickable"></canvas>
+								<!-- Legend -->
+								<div class="legend-panel">
+									<div class="legend-title">Classes</div>
+									<div class="legend-items">
+										<div class="legend-item">
+											<span class="legend-dot train" style="background-color: #4fc3f7;"></span>
+											<span class="legend-name">Setosa</span>
+										</div>
+										<div class="legend-item">
+											<span class="legend-dot train" style="background-color: #ffb74d;"></span>
+											<span class="legend-name">Versicolor</span>
+										</div>
+										<div class="legend-item">
+											<span class="legend-dot train" style="background-color: #81c784;"></span>
+											<span class="legend-name">Virginica</span>
+										</div>
+									</div>
+									<div class="legend-marker-types">
+										<div class="marker-type">
+											<span class="legend-dot train" style="background-color: #4fc3f7;"></span>
+											<span class="marker-label">Train</span>
+										</div>
+										<div class="marker-type">
+											<span class="legend-dot test" style="background-color: #4fc3f7;"></span>
+											<span class="marker-label">Test</span>
+										</div>
+									</div>
+									<div class="legend-hint">Click on a test point to see K nearest neighbors</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Testing Metrics Evolution -->
+					<div class="viz-panel">
+						<div class="panel-header">
+							<span>Testing Metrics Evolution</span>
+							<div class="panel-controls">
+								<button class="zoom-btn" data-panel="metrics">🔍</button>
+							</div>
+						</div>
+						<div class="canvas-wrapper">
+							<canvas id="metricsCanvas" class="viz-canvas"></canvas>
+						</div>
+					</div>
+
+					<!-- ROC Curve -->
+					<div class="viz-panel">
+						<div class="panel-header">
+							<span>ROC Curve (Test Set)</span>
+							<div class="panel-controls">
+								<button class="zoom-btn" data-panel="roc">🔍</button>
+							</div>
+						</div>
+						<div class="canvas-wrapper">
+							<canvas id="rocCanvas" class="viz-canvas"></canvas>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+
+		<!-- Feature Pairs Window (Modal) -->
+		<div class="feature-window" id="featureWindow" style="display: none;">
+			<div class="feature-window-header">
+				<span class="window-title">Feature Pair Decision Boundaries</span>
+				<div class="window-controls">
+					<div class="blur-toggles header-toggles">
+						<button class="toggle-btn small active" id="featureBlurTrainBtn">
+							<span class="toggle-dot train"></span> Train
+						</button>
+						<button class="toggle-btn small active" id="featureBlurTestBtn">
+							<span class="toggle-dot test"></span> Test
+						</button>
+					</div>
+					<button class="window-btn minimize" id="featureMinBtn">−</button>
+					<button class="window-btn close" id="featureCloseBtn">×</button>
+				</div>
+			</div>
+			<div class="feature-window-content">
+				<!-- Legend -->
+				<div class="feature-legend">
+					<div class="feature-legend-classes">
+						<div class="feature-legend-item">
+							<span class="legend-dot" style="background-color: #4fc3f7;"></span>
+							<span>Setosa</span>
+						</div>
+						<div class="feature-legend-item">
+							<span class="legend-dot" style="background-color: #ffb74d;"></span>
+							<span>Versicolor</span>
+						</div>
+						<div class="feature-legend-item">
+							<span class="legend-dot" style="background-color: #81c784;"></span>
+							<span>Virginica</span>
+						</div>
+					</div>
+					<div class="feature-legend-markers">
+						<span class="marker-info">● Train (black edge)</span>
+						<span class="marker-info">○ Test (white edge)</span>
+					</div>
+				</div>
+
+				<!-- Feature Grid -->
+				<div class="feature-grid">
+					<div class="feature-card">
+						<div class="feature-card-header">
+							<h4>Sepal Length vs Sepal Width</h4>
+							<button class="card-zoom-btn" data-panel="feature_f0_f1">🔍</button>
+						</div>
+						<canvas id="featureCanvas_f0_f1" class="feature-canvas clickable"></canvas>
+					</div>
+					<div class="feature-card">
+						<div class="feature-card-header">
+							<h4>Sepal Length vs Petal Length</h4>
+							<button class="card-zoom-btn" data-panel="feature_f0_f2">🔍</button>
+						</div>
+						<canvas id="featureCanvas_f0_f2" class="feature-canvas clickable"></canvas>
+					</div>
+					<div class="feature-card">
+						<div class="feature-card-header">
+							<h4>Sepal Length vs Petal Width</h4>
+							<button class="card-zoom-btn" data-panel="feature_f0_f3">🔍</button>
+						</div>
+						<canvas id="featureCanvas_f0_f3" class="feature-canvas clickable"></canvas>
+					</div>
+					<div class="feature-card">
+						<div class="feature-card-header">
+							<h4>Sepal Width vs Petal Length</h4>
+							<button class="card-zoom-btn" data-panel="feature_f1_f2">🔍</button>
+						</div>
+						<canvas id="featureCanvas_f1_f2" class="feature-canvas clickable"></canvas>
+					</div>
+					<div class="feature-card">
+						<div class="feature-card-header">
+							<h4>Sepal Width vs Petal Width</h4>
+							<button class="card-zoom-btn" data-panel="feature_f1_f3">🔍</button>
+						</div>
+						<canvas id="featureCanvas_f1_f3" class="feature-canvas clickable"></canvas>
+					</div>
+					<div class="feature-card">
+						<div class="feature-card-header">
+							<h4>Petal Length vs Petal Width</h4>
+							<button class="card-zoom-btn" data-panel="feature_f2_f3">🔍</button>
+						</div>
+						<canvas id="featureCanvas_f2_f3" class="feature-canvas clickable"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Zoom Modal -->
+		<div class="zoom-modal" id="zoomModal" style="display: none;">
+			<div class="zoom-content">
+				<button class="zoom-close">×</button>
+				<canvas id="zoomCanvas" class="zoom-canvas clickable"></canvas>
+				<div class="zoom-hint">Click on a test point to show K nearest neighbors</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Scripts -->
+	<script src="./js/knn_data.js"></script>
+	<script src="./js/knn_animation.js"></script>
+	<script src="./js/main.js"></script>
+<script src="..\assets\js\iframeResize.js"></script>
+        
+        </body>
+
+</html>

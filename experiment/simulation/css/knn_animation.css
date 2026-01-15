@@ -1,0 +1,850 @@
+/* ==========================================
+   KNN ANIMATION STYLES
+   Ported from React App.css for vanilla JS
+   ========================================== */
+
+/* ==================== RESET & BASE ==================== */
+.knn-animation {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 10000 !important;
+  font-family: 'Consolas', 'Monaco', 'SF Mono', monospace;
+  background: #1a1d21;
+  background: radial-gradient(circle at center, #1e2520, #1a1d21);
+  color: #e0e0e0;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.knn-animation * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ==================== HEADER ==================== */
+.knn-animation header {
+  background: linear-gradient(135deg, #1f2823, #242830);
+  color: #ffffff;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  z-index: 20;
+}
+
+.knn-animation header h1 {
+  font-size: 1.5em;
+  margin: 0;
+  font-weight: 700;
+  background: linear-gradient(135deg, #4CAF50, #81C784);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.knn-animation .back-btn {
+  background: rgba(239, 83, 80, 0.2);
+  border: 1px solid rgba(239, 83, 80, 0.4);
+  color: #ef5350;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.knn-animation .back-btn:hover {
+  background: rgba(239, 83, 80, 0.3);
+  border-color: rgba(239, 83, 80, 0.6);
+  transform: translateX(-2px);
+}
+
+/* ==================== CONTENT LAYOUT ==================== */
+.knn-animation .content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ==================== SIDEBAR ==================== */
+.knn-animation .sidebar {
+  width: 320px;
+  background: linear-gradient(180deg, #242830, #1f2823);
+  padding: 15px;
+  border-right: 1px solid rgba(76, 175, 80, 0.15);
+  overflow-y: auto;
+  z-index: 20;
+  flex-shrink: 0;
+}
+
+.knn-animation .control-section {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(76, 175, 80, 0.1);
+}
+
+.knn-animation .control-section:last-child {
+  border-bottom: none;
+}
+
+.knn-animation .control-section h3 {
+  color: #81C784;
+  margin-bottom: 10px;
+  font-size: 0.95em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ==================== K VALUE BUTTONS ==================== */
+.knn-animation .k-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.knn-animation .k-btn {
+  flex: 1;
+  padding: 10px;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(76, 175, 80, 0.1));
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 6px;
+  color: #3bbfa0;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-size: 0.9em;
+}
+
+.knn-animation .k-btn:hover {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(76, 175, 80, 0.15));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.knn-animation .k-btn.active {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.35), rgba(76, 175, 80, 0.2));
+  border-color: #4CAF50;
+  color: #4CAF50;
+  box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
+}
+
+/* ==================== FEATURE BUTTON ==================== */
+.knn-animation .feature-btn {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(76, 175, 80, 0.1));
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 6px;
+  color: #3bbfa0;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-size: 0.9em;
+}
+
+.knn-animation .feature-btn:hover {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(76, 175, 80, 0.15));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+/* ==================== AUTO PILOT ==================== */
+.knn-animation .auto-pilot {
+  border: 1px solid #8bc34a;
+  background: rgba(139, 195, 74, 0.05);
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.knn-animation .auto-pilot h3 {
+  color: #8bc34a;
+}
+
+.knn-animation .run-btn {
+  width: 100%;
+  padding: 10px;
+  background: #689f38;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  font-size: 0.9em;
+}
+
+.knn-animation .run-btn:hover {
+  background: #7cb342;
+}
+
+.knn-animation .run-btn.active {
+  background: linear-gradient(135deg, #26a69a, #00897b);
+}
+
+/* ==================== SLIDERS ==================== */
+.knn-animation .slider-container {
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.knn-animation .slider-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #bdbdbd;
+  font-size: 0.85em;
+}
+
+.knn-animation .slider-value {
+  color: #4CAF50;
+  font-weight: 700;
+  font-family: 'Consolas', 'Monaco', monospace;
+}
+
+.knn-animation .slider-with-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.knn-animation .slider-control-btn {
+  background: rgba(76, 175, 80, 0.15);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #d4d45a;
+  font-size: 0.7em;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.knn-animation .slider-control-btn:hover {
+  background: rgba(76, 175, 80, 0.25);
+  border-color: rgba(76, 175, 80, 0.5);
+  transform: scale(1.05);
+}
+
+.knn-animation input[type="range"] {
+  flex: 1;
+  height: 5px;
+  border-radius: 3px;
+  background: #424242;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.knn-animation input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #4CAF50;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.knn-animation input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 12px rgba(76, 175, 80, 0.6);
+}
+
+/* ==================== METRICS PANEL ==================== */
+.knn-animation .metrics-panel {
+  background: rgba(76, 175, 80, 0.05);
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+.knn-animation .metric-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px;
+  border-bottom: 1px solid rgba(76, 175, 80, 0.1);
+}
+
+.knn-animation .metric-item:last-child {
+  border-bottom: none;
+}
+
+.knn-animation .metric-name {
+  color: #b0bec5;
+  font-size: 0.85em;
+}
+
+.knn-animation .metric-value {
+  font-weight: 700;
+  color: #fff;
+  font-family: 'Consolas', 'Monaco', monospace;
+}
+
+/* ==================== DATASET INFO ==================== */
+.knn-animation .dataset-info {
+  font-size: 0.82em;
+  color: #9e9e9e;
+  line-height: 1.6;
+}
+
+.knn-animation .dataset-info p {
+  margin-bottom: 6px;
+}
+
+.knn-animation .dataset-info strong {
+  color: #538856;
+}
+
+/* ==================== MAIN CONTENT ==================== */
+.knn-animation .main-content {
+  flex: 1;
+  position: relative;
+  background: radial-gradient(circle at center, #1a1f1d, #15171a);
+  overflow: hidden;
+  padding: 20px;
+}
+
+.knn-animation .visualization-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+.knn-animation .viz-panel {
+  background: rgba(30, 35, 33, 0.6);
+  border: 1px solid rgba(76, 175, 80, 0.2);
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+
+.knn-animation .viz-panel.large {
+  grid-row: span 2;
+}
+
+.knn-animation .panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(76, 175, 80, 0.15);
+}
+
+.knn-animation .panel-header span {
+  color: #81C784;
+  font-size: 0.9em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.knn-animation .panel-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.knn-animation .zoom-btn {
+  background: rgba(76, 175, 80, 0.15);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  color: #81C784;
+  font-size: 1em;
+  transition: all 0.2s ease;
+}
+
+.knn-animation .zoom-btn:hover {
+  background: rgba(76, 175, 80, 0.25);
+  transform: scale(1.1);
+}
+
+.knn-animation .canvas-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.knn-animation .viz-canvas {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 4px;
+}
+
+.knn-animation .viz-canvas.clickable {
+  cursor: crosshair;
+}
+
+/* ==================== BLUR TOGGLES ==================== */
+.knn-animation .blur-toggles {
+  display: flex;
+  gap: 6px;
+}
+
+.knn-animation .toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  color: #888;
+  font-size: 0.75em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.knn-animation .toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.knn-animation .toggle-btn.active {
+  background: rgba(76, 175, 80, 0.15);
+  border-color: rgba(76, 175, 80, 0.4);
+  color: #e0e0e0;
+}
+
+.knn-animation .toggle-btn.small {
+  padding: 3px 6px;
+  font-size: 0.7em;
+}
+
+.knn-animation .toggle-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.knn-animation .toggle-dot.train {
+  background: #4fc3f7;
+  border: 1.5px solid #000;
+}
+
+.knn-animation .toggle-dot.test {
+  background: #4fc3f7;
+  border: 1.5px solid #fff;
+}
+
+/* ==================== FEATURE PAIRS WINDOW ==================== */
+.knn-animation .feature-window {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+  max-width: 1400px;
+  height: 90vh;
+  min-width: 700px;
+  min-height: 500px;
+  background: linear-gradient(135deg, #1f2823, #242830);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.knn-animation .feature-window.minimized {
+  height: 42px !important;
+  overflow: hidden;
+}
+
+.knn-animation .feature-window-header {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.05));
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+  cursor: move;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.knn-animation .window-title {
+  color: #7fd9d6;
+  font-weight: 600;
+  font-size: 0.95em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.knn-animation .window-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.knn-animation .header-toggles {
+  margin-right: 15px;
+}
+
+.knn-animation .window-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: #e0e0e0;
+  font-size: 1.2em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.knn-animation .window-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.knn-animation .window-btn.minimize:hover {
+  background: rgba(255, 193, 7, 0.2);
+  border-color: rgba(255, 193, 7, 0.5);
+}
+
+.knn-animation .window-btn.close:hover {
+  background: rgba(239, 83, 80, 0.2);
+  border-color: rgba(239, 83, 80, 0.5);
+}
+
+.knn-animation .feature-window-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.knn-animation .feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.knn-animation .feature-card {
+  background: rgba(30, 35, 33, 0.6);
+  border: 1px solid rgba(43, 185, 207, 0.2);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+}
+
+.knn-animation .feature-card:hover {
+  border-color: rgba(76, 175, 80, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+}
+
+.knn-animation .feature-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.knn-animation .feature-card h4 {
+  color: #b0bec5;
+  font-size: 0.85em;
+  margin-bottom: 0;
+  text-align: left;
+}
+
+.knn-animation .card-zoom-btn {
+  background: rgba(76, 175, 80, 0.15);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 4px;
+  padding: 2px 6px;
+  cursor: pointer;
+  color: #81C784;
+  font-size: 0.9em;
+  transition: all 0.2s ease;
+}
+
+.knn-animation .card-zoom-btn:hover {
+  background: rgba(76, 175, 80, 0.25);
+  transform: scale(1.1);
+}
+
+.knn-animation .feature-canvas {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.knn-animation .feature-canvas.clickable {
+  cursor: crosshair;
+}
+
+/* ==================== ZOOM MODAL ==================== */
+.knn-animation .zoom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  cursor: zoom-out;
+}
+
+.knn-animation .zoom-content {
+  position: relative;
+  max-width: 95vw;
+  max-height: 95vh;
+  cursor: default;
+}
+
+.knn-animation .zoom-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: rgba(239, 83, 80, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5em;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.knn-animation .zoom-close:hover {
+  background: #ef5350;
+  transform: rotate(90deg);
+}
+
+.knn-animation .zoom-canvas {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 8px;
+}
+
+.knn-animation .zoom-canvas.clickable {
+  cursor: crosshair;
+}
+
+.knn-animation .zoom-hint {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #888;
+  font-size: 0.85em;
+  white-space: nowrap;
+  font-style: italic;
+}
+
+/* ==================== LEGEND PANEL ==================== */
+.knn-animation .legend-panel {
+  background: rgba(13, 13, 13, 0.9);
+  border: 1px solid rgba(76, 175, 80, 0.2);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-top: 10px;
+  flex-shrink: 0;
+}
+
+.knn-animation .legend-title {
+  color: #81C784;
+  font-size: 0.75em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.knn-animation .legend-items {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.knn-animation .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.knn-animation .legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.knn-animation .legend-dot.train {
+  border: 2px solid #000;
+}
+
+.knn-animation .legend-dot.test {
+  border: 2px solid #fff;
+}
+
+.knn-animation .legend-name {
+  color: #e0e0e0;
+  font-size: 0.8em;
+}
+
+.knn-animation .legend-marker-types {
+  display: flex;
+  gap: 15px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.knn-animation .marker-type {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.knn-animation .marker-label {
+  color: #888;
+  font-size: 0.7em;
+}
+
+.knn-animation .legend-hint {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #666;
+  font-size: 0.7em;
+  font-style: italic;
+}
+
+/* ==================== CANVAS WITH LEGEND ==================== */
+.knn-animation .canvas-with-legend {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.knn-animation .canvas-with-legend .viz-canvas {
+  flex: 1;
+  min-height: 0;
+}
+
+/* ==================== FEATURE LEGEND ==================== */
+.knn-animation .feature-legend {
+  background: rgba(13, 13, 13, 0.8);
+  border: 1px solid rgba(76, 175, 80, 0.2);
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.knn-animation .feature-legend-classes {
+  display: flex;
+  gap: 20px;
+}
+
+.knn-animation .feature-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #e0e0e0;
+  font-size: 0.85em;
+}
+
+.knn-animation .feature-legend-markers {
+  display: flex;
+  gap: 15px;
+}
+
+.knn-animation .marker-info {
+  color: #888;
+  font-size: 0.75em;
+}
+
+/* ==================== SCROLLBAR ==================== */
+.knn-animation ::-webkit-scrollbar {
+  width: 8px;
+}
+
+.knn-animation ::-webkit-scrollbar-track {
+  background: #1a1d21;
+}
+
+.knn-animation ::-webkit-scrollbar-thumb {
+  background: rgba(76, 175, 80, 0.3);
+  border-radius: 4px;
+}
+
+.knn-animation ::-webkit-scrollbar-thumb:hover {
+  background: rgba(76, 175, 80, 0.5);
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1400px) {
+  .knn-animation .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .knn-animation .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .knn-animation .visualization-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+
+  .knn-animation .viz-panel.large {
+    grid-row: span 1;
+  }
+}
