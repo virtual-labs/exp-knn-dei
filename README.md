@@ -1,9 +1,9 @@
 ## Introduction
 
-<b>Discipline | <b>Electrical Engineering
+<b>Discipline | Computer Science and Engineering
 :--|:--|
-<b> Lab | <b> Machine Learning Virtual Lab
-<b> Experiment|     <b> EXP-6: k-Nearest Neighbours (KNN)
+<b> Lab | Machine Learning Virtual Lab
+<b> Experiment|     <b> EXP-4: k-Nearest Neighbours (KNN)
 
 ### About the Experiment 
 
@@ -23,3 +23,4 @@ SrNo | Name | Faculty or Student | Department| Institute | Email id
 2 | Dr. K. Srinivas | Faculty | Electrical Engineering | Dayalbagh Educational Institute | ksrinivas@dei.ac.in
 3 | Mehar Satsangi | Student | Electrical Engineering | Dayalbagh Educational Institute | meharsatdei@gmail.com
 4 | Punyak | Student | Electrical Engineering | Dayalbagh Educational Institute | punyak.dei@gmail.com
+5 | Rohit | Student | Electrical Engineering | Dayalbagh Educational Institute | 3337.rohit64@gmail.com
