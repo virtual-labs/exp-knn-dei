@@ -351,30 +351,33 @@
               <h2 id="k-nearest-neighbors-knn">k-Nearest Neighbors (KNN)</h2>
           
             </div>
-              <h3 id="theory">Theory</h3>
-          <p>The k-Nearest Neighbours (KNN) algorithm is a supervised machine learning algorithm used for classification and regression. It is a non-parametric method, as it does not assume any prior distribution of the data. In KNN, classification is performed based on the similarity between data samples, which is commonly measured using distance metrics such as Euclidean distance.</p>
+              <p>The k-Nearest Neighbours (KNN) algorithm is a supervised machine learning algorithm used for classification and regression. It is a non-parametric method, as it does not assume any prior distribution of the data. In KNN, classification is performed based on the similarity between data samples, which is commonly measured using distance metrics such as Euclidean distance.</p>
+          <h4 id="1-algorithm-overview">1. Algorithm Overview</h4>
           <p>The nearest neighbour classification concept was introduced by Fix and Hodges and later extended by Cover and Hart. In this method, a test sample is assigned a class label by identifying the k nearest training samples in the feature space and applying majority voting. The value of k represents the number of nearest neighbours considered for classification.</p>
+          <h4 id="2-lazy-learning">2. Lazy Learning</h4>
           <p>KNN does not involve an explicit training phase. Instead, it stores the entire training dataset and performs computation during the testing phase. Hence, it is referred to as a <strong>lazy learning</strong> or <strong>instance-based learning</strong> algorithm. The choice of k significantly affects classifier performance. Smaller values of k may result in overfitting, while larger values of k may lead to underfitting.</p>
+          <h4 id="3-feature-scaling">3. Feature Scaling</h4>
           <p>Since KNN is based on distance calculations, feature scaling is important to ensure that all features contribute equally. Without proper scaling, features with larger numerical ranges may dominate the distance computation.</p>
-          <h4 id="merits-of-k-nearest-neighbours-knn">Merits of k-Nearest Neighbours (KNN)</h4>
+          <h4 id="4-merits-of-k-nearest-neighbours-knn">4. Merits of k-Nearest Neighbours (KNN)</h4>
           <ul>
-          <li><strong>Simple and easy to understand</strong></li>
-          <li><strong>Does not require an explicit training phase</strong></li>
-          <li><strong>Makes no assumption about data distribution</strong></li>
-          <li><strong>Works well for small and well-separated datasets</strong></li>
-          <li><strong>Can be used for both classification and regression</strong></li>
+          <li>Simple and easy to understand</li>
+          <li>Does not require an explicit training phase</li>
+          <li>Makes no assumption about data distribution</li>
+          <li>Works well for small and well-separated datasets</li>
+          <li>Can be used for both classification and regression</li>
           </ul>
-          <h4 id="demerits-of-k-nearest-neighbours-knn">Demerits of k-Nearest Neighbours (KNN)</h4>
+          <h4 id="5-demerits-of-k-nearest-neighbours-knn">5. Demerits of k-Nearest Neighbours (KNN)</h4>
           <ul>
-          <li><strong>High computational cost during prediction</strong></li>
-          <li><strong>Requires large memory to store training data</strong></li>
-          <li><strong>Highly sensitive to feature scaling</strong></li>
-          <li><strong>Performance degrades in high-dimensional data</strong></li>
-          <li><strong>Sensitive to noise and outliers</strong></li>
+          <li>High computational cost during prediction</li>
+          <li>Requires large memory to store training data</li>
+          <li>Highly sensitive to feature scaling</li>
+          <li>Performance degrades in high-dimensional data</li>
+          <li>Sensitive to noise and outliers</li>
           </ul>
           <p>The figure below illustrates how K-NN assigns a class to a new data point by considering the majority class among its nearest neighbours.</p>
-          <p><img src="images/knn_new_data_assign.png" alt="KNN Classification"></p>
-          
+          <div style="text-align: center; margin: 20px 0;">
+          <img src="images/knn_new_data_assign.png" alt="KNN Classification" style="max-height: 300px; width: auto;">
+          </div>
           </div>
           <div class="bug-report-mobile">
               <bug-report id="bug-report" title="[BUG REPORT] K-NEAREST NEIGHBORS (KNN)" page-type="text" context-info="{&quot;organisation&quot;:&quot;Virtual Labs&quot;,&quot;developer_institute&quot;:&quot;DLBG&quot;,&quot;expname&quot;:&quot;K-NEAREST NEIGHBORS (KNN)&quot;,&quot;labname&quot;:&quot;Virtual Lab&quot;,&quot;phase&quot;:&quot;Testing&quot;}" checkbox-json="{&quot;text&quot;:[&quot;Insufficient Content&quot;],&quot;video&quot;:[&quot;Insufficient Content&quot;],&quot;assesment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;assessment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;simulation&quot;:[&quot;Simulation Not Working&quot;,&quot;Incorrect Results/Observations&quot;,&quot;Insufficient/Incorrect Instructions&quot;],&quot;DEFAULT&quot;:[&quot;Page Not Loading&quot;,&quot;Content Not Visible&quot;,&quot;Incorrect Content&quot;]}" position="override" button_style="
