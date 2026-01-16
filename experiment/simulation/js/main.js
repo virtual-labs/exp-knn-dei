@@ -4,39 +4,74 @@
 // ==========================================
 
 const STEPS_KNN = [
+    // ========== STEP 1: IMPORTING LIBRARIES (Cells 1-2) ==========
     {
         title: "Importing Libraries",
         blocks: [
             {
-                comment: "Import essential libraries for data handling and machine learning",
-                code: `import numpy as np
+                // Cell 1
+                comment: "Import analysis and plotting libraries",
+                code: `# Import Libraries
+
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.datasets import load_iris
+print("Imported Analysis and Plotting libraries")`,
+                output: `<div class="output-success">Imported Analysis and Plotting libraries</div>`
+            },
+            {
+                // Cell 2
+                comment: "Import scikit-learn modules",
+                code: `from sklearn.datasets import load_iris
 from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import label_binarize
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import StratifiedKFold
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
-print("Libraries imported successfully!")`,
-                output: `<div class="output-success">Libraries imported successfully!</div>`
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    roc_auc_score,
+    classification_report,
+    confusion_matrix
+)
+print("Imported Sklearn Modules")`,
+                output: `<div class="output-success">Imported Sklearn Modules</div>`
             }
         ]
     },
+    // ========== STEP 2: LOADING DATASET (Cells 3-4) ==========
     {
         title: "Loading Dataset",
         blocks: [
             {
-                comment: "Load the Iris dataset and display initial rows",
-                code: `iris = load_iris()
-X, y = iris.data, iris.target
+                // Cell 3
+                comment: "Loading and Reading Data",
+                code: `# Loading and Reading Data 
+
+iris = load_iris()
+X = iris.data
+y = iris.target
+print("Extracted Feature and Target as numpy Arrays")`,
+                output: `<div class="output-success">Extracted Feature and Target as numpy Arrays</div>`
+            },
+            {
+                // Cell 4
+                comment: "Creating DataFrame with feature and target names",
+                code: `# extracting feature names
+names = iris.feature_names
+
+# extracting target names
 target_names = iris.target_names
-iris_df = pd.DataFrame(X, columns=iris.feature_names)
+
+# making a dataframe with column names
+iris_df = pd.DataFrame(X, columns=names)
 iris_df["label"] = [target_names[i] for i in y]
-print("Dataset loaded successfully. Shape:", iris_df.shape)
 iris_df.head()`,
-                output: `<div class="output-text">Dataset loaded successfully. Shape: (150, 5)</div>
-<div class="table-wrapper">
+                output: `<div class="table-wrapper">
 <table border="1" class="dataframe data-table">
   <thead>
     <tr style="text-align: right;">
@@ -47,18 +82,58 @@ iris_df.head()`,
     <tr><th>0</th><td>5.1</td><td>3.5</td><td>1.4</td><td>0.2</td><td>setosa</td></tr>
     <tr><th>1</th><td>4.9</td><td>3.0</td><td>1.4</td><td>0.2</td><td>setosa</td></tr>
     <tr><th>2</th><td>4.7</td><td>3.2</td><td>1.3</td><td>0.2</td><td>setosa</td></tr>
+    <tr><th>3</th><td>4.6</td><td>3.1</td><td>1.5</td><td>0.2</td><td>setosa</td></tr>
+    <tr><th>4</th><td>5.0</td><td>3.6</td><td>1.4</td><td>0.2</td><td>setosa</td></tr>
   </tbody>
 </table>
 </div>`
             }
         ]
     },
+    // ========== STEP 3: DATA ANALYSIS (Cells 5-10) ==========
     {
         title: "Data Analysis",
         blocks: [
             {
+                // Cell 5
+                comment: "Overview of the dataset",
+                code: `# Data Analysis
+
+# Overview
+iris_df.info()`,
+                output: `<div class="output-text">
+&lt;class 'pandas.core.frame.DataFrame'&gt;<br>
+RangeIndex: 150 entries, 0 to 149<br>
+Data columns (total 5 columns):<br>
+ #   Column             Non-Null Count  Dtype  <br>
+---  ------             --------------  -----  <br>
+ 0   sepal length (cm)  150 non-null    float64<br>
+ 1   sepal width (cm)   150 non-null    float64<br>
+ 2   petal length (cm)  150 non-null    float64<br>
+ 3   petal width (cm)   150 non-null    float64<br>
+ 4   label              150 non-null    object <br>
+dtypes: float64(4), object(1)<br>
+memory usage: 6.0+ KB
+</div>`
+            },
+            {
+                // Cell 6
+                comment: "Checking target distribution",
+                code: `# Target counts
+iris_df["label"].value_counts()`,
+                output: `<div class="output-text">
+label<br>
+setosa        50<br>
+versicolor    50<br>
+virginica     50<br>
+Name: count, dtype: int64
+</div>`
+            },
+            {
+                // Cell 7
                 comment: "Statistical summary of the dataset",
-                code: `iris_df.describe()`,
+                code: `# Dataset description
+iris_df.describe()`,
                 output: `<div class="table-wrapper">
 <table border="1" class="dataframe data-table">
   <thead>
@@ -67,61 +142,271 @@ iris_df.head()`,
     </tr>
   </thead>
   <tbody>
+    <tr><th>count</th><td>150.000000</td><td>150.000000</td><td>150.000000</td><td>150.000000</td></tr>
     <tr><th>mean</th><td>5.843333</td><td>3.057333</td><td>3.758000</td><td>1.199333</td></tr>
     <tr><th>std</th><td>0.828066</td><td>0.435866</td><td>1.765298</td><td>0.762238</td></tr>
+    <tr><th>min</th><td>4.300000</td><td>2.000000</td><td>1.000000</td><td>0.100000</td></tr>
+    <tr><th>25%</th><td>5.100000</td><td>2.800000</td><td>1.600000</td><td>0.300000</td></tr>
+    <tr><th>50%</th><td>5.800000</td><td>3.000000</td><td>4.350000</td><td>1.300000</td></tr>
+    <tr><th>75%</th><td>6.400000</td><td>3.300000</td><td>5.100000</td><td>1.800000</td></tr>
+    <tr><th>max</th><td>7.900000</td><td>4.400000</td><td>6.900000</td><td>2.500000</td></tr>
   </tbody>
 </table>
 </div>`
             },
             {
-                comment: "Visualizing feature distributions across classes",
-                code: `fig, axes = plt.subplots(2, 2, figsize=(10, 8))
-# Visualizing distributions...
+                // Cell 8
+                comment: "Finding any null values in dataset",
+                code: `# Finding any null values
+iris_df.isnull().sum()`,
+                output: `<div class="output-text">
+sepal length (cm)    0<br>
+sepal width (cm)     0<br>
+petal length (cm)    0<br>
+petal width (cm)     0<br>
+label                0<br>
+dtype: int64
+</div>`
+            },
+            {
+                // Cell 9
+                comment: "Plotting histogram distribution of data points with labelled classes",
+                code: `# Plotting a histogram distribution of data points with labelled classes
+
+fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+for ax, col in zip(axes.ravel(), names):
+    sns.histplot(
+    data=iris_df, x=col, hue="label",
+    kde=True, element="step", ax=ax
+    )
+    ax.set_xlabel(col, fontweight='bold')
+    ax.set_ylabel("Count", fontweight='bold')
+plt.suptitle("Feature Distributions by Class", y=1.02, fontweight='bold')
+plt.tight_layout()
 plt.show()`,
                 output: `<img src="images/Feature_Distribution_by_Class.png" style="max-width:100%; height:auto; border: 1px solid #ddd; padding: 5px;">`
             },
             {
-                comment: "Analyzing correlations between features",
-                code: `plt.figure(figsize=(10, 8))
-sns.heatmap(iris_df.iloc[:, :4].corr(), annot=True, cmap="crest")
+                // Cell 10
+                comment: "Plotting correlation between features",
+                code: `# Plotting correlation between features
+
+plt.figure(figsize=(10, 8))
+ax = sns.heatmap(
+    iris_df.iloc[:, :4].corr(),
+    annot=True,
+    cmap="crest",
+    fmt=".2f",
+    linewidths=0.7,
+    # Force annotation text to be black
+    annot_kws={"color": "black"}
+    )
+plt.title("Feature Correlation Heatmap", fontweight='bold')
 plt.show()`,
                 output: `<img src="images/Feature_Correlation_Heatmap.png" style="max-width:100%; height:auto; border: 1px solid #ddd; padding: 5px;">`
             }
         ]
     },
+    // ========== STEP 4: DATA PREPROCESSING (Cells 11-17) ==========
     {
         title: "Data Preprocessing",
         blocks: [
             {
-                comment: "Scale features and split data into training and testing sets",
-                code: `X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, stratify=y, random_state=42)
+                // Cell 11
+                comment: "Data Encoding - Adding target column",
+                code: `# Data Preprocessing
+
+# Data Encoding
+# we already have encoded targets from sklearn datasets
+iris_df["target"] = y
+iris_df.head()`,
+                output: `<div class="table-wrapper">
+<table border="1" class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th><th>sepal length (cm)</th><th>sepal width (cm)</th><th>petal length (cm)</th><th>petal width (cm)</th><th>label</th><th>target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><th>0</th><td>5.1</td><td>3.5</td><td>1.4</td><td>0.2</td><td>setosa</td><td>0</td></tr>
+    <tr><th>1</th><td>4.9</td><td>3.0</td><td>1.4</td><td>0.2</td><td>setosa</td><td>0</td></tr>
+    <tr><th>2</th><td>4.7</td><td>3.2</td><td>1.3</td><td>0.2</td><td>setosa</td><td>0</td></tr>
+    <tr><th>3</th><td>4.6</td><td>3.1</td><td>1.5</td><td>0.2</td><td>setosa</td><td>0</td></tr>
+    <tr><th>4</th><td>5.0</td><td>3.6</td><td>1.4</td><td>0.2</td><td>setosa</td><td>0</td></tr>
+  </tbody>
+</table>
+</div>`
+            },
+            {
+                // Cell 12
+                comment: "Train/Test Split with stratification",
+                code: `X = iris_df.iloc[:,:4].values
+y = iris_df["target"].values
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, 
+    # Stratification is important to balance classes between split
+    stratify=y,
+    random_state=42
+)
+print(X_train.shape, X_test.shape, y_train.shape, y_test.shape)`,
+                output: `<div class="output-text">(105, 4) (45, 4) (105,) (45,)</div>`
+            },
+            {
+                // Cell 13
+                comment: "Initialize Standard Scaler",
+                code: `# Scaling the values
+
 scaler = StandardScaler()
-X_train_s = scaler.fit_transform(X_train)
+scaler`,
+                output: `<div class="output-text">StandardScaler()</div>`
+            },
+            {
+                // Cell 14
+                comment: "Apply scaling to training and test data",
+                code: `X_train_s = scaler.fit_transform(X_train)
 X_test_s = scaler.transform(X_test)
-print("Data split and scaling complete.")
-print("Training set:", X_train_s.shape, "Test set:", X_test_s.shape)`,
-                output: `<div class="output-success">Data split and scaling complete.</div><div class="output-text">Training set: (105, 4) Test set: (45, 4)</div>`
+print("Values scaled with Standard Scaler")`,
+                output: `<div class="output-success">Values scaled with Standard Scaler</div>`
+            },
+            {
+                // Cell 15
+                comment: "View original training data (before scaling)",
+                code: `X_train[:5]`,
+                output: `<div class="output-text">array([[5.1, 2.5, 3. , 1.1],<br>
+       [6.2, 2.2, 4.5, 1.5],<br>
+       [5.1, 3.8, 1.5, 0.3],<br>
+       [6.8, 3.2, 5.9, 2.3],<br>
+       [5.7, 2.8, 4.1, 1.3]])</div>`
+            },
+            {
+                // Cell 16
+                comment: "View scaled training data (after scaling)",
+                code: `X_train_s[:5]`,
+                output: `<div class="output-text">array([[-0.90045861, -1.22024754, -0.4419858 , -0.13661044],<br>
+       [ 0.38036614, -1.87955796,  0.40282929,  0.38029394],<br>
+       [-0.90045861,  1.63676428, -1.2868009 , -1.17041921],<br>
+       [ 1.07899781,  0.31814344,  1.19132338,  1.41410271],<br>
+       [-0.20182693, -0.56093712,  0.17754527,  0.12184175]])</div>`
+            },
+            {
+                // Cell 17
+                comment: "Binarize labels for ROC-AUC metric calculation",
+                code: `# Binarizing encoded labels for ROC-AUC metric calculation
+y_test_bin = label_binarize(y_test, classes=[0,1,2])
+y_test_bin[:5]`,
+                output: `<div class="output-text">array([[0, 0, 1],<br>
+       [0, 1, 0],<br>
+       [0, 0, 1],<br>
+       [0, 1, 0],<br>
+       [0, 0, 1]])</div>`
             }
         ]
     },
+    // ========== STEP 5: MODEL TRAINING (Cell 18) ==========
     {
         title: "Model Training",
-        blocks: [] // Placeholder for dynamic selection
+        blocks: [
+            {
+                // Cell 18
+                comment: "Initialize and fit KNN model with k=10",
+                code: `# Model Training
+
+# k = 10 (Heuristic Rule)
+model = KNeighborsClassifier(n_neighbors=10)
+model.fit(X_train_s, y_train)`,
+                output: `<div class="output-text">KNeighborsClassifier(n_neighbors=10)</div>`
+            }
+        ]
     },
+    // ========== STEP 6: MODEL EVALUATION (Cells 19-22) ==========
     {
         title: "Model Evaluation",
-        blocks: [] // Placeholder for dynamic selection
+        blocks: [
+            {
+                // Cell 19
+                comment: "Generate predictions on test data",
+                code: `# Model Evaluation
+
+y_pred = model.predict(X_test_s)
+y_pred`,
+                output: `<div class="output-text">array([2, 1, 1, 1, 2, 2, 1, 1, 0, 2, 0, 0, 2, 2, 0, 2, 1, 0, 0, 0, 1, 0,<br>
+       1, 2, 1, 1, 1, 1, 1, 0, 2, 2, 1, 0, 2, 0, 0, 0, 0, 1, 1, 0, 1, 2,<br>
+       1])</div>`
+            },
+            {
+                // Cell 20
+                comment: "Get prediction probabilities",
+                code: `y_prob = model.predict_proba(X_test_s)
+y_prob[:5]`,
+                output: `<div class="output-text">array([[0. , 0.1, 0.9],<br>
+       [0. , 0.9, 0.1],<br>
+       [0. , 0.7, 0.3],<br>
+       [0. , 0.7, 0.3],<br>
+       [0. , 0.4, 0.6]])</div>`
+            },
+            {
+                // Cell 21
+                comment: "Generate classification report",
+                code: `print("\\nClassification Report (k=10):")
+print(classification_report(
+    y_test,
+    y_pred,
+    target_names=target_names,
+    digits=4
+))`,
+                output: `<div class="output-text" style="white-space: pre-wrap; font-family: monospace;">
+Classification Report (k=10):
+              precision    recall  f1-score   support
+
+      setosa     1.0000    1.0000    1.0000        15
+  versicolor     0.8333    1.0000    0.9091        15
+   virginica     1.0000    0.8000    0.8889        15
+
+    accuracy                         0.9333        45
+   macro avg     0.9444    0.9333    0.9327        45
+weighted avg     0.9444    0.9333    0.9327        45
+</div>`
+            },
+            {
+                // Cell 22
+                comment: "Visualize confusion matrix heatmap",
+                code: `plt.figure(figsize=(7, 5))
+sns.heatmap(
+    confusion_matrix(y_test, y_pred), annot=True, fmt="d", cmap="Greens",
+    xticklabels=target_names, yticklabels=target_names
+    )
+plt.xlabel("Predicted", fontweight='bold')
+plt.ylabel("True", fontweight='bold')
+plt.title("Confusion Matrix Heatmap (KNN, k=10)", fontweight='bold')
+plt.tight_layout()
+plt.show()`,
+                output: `<img src="images/Confusion_Matrix_Heatmap_KNN_k_10.png" style="max-width:100%; height:auto; border: 1px solid #ddd; padding: 5px;">`
+            }
+        ]
     },
+    // ========== STEP 7: MODEL SIMULATION (Cell 23) ==========
     {
         title: "Model Simulation",
         blocks: [
             {
-                comment: "Predicting class for a new, unseen sample",
-                code: `sample = np.array([[5.1, 3.5, 1.4, 0.2]])
-sample_scaled = scaler.transform(sample)
-prediction = model.predict(sample_scaled)
-print(f"Predicted Class: {target_names[prediction[0]]}")`,
-                output: `<div class="output-text">Predicted Class: setosa</div>`
+                // Cell 23
+                comment: "Final Metrics - Accuracy, Precision, Recall, F1 and ROC-AUC",
+                code: `# Final Metrics
+
+# Accuracy will be same as F1 score as dataset is perfectly balanced and stratified
+print(f'''Accuracy   : {accuracy_score(y_test, y_pred)}
+Precision  : {precision_score(y_test, y_pred, average="macro")}
+Recall     : {recall_score(y_test, y_pred, average="macro")}
+F1         : {f1_score(y_test, y_pred, average="macro")}
+ROC        : {roc_auc_score(y_test_bin, y_prob, multi_class="ovr", average="macro")}
+''')`,
+                output: `<div class="output-text" style="white-space: pre-wrap; font-family: monospace;">Accuracy   : 0.9333333333333333
+Precision  : 0.9444444444444445
+Recall     : 0.9333333333333332
+F1         : 0.9326599326599326
+ROC        : 0.9948148148148149
+</div>`
             }
         ]
     }
@@ -139,8 +424,7 @@ let EXPERIMENT_STATE = {
 };
 
 let currentConfig = {
-    metric: 'euclidean',
-    kValue: 5
+    metric: 'euclidean'
 };
 
 // ==========================================
@@ -161,16 +445,8 @@ function init() {
     bottomPane = document.querySelector('.bottom-pane');
     runBtn = document.getElementById('runBtn');
 
-    // Load initial 7 steps
-    STEPS = [
-        { ...STEPS_KNN[0] },
-        { ...STEPS_KNN[1] },
-        { ...STEPS_KNN[2] },
-        { ...STEPS_KNN[3] },
-        { title: "Model Training", blocks: [] },
-        { title: "Model Evaluation", blocks: [] },
-        { title: "Model Simulation", blocks: [] }
-    ];
+    // Load all 7 steps from STEPS_KNN (23 cells mapped across 7 categories)
+    STEPS = STEPS_KNN.map(step => ({ ...step }));
 
     // Initialize State
     EXPERIMENT_STATE.stepIndex = 0;
@@ -183,12 +459,10 @@ function init() {
 
 // Global exposure
 window.selectDistanceMetric = selectDistanceMetric;
-window.selectKValue = selectKValue;
 window.runStep = runStep;
 window.nextSubStep = nextSubStep;
 window.restartExperiment = restartExperiment;
 window.showMetricSelector = showMetricSelector;
-window.showKSelector = showKSelector;
 
 // Show Metric Selector
 function showMetricSelector() {
@@ -204,59 +478,113 @@ function selectDistanceMetric(metric) {
     document.querySelector('.bottom-pane').style.display = '';
 
     const label = metric.charAt(0).toUpperCase() + metric.slice(1);
+    
+    // Update Model Training step (Step 5) with selected metric
     STEPS[4] = {
         title: `Model Training (${label})`,
         blocks: [{
-            comment: `Initialize and fit KNN with ${label} distance`,
-            code: `model = KNeighborsClassifier(n_neighbors=5, metric='${metric}')
+            comment: `Initialize and fit KNN model with ${label} distance (k=10)`,
+            code: `# Model Training
+
+# k = 10 (Heuristic Rule)
+model = KNeighborsClassifier(n_neighbors=10, metric='${metric}')
 model.fit(X_train_s, y_train)
-print("Model trained using ${label} distance")`,
-            output: `<div class="output-success">Model trained using ${label} distance</div>`
+print("Model trained using ${label} distance with k=10")`,
+            output: `<div class="output-success">Model trained using ${label} distance with k=10<br>KNeighborsClassifier(metric='${metric}', n_neighbors=10)</div>`
         }]
     };
 
-    EXPERIMENT_STATE.stepsStatus[4].unlocked = true;
-    loadStep(4);
-}
-
-// Show K Selector
-function showKSelector() {
-    document.querySelector('.top-pane').style.display = 'none';
-    document.querySelector('.bottom-pane').style.display = 'none';
-    document.getElementById('kSelectorPane').style.display = 'flex';
-}
-
-function selectKValue(k) {
-    currentConfig.kValue = k;
-    document.getElementById('kSelectorPane').style.display = 'none';
-    document.querySelector('.top-pane').style.display = '';
-    document.querySelector('.bottom-pane').style.display = '';
-
+    // Update Model Evaluation step (Step 6) with selected metric
     STEPS[5] = {
-        title: `Model Evaluation (K=${k})`,
+        title: `Model Evaluation (${label})`,
         blocks: [
             {
-                comment: `Generate classification report for K=${k}`,
-                code: `y_pred = model.predict(X_test_s)
-print(classification_report(y_test, y_pred, target_names=target_names))`,
-                output: `<div class="output-text" style="white-space: pre-wrap;">              precision    recall  f1-score   support
+                comment: "Generate predictions on test data",
+                code: `# Model Evaluation
+
+y_pred = model.predict(X_test_s)
+y_pred`,
+                output: `<div class="output-text">array([2, 1, 1, 1, 2, 2, 1, 1, 0, 2, 0, 0, 2, 2, 0, 2, 1, 0, 0, 0, 1, 0,<br>
+       1, 2, 1, 1, 1, 1, 1, 0, 2, 2, 1, 0, 2, 0, 0, 0, 0, 1, 1, 0, 1, 2,<br>
+       1])</div>`
+            },
+            {
+                comment: "Get prediction probabilities",
+                code: `y_prob = model.predict_proba(X_test_s)
+y_prob[:5]`,
+                output: `<div class="output-text">array([[0. , 0.1, 0.9],<br>
+       [0. , 0.9, 0.1],<br>
+       [0. , 0.7, 0.3],<br>
+       [0. , 0.7, 0.3],<br>
+       [0. , 0.4, 0.6]])</div>`
+            },
+            {
+                comment: "Generate classification report",
+                code: `print("\\nClassification Report (${label}, k=10):")
+print(classification_report(
+    y_test,
+    y_pred,
+    target_names=target_names,
+    digits=4
+))`,
+                output: `<div class="output-text"><pre style="font-family: monospace; margin: 0;">
+Classification Report (${label}, k=10):
+              precision    recall  f1-score   support
 
       setosa     1.0000    1.0000    1.0000        15
   versicolor     0.8333    1.0000    0.9091        15
-   virginica     1.0000    0.8000    0.8889        15</div>`
+   virginica     1.0000    0.8000    0.8889        15
+
+    accuracy                         0.9333        45
+   macro avg     0.9444    0.9333    0.9327        45
+weighted avg     0.9444    0.9333    0.9327        45
+</pre></div>`
             },
             {
-                comment: `Visualize confusion matrix for K=${k}`,
-                code: `sns.heatmap(confusion_matrix(y_test, y_pred), annot=True, cmap="Greens")
+                comment: "Visualize confusion matrix heatmap",
+                code: `plt.figure(figsize=(7, 5))
+sns.heatmap(
+    confusion_matrix(y_test, y_pred), annot=True, fmt="d", cmap="Greens",
+    xticklabels=target_names, yticklabels=target_names
+    )
+plt.xlabel("Predicted", fontweight='bold')
+plt.ylabel("True", fontweight='bold')
+plt.title("Confusion Matrix Heatmap (KNN, ${label}, k=10)", fontweight='bold')
+plt.tight_layout()
 plt.show()`,
                 output: `<img src="images/Confusion_Matrix_Heatmap_KNN_k_10.png" style="max-width:100%; height:auto; border: 1px solid #ddd; padding: 5px;">`
             }
         ]
     };
 
-    STEPS[6] = STEPS_KNN[6];
-    EXPERIMENT_STATE.stepsStatus[5].unlocked = true;
-    loadStep(5);
+    // Keep Model Simulation step (Step 7)
+    STEPS[6] = {
+        title: "Model Simulation",
+        blocks: [
+            {
+                comment: `Final Metrics - Accuracy, Precision, Recall, F1 and ROC-AUC (${label})`,
+                code: `# Final Metrics
+
+# Accuracy will be same as F1 score as dataset is perfectly balanced and stratified
+print(f'''Accuracy   : {accuracy_score(y_test, y_pred)}
+Precision  : {precision_score(y_test, y_pred, average="macro")}
+Recall     : {recall_score(y_test, y_pred, average="macro")}
+F1         : {f1_score(y_test, y_pred, average="macro")}
+ROC        : {roc_auc_score(y_test_bin, y_prob, multi_class="ovr", average="macro")}
+''')`,
+                output: `<div class="output-text" style="white-space: pre-wrap; font-family: monospace;">Accuracy   : 0.9333333333333333
+Precision  : 0.9444444444444445
+Recall     : 0.9333333333333332
+F1         : 0.9326599326599326
+ROC        : 0.9948148148148149
+</div>`
+            }
+        ]
+    };
+
+    EXPERIMENT_STATE.stepsStatus[4].unlocked = true;
+    renderSidebar();
+    loadStep(4);
 }
 
 // Render Sidebar
@@ -431,21 +759,26 @@ function runStep() {
                 EXPERIMENT_STATE.stepsStatus[EXPERIMENT_STATE.stepIndex + 1].unlocked = true;
                 renderSidebar();
                 
-                 setTimeout(() => {
-                    runBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
-                    runBtn.classList.remove('completed');
-                    runBtn.classList.add('arrow-mode');
-                    runBtn.style.backgroundColor = '#5FA8E4';
-                    runBtn.disabled = false;
-
-                    if (EXPERIMENT_STATE.stepIndex === 3) {
+                // After Data Preprocessing (step 3), show metric selector
+                if (EXPERIMENT_STATE.stepIndex === 3) {
+                    setTimeout(() => {
+                        runBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+                        runBtn.classList.remove('completed');
+                        runBtn.classList.add('arrow-mode');
+                        runBtn.style.backgroundColor = '#5FA8E4';
+                        runBtn.disabled = false;
                         runBtn.onclick = showMetricSelector;
-                    } else if (EXPERIMENT_STATE.stepIndex === 4) {
-                        runBtn.onclick = showKSelector;
-                    } else {
+                    }, 500);
+                } else {
+                    setTimeout(() => {
+                        runBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+                        runBtn.classList.remove('completed');
+                        runBtn.classList.add('arrow-mode');
+                        runBtn.style.backgroundColor = '#5FA8E4';
+                        runBtn.disabled = false;
                         runBtn.onclick = function() { loadStep(EXPERIMENT_STATE.stepIndex + 1); };
-                    }
-                 }, 500);
+                    }, 500);
+                }
             } else {
                  setTimeout(() => {
                     runBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';

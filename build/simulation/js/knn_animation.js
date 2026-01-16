@@ -171,21 +171,6 @@ const CanvasRenderer = (function() {
             ctx.stroke();
         }
 
-        // Draw test points (smaller, with white edge)
-        const testAlpha = blurTest ? 0.15 : 1;
-        testPoints.forEach((p, idx) => {
-            const isSelected = selectedTestIdx === idx;
-            ctx.beginPath();
-            ctx.arc(scaleX(p.x), scaleY(p.y), isSelected ? 7 : 5, 0, Math.PI * 2);
-            ctx.fillStyle = COLORS.classes[p.c];
-            ctx.globalAlpha = isSelected ? 1 : testAlpha;
-            ctx.fill();
-            ctx.strokeStyle = isSelected ? '#ff5252' : '#ffffff';
-            ctx.lineWidth = isSelected ? 2.5 : 1.5;
-            ctx.stroke();
-            ctx.globalAlpha = 1;
-        });
-
         // Draw training points (larger, with black edge)
         const trainAlpha = blurTrain ? 0.15 : 1;
         const pointSize = Math.max(4, Math.min(7, 9 - trainPoints.length / 15));
@@ -197,6 +182,21 @@ const CanvasRenderer = (function() {
             ctx.fill();
             ctx.strokeStyle = '#000000';
             ctx.lineWidth = 1.5;
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+        });
+
+        // Draw test points (smaller, with white edge)
+        const testAlpha = blurTest ? 0.15 : 1;
+        testPoints.forEach((p, idx) => {
+            const isSelected = selectedTestIdx === idx;
+            ctx.beginPath();
+            ctx.arc(scaleX(p.x), scaleY(p.y), isSelected ? 8 : 5, 0, Math.PI * 2);
+            ctx.fillStyle = COLORS.classes[p.c];
+            ctx.globalAlpha = isSelected ? 1 : testAlpha;
+            ctx.fill();
+            ctx.strokeStyle = isSelected ? '#ff5252' : '#ffffff';
+            ctx.lineWidth = isSelected ? 2.5 : 1.5;
             ctx.stroke();
             ctx.globalAlpha = 1;
         });
@@ -591,7 +591,8 @@ const KNNAnimation = (function() {
         blurTrain: false,
         blurTest: false,
         featureWindowOpen: false,
-        zoomPanel: null
+        zoomPanel: null,
+        initialized: false
     };
 
     // DOM Elements cache
@@ -623,6 +624,11 @@ const KNNAnimation = (function() {
      * Initialize the animation
      */
     function init() {
+        // Prevent multiple initializations
+        if (state.initialized) {
+            return;
+        }
+        
         // Cache DOM elements
         els.container = document.getElementById('knnAnimationContainer');
         els.boundaryCanvas = document.getElementById('boundaryCanvas');
@@ -661,6 +667,7 @@ const KNNAnimation = (function() {
             state.data = KNN_PLOT_DATA;
             setupEventListeners();
             initializeState();
+            state.initialized = true;
         } else {
             console.error('KNN_PLOT_DATA not found!');
         }

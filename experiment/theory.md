@@ -1,5 +1,3 @@
-### Theory
-
 The k-Nearest Neighbours (KNN) algorithm is a supervised machine learning algorithm used for classification and regression. It is a non-parametric method, as it does not assume any prior distribution of the data. In KNN, classification is performed based on the similarity between data samples, which is commonly measured using distance metrics such as Euclidean distance.
 
 #### 1. Algorithm Overview
@@ -16,20 +14,22 @@ Since KNN is based on distance calculations, feature scaling is important to ens
 
 #### 4. Merits of k-Nearest Neighbours (KNN)
 
-- **Simple and easy to understand**
-- **Does not require an explicit training phase**
-- **Makes no assumption about data distribution**
-- **Works well for small and well-separated datasets**
-- **Can be used for both classification and regression**
+- Simple and easy to understand
+- Does not require an explicit training phase
+- Makes no assumption about data distribution
+- Works well for small and well-separated datasets
+- Can be used for both classification and regression
 
 #### 5. Demerits of k-Nearest Neighbours (KNN)
 
-- **High computational cost during prediction**
-- **Requires large memory to store training data**
-- **Highly sensitive to feature scaling**
-- **Performance degrades in high-dimensional data**
-- **Sensitive to noise and outliers**
+- High computational cost during prediction
+- Requires large memory to store training data
+- Highly sensitive to feature scaling
+- Performance degrades in high-dimensional data
+- Sensitive to noise and outliers
 
 The figure below illustrates how K-NN assigns a class to a new data point by considering the majority class among its nearest neighbours.
 
-![KNN Classification](images/knn_new_data_assign.png)
+<div style="text-align: center; margin: 20px 0;">
+<img src="images/knn_new_data_assign.png" alt="KNN Classification" style="max-height: 300px; width: auto;">
+</div>
