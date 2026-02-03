@@ -105,21 +105,9 @@
 		<div class="content">
 			<!-- Sidebar -->
 			<aside class="sidebar">
-				<!-- Feature Pairs Button -->
-				<div class="control-section">
-					<button class="feature-btn" id="featureBtn">Feature Pair Visualization</button>
-				</div>
-
-				<!-- Auto-Pilot Control -->
-				<div class="control-section auto-pilot">
-					<h3>Auto-Pilot</h3>
-					<p style="font-size: 0.8em; opacity: 0.7; margin-bottom: 10px;">Auto-increment samples</p>
-					<button class="run-btn" id="autoRunBtn">▶ Play</button>
-				</div>
-
 				<!-- K Value Selection -->
-				<div class="control-section">
-					<h3>K Value</h3>
+				<div class="control-group">
+					<h3>K VALUE</h3>
 					<div class="k-buttons">
 						<button class="k-btn" data-k="6">6</button>
 						<button class="k-btn" data-k="8">8</button>
@@ -128,13 +116,12 @@
 				</div>
 
 				<!-- Training Samples Slider -->
-				<div class="control-section">
-					<h3>Training Samples</h3>
+				<div class="control-group">
+					<h3>TRAINING SAMPLES</h3>
 					<div class="slider-container">
 						<div class="slider-label">
 							<span>Sample Count</span>
-							<span class="slider-value"><span id="sampleValue">0</span>/<span
-									id="trainTotal">105</span></span>
+							<span class="slider-value"><span id="sampleValue">0</span>/<span id="trainTotal">105</span></span>
 						</div>
 						<div class="slider-with-controls">
 							<button class="slider-control-btn" id="decSamplesBtn">◀</button>
@@ -144,26 +131,54 @@
 					</div>
 				</div>
 
+				<!-- Feature Pairs Button -->
+				<div class="control-group">
+					<button class="feature-btn" id="featureBtn">FEATURE PAIR VISUALIZATION</button>
+				</div>
+
+				<div class="thick-separator"></div>
+
+				<!-- Auto-Pilot Control -->
+				<div class="control-group">
+					<h3>AUTO-PILOT</h3>
+					<div class="auto-pilot-section">
+						<button class="run-btn" id="autoRunBtn">▶ PLAY</button>
+						<div class="speed-control">
+							<div class="slider-label">
+								<span>Animation Speed</span>
+								<span class="slider-value" id="speedValue">1.3x</span>
+							</div>
+							<input type="range" id="speedSlider" min="100" max="2000" step="100" value="1350">
+						</div>
+					</div>
+				</div>
+
+				<div class="thick-separator"></div>
+
 				<!-- Metrics Panel -->
-				<div class="control-section">
-					<h3>Live Testing Metrics</h3>
+				<div class="control-group">
+					<h3>LIVE TESTING METRICS</h3>
 					<div class="metrics-panel">
 						<div class="metric-item">
 							<span class="metric-name">Accuracy</span>
 							<span class="metric-value" id="metricAcc">-</span>
 						</div>
+						<hr class="metric-divider" />
 						<div class="metric-item">
 							<span class="metric-name">Precision</span>
 							<span class="metric-value" id="metricPrec">-</span>
 						</div>
+						<hr class="metric-divider" />
 						<div class="metric-item">
 							<span class="metric-name">Recall</span>
 							<span class="metric-value" id="metricRec">-</span>
 						</div>
+						<hr class="metric-divider" />
 						<div class="metric-item">
 							<span class="metric-name">F1 Score</span>
 							<span class="metric-value" id="metricF1">-</span>
 						</div>
+						<hr class="metric-divider" />
 						<div class="metric-item">
 							<span class="metric-name">ROC-AUC</span>
 							<span class="metric-value" id="metricAUC">-</span>
@@ -172,14 +187,15 @@
 				</div>
 
 				<!-- Dataset Info -->
-				<div class="control-section">
-					<h3>Overview</h3>
+				<div class="control-group">
+					<h3>OVERVIEW</h3>
 					<div class="dataset-info">
-						<p><strong>Dataset:</strong> Fisher's Iris</p>
-						<p><strong>Domain:</strong> Botanical multivariate</p>
-						<p><strong>Features:</strong> 4 morphological (cm)</p>
-						<p><strong>Classes:</strong> 3 species</p>
-						<p><strong>Split:</strong> 70-30</p>
+						<p><strong>Dataset:</strong> <span style="color: #e0e0e0">Fisher's Iris</span></p>
+						<p><strong>Features:</strong> 4 morphological measurements (cm)</p>
+						<p><strong>Classes:</strong> 3 (setosa, versicolor, virginica)</p>
+						<p><strong>Samples:</strong> 150 (balanced: 50 per class)</p>
+						<p><strong>Current Split:</strong> 70-30 (105 / 45)</p>
+						<p><strong>Increment:</strong> 5 samples</p>
 					</div>
 				</div>
 			</aside>
@@ -290,20 +306,30 @@
 					<div class="feature-legend-classes">
 						<div class="feature-legend-item">
 							<span class="legend-dot" style="background-color: #4fc3f7;"></span>
-							<span>Setosa</span>
+							<span>setosa</span>
 						</div>
 						<div class="feature-legend-item">
 							<span class="legend-dot" style="background-color: #ffb74d;"></span>
-							<span>Versicolor</span>
+							<span>versicolor</span>
 						</div>
 						<div class="feature-legend-item">
 							<span class="legend-dot" style="background-color: #81c784;"></span>
-							<span>Virginica</span>
+							<span>virginica</span>
 						</div>
 					</div>
 					<div class="feature-legend-markers">
-						<span class="marker-info">● Train (black edge)</span>
-						<span class="marker-info">○ Test (white edge)</span>
+						<div class="marker-item">
+							<span class="legend-dot marker-train"></span>
+							<span class="marker-info">Train</span>
+						</div>
+						<div class="marker-item">
+							<span class="legend-dot marker-test-correct"></span>
+							<span class="marker-info">Test (Correct)</span>
+						</div>
+						<div class="marker-item">
+							<span class="legend-dot marker-test-wrong"></span>
+							<span class="marker-info">Test (Misclassified)</span>
+						</div>
 					</div>
 				</div>
 

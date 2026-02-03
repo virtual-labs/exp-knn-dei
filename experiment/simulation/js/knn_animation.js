@@ -37,7 +37,31 @@ const CanvasRenderer = (function() {
     const GRID_DIVISIONS = 100;
 
     /**
-     * Set up high-DPI canvas
+     * Lighten a hex color by a percentage
+     */
+    function lightenColor(hex, percent) {
+        const num = parseInt(hex.replace('#', ''), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = Math.min(255, (num >> 16) + amt);
+        const G = Math.min(255, ((num >> 8) & 0x00FF) + amt);
+        const B = Math.min(255, (num & 0x0000FF) + amt);
+        return `rgb(${R}, ${G}, ${B})`;
+    }
+
+    /**
+     * Darken a hex color by a percentage
+     */
+    function darkenColor(hex, percent) {
+        const num = parseInt(hex.replace('#', ''), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = Math.max(0, (num >> 16) - amt);
+        const G = Math.max(0, ((num >> 8) & 0x00FF) - amt);
+        const B = Math.max(0, (num & 0x0000FF) - amt);
+        return `rgb(${R}, ${G}, ${B})`;
+    }
+
+    /**
+     * Set up high-DPI canvas with anti-aliasing
      */
     function setupHighDPICanvas(canvas, width, height) {
         const dpr = window.devicePixelRatio || 1;
@@ -45,8 +69,13 @@ const CanvasRenderer = (function() {
         canvas.height = height * dpr;
         canvas.style.width = width + 'px';
         canvas.style.height = height + 'px';
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', { alpha: true });
         ctx.scale(dpr, dpr);
+        
+        // Enable anti-aliasing
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        
         return ctx;
     }
 
@@ -72,16 +101,24 @@ const CanvasRenderer = (function() {
     }
 
     /**
-     * Draw arrow from source to target
+     * Draw arrow from source to target - clean modern style
      */
     function drawArrow(ctx, fromX, fromY, toX, toY, color = COLORS.arrow) {
-        const headLength = 5;
+        const headLength = 7;
         const angle = Math.atan2(toY - fromY, toX - fromX);
 
+        ctx.save();
+        
+        // Subtle glow
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 4;
+        
+        // Clean line
         ctx.strokeStyle = color;
         ctx.fillStyle = color;
-        ctx.lineWidth = 0.8;
-        ctx.globalAlpha = 0.8;
+        ctx.lineWidth = 1.5;
+        ctx.lineCap = 'round';
+        ctx.globalAlpha = 0.75;
 
         // Draw line
         ctx.beginPath();
@@ -89,7 +126,9 @@ const CanvasRenderer = (function() {
         ctx.lineTo(toX, toY);
         ctx.stroke();
 
-        // Draw arrowhead
+        // Clean arrowhead
+        ctx.shadowBlur = 0;
+        ctx.globalAlpha = 0.85;
         ctx.beginPath();
         ctx.moveTo(toX, toY);
         ctx.lineTo(
@@ -103,7 +142,116 @@ const CanvasRenderer = (function() {
         ctx.closePath();
         ctx.fill();
 
-        ctx.globalAlpha = 1;
+        ctx.restore();
+    }
+
+    /**
+     * Draw tooltip with KNN stats (Smart Positioning)
+     */
+    function drawTooltip(ctx, pointX, pointY, counts, predictedClass, classNames, canvasWidth, canvasHeight) {
+        const padding = 12;
+        const lineHeight = 18;
+        const titleHeight = 22;
+        const width = 140;
+        const height = titleHeight + (counts.length) * lineHeight + padding * 2;
+        const pointerSize = 8;
+        const offset = 12; // Distance from point
+
+        const r = 8; // corner radius
+        
+        // Calculate best position for tooltip
+        let bx, by;
+        let pointerDirection = 'down'; // default: tooltip above, pointer points down
+        
+        // Try to place above the point first
+        by = pointY - height - offset - pointerSize;
+        
+        // If goes off top, place below
+        if (by < 5) {
+            by = pointY + offset + pointerSize;
+            pointerDirection = 'up';
+        }
+        
+        // If still goes off bottom, clamp it
+        if (by + height > canvasHeight - 5) {
+            by = canvasHeight - height - 5;
+        }
+        
+        // Center horizontally on point
+        bx = pointX - width / 2;
+        
+        // Clamp horizontal position
+        if (bx < 5) bx = 5;
+        if (bx + width > canvasWidth - 5) bx = canvasWidth - width - 5;
+
+        // Calculate pointer X position (should point to actual point)
+        let pointerX = Math.max(bx + 15, Math.min(bx + width - 15, pointX));
+
+        ctx.save();
+        
+        // Draw shadow
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
+        ctx.shadowBlur = 12;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 4;
+
+        // Draw background with glassmorphism effect
+        ctx.fillStyle = 'rgba(15, 15, 20, 0.92)';
+        ctx.strokeStyle = COLORS.classes[predictedClass] || '#ffffff';
+        ctx.lineWidth = 1.5;
+
+        ctx.beginPath();
+        ctx.roundRect(bx, by, width, height, r);
+        ctx.fill();
+        ctx.stroke();
+        
+        // Reset shadow
+        ctx.shadowColor = 'transparent';
+        ctx.shadowBlur = 0;
+
+        // Draw pointer triangle
+        ctx.fillStyle = 'rgba(15, 15, 20, 0.92)';
+        ctx.strokeStyle = COLORS.classes[predictedClass] || '#ffffff';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        
+        if (pointerDirection === 'down') {
+            // Pointer at bottom, pointing down to point
+            ctx.moveTo(pointerX - pointerSize, by + height);
+            ctx.lineTo(pointerX, by + height + pointerSize);
+            ctx.lineTo(pointerX + pointerSize, by + height);
+        } else {
+            // Pointer at top, pointing up to point  
+            ctx.moveTo(pointerX - pointerSize, by);
+            ctx.lineTo(pointerX, by - pointerSize);
+            ctx.lineTo(pointerX + pointerSize, by);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // Draw texts
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+
+        // Prediction Header
+        ctx.font = 'bold 12px "Segoe UI", system-ui, sans-serif';
+        const predName = classNames[predictedClass] || 'Unknown';
+        ctx.fillStyle = COLORS.classes[predictedClass] || '#ffffff';
+        ctx.fillText('Pred: ' + predName, bx + padding, by + padding);
+
+        // Neighbors breakdown
+        ctx.font = '11px "Segoe UI", system-ui, sans-serif';
+        let currentY = by + padding + titleHeight;
+
+        counts.forEach((count, idx) => {
+            const name = classNames[idx] || ('Class ' + idx);
+            ctx.fillStyle = COLORS.classes[idx];
+            ctx.fillText(name + ': ' + count, bx + padding, currentY);
+            currentY += lineHeight;
+        });
+        
+        ctx.restore();
     }
 
     /**
@@ -114,7 +262,7 @@ const CanvasRenderer = (function() {
         const height = options.height || 400;
         const ctx = setupHighDPICanvas(canvas, width, height);
 
-        const padding = { top: 0, right: 0, bottom: 0, left: 0 };
+        const padding = options.padding || { top: 25, right: 25, bottom: 25, left: 25 };
         const plotWidth = width - padding.left - padding.right;
         const plotHeight = height - padding.top - padding.bottom;
 
@@ -130,23 +278,65 @@ const CanvasRenderer = (function() {
         const selectedTestIdx = options.selectedTestIdx;
         const k = options.k || 6;
 
+        // Determine bounds - dynamic scaling based on data
+        let bounds = options.bounds;
+
+        if (!bounds) {
+            // Calculate bounds from points if not provided
+            let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+
+            const allPoints = [...trainPoints, ...testPoints];
+            if (allPoints.length > 0) {
+                allPoints.forEach(p => {
+                    if (p.x < minX) minX = p.x;
+                    if (p.x > maxX) maxX = p.x;
+                    if (p.y < minY) minY = p.y;
+                    if (p.y > maxY) maxY = p.y;
+                });
+
+                // Add 10% padding
+                const paddingX = (maxX - minX) * 0.1;
+                const paddingY = (maxY - minY) * 0.1;
+
+                bounds = {
+                    x_min: minX - paddingX,
+                    x_max: maxX + paddingX,
+                    y_min: minY - paddingY,
+                    y_max: maxY + paddingY
+                };
+            } else if (boundary && boundary.x_min !== undefined) {
+                // Use boundary bounds as fallback
+                bounds = {
+                    x_min: boundary.x_min,
+                    x_max: boundary.x_max,
+                    y_min: boundary.y_min,
+                    y_max: boundary.y_max
+                };
+            } else {
+                // Fallback default
+                bounds = { x_min: -3, x_max: 3, y_min: -3, y_max: 3 };
+            }
+        }
+
         // Scale functions
-        const scaleX = (x) => padding.left + ((x - boundary.x_min) / (boundary.x_max - boundary.x_min)) * plotWidth;
-        const scaleY = (y) => padding.top + plotHeight - ((y - boundary.y_min) / (boundary.y_max - boundary.y_min)) * plotHeight;
+        const scaleX = (x) => padding.left + ((x - bounds.x_min) / (bounds.x_max - bounds.x_min)) * plotWidth;
+        const scaleY = (y) => padding.top + plotHeight - ((y - bounds.y_min) / (bounds.y_max - bounds.y_min)) * plotHeight;
 
-        // Draw decision boundary (filled contour)
-        const grid = boundary.grid;
-        const gridSize = grid.length;
-        const cellWidth = plotWidth / (gridSize - 1);
-        const cellHeight = plotHeight / (gridSize - 1);
+        // Draw decision boundary (only if showBoundary option is true)
+        if (options.showBoundary && boundary && boundary.grid) {
+            const grid = boundary.grid;
+            const gridSize = grid.length;
+            const cellWidth = plotWidth / (gridSize - 1);
+            const cellHeight = plotHeight / (gridSize - 1);
 
-        for (let i = 0; i < gridSize; i++) {
-            for (let j = 0; j < gridSize; j++) {
-                const classIdx = grid[i][j];
-                ctx.fillStyle = COLORS.classesAlpha[classIdx];
-                const x = padding.left + j * cellWidth;
-                const y = padding.top + (gridSize - 1 - i) * cellHeight;
-                ctx.fillRect(x, y, cellWidth + 1, cellHeight + 1);
+            for (let i = 0; i < gridSize; i++) {
+                for (let j = 0; j < gridSize; j++) {
+                    const classIdx = grid[i][j];
+                    ctx.fillStyle = COLORS.classesAlpha[classIdx];
+                    const x = padding.left + j * cellWidth;
+                    const y = padding.top + (gridSize - 1 - i) * cellHeight;
+                    ctx.fillRect(x, y, cellWidth + 1, cellHeight + 1);
+                }
             }
         }
 
@@ -171,46 +361,28 @@ const CanvasRenderer = (function() {
             ctx.stroke();
         }
 
-        // Draw training points (larger, with black edge)
-        const trainAlpha = blurTrain ? 0.15 : 1;
-        const pointSize = Math.max(4, Math.min(7, 9 - trainPoints.length / 15));
-        trainPoints.forEach(p => {
-            ctx.beginPath();
-            ctx.arc(scaleX(p.x), scaleY(p.y), pointSize, 0, Math.PI * 2);
-            ctx.fillStyle = COLORS.classes[p.c];
-            ctx.globalAlpha = trainAlpha;
-            ctx.fill();
-            ctx.strokeStyle = '#000000';
-            ctx.lineWidth = 1.5;
-            ctx.stroke();
-            ctx.globalAlpha = 1;
-        });
+        // CLIP TO PLOT AREA to prevent points from leaking outside
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(padding.left, padding.top, plotWidth, plotHeight);
+        ctx.clip();
 
-        // Draw test points (smaller, with white edge)
-        const testAlpha = blurTest ? 0.15 : 1;
-        testPoints.forEach((p, idx) => {
-            const isSelected = selectedTestIdx === idx;
-            ctx.beginPath();
-            ctx.arc(scaleX(p.x), scaleY(p.y), isSelected ? 8 : 5, 0, Math.PI * 2);
-            ctx.fillStyle = COLORS.classes[p.c];
-            ctx.globalAlpha = isSelected ? 1 : testAlpha;
-            ctx.fill();
-            ctx.strokeStyle = isSelected ? '#ff5252' : '#ffffff';
-            ctx.lineWidth = isSelected ? 2.5 : 1.5;
-            ctx.stroke();
-            ctx.globalAlpha = 1;
-        });
-
-        // Draw KNN arrows if a test point is selected
+        // === DRAW ORDER: Arrows -> Training Points -> Test Points -> Tooltip ===
+        
+        // 1. Draw KNN arrows FIRST (behind all points)
+        let selectedNeighbors = null;
+        let selectedPointCoords = null;
         if (selectedTestIdx !== undefined && selectedTestIdx !== null && testPoints[selectedTestIdx]) {
             const selectedPoint = testPoints[selectedTestIdx];
-            const neighbors = findKNearestNeighbors(selectedPoint, trainPoints, k);
+            selectedNeighbors = findKNearestNeighbors(selectedPoint, trainPoints, k);
+            selectedPointCoords = { x: scaleX(selectedPoint.x), y: scaleY(selectedPoint.y) };
 
-            neighbors.forEach(neighbor => {
+            // Draw arrows
+            selectedNeighbors.forEach(neighbor => {
                 drawArrow(
                     ctx,
-                    scaleX(selectedPoint.x),
-                    scaleY(selectedPoint.y),
+                    selectedPointCoords.x,
+                    selectedPointCoords.y,
                     scaleX(neighbor.point.x),
                     scaleY(neighbor.point.y),
                     COLORS.classes[neighbor.point.c]
@@ -218,8 +390,176 @@ const CanvasRenderer = (function() {
             });
         }
 
+        // 2. Draw training points - refined style
+        const trainAlpha = blurTrain ? 0.12 : 1;
+        const pointSize = Math.max(5, Math.min(6, 8 - trainPoints.length / 20));
+        
+        // Get set of neighbor indices for highlighting
+        const neighborIndices = new Set();
+        if (selectedNeighbors) {
+            selectedNeighbors.forEach(n => neighborIndices.add(n.idx));
+        }
+        
+        trainPoints.forEach((p, idx) => {
+            const px = scaleX(p.x);
+            const py = scaleY(p.y);
+            const isNeighbor = neighborIndices.has(idx);
+
+            ctx.save();
+            
+            ctx.globalAlpha = isNeighbor ? 1 : trainAlpha;
+
+            const baseColor = COLORS.classes[p.c];
+            const size = isNeighbor ? pointSize + 3 : pointSize;
+            
+            // Soft shadow
+            if (!blurTrain || isNeighbor) {
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.25)';
+                ctx.shadowBlur = 4;
+                ctx.shadowOffsetY = 1;
+            }
+            
+            // Subtle gradient
+            const grad = ctx.createRadialGradient(px, py - size * 0.25, 0, px, py, size);
+            grad.addColorStop(0, lightenColor(baseColor, 12));
+            grad.addColorStop(0.7, baseColor);
+            grad.addColorStop(1, darkenColor(baseColor, 8));
+            
+            ctx.beginPath();
+            ctx.arc(px, py, size, 0, Math.PI * 2);
+            ctx.fillStyle = grad;
+            ctx.fill();
+
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetY = 0;
+
+            // Neighbor highlight ring
+            if (isNeighbor) {
+                ctx.beginPath();
+                ctx.arc(px, py, size, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                
+                // Outer glow ring
+                ctx.beginPath();
+                ctx.arc(px, py, size + 3, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+            
+            ctx.restore();
+        });
+
+        // 3. Draw test points (on top of training points) - refined style
+        const testAlpha = blurTest ? 0.15 : 1;
+        testPoints.forEach((p, idx) => {
+            const isSelected = selectedTestIdx === idx;
+
+            const neighbors = findKNearestNeighbors(p, trainPoints, k);
+            const counts = [0, 0, 0];
+            neighbors.forEach(n => counts[n.point.c]++);
+            let maxCount = -1;
+            let predictedClass = -1;
+            counts.forEach((count, cIdx) => {
+                if (count > maxCount) {
+                    maxCount = count;
+                    predictedClass = cIdx;
+                }
+            });
+
+            const isMisclassified = predictedClass !== p.c;
+            const px = scaleX(p.x);
+            const py = scaleY(p.y);
+            const radius = isSelected ? 9 : 6;
+
+            ctx.save();
+            ctx.globalAlpha = isSelected ? 1 : testAlpha;
+
+            const baseColor = COLORS.classes[p.c];
+            
+            // Soft drop shadow for depth
+            if (!blurTest) {
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.35)';
+                ctx.shadowBlur = 6;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 2;
+            }
+
+            // Subtle radial gradient for refined look
+            const grad = ctx.createRadialGradient(px, py - radius * 0.3, 0, px, py, radius);
+            grad.addColorStop(0, lightenColor(baseColor, 15));
+            grad.addColorStop(0.6, baseColor);
+            grad.addColorStop(1, darkenColor(baseColor, 10));
+
+            ctx.beginPath();
+            ctx.arc(px, py, radius, 0, Math.PI * 2);
+            ctx.fillStyle = grad;
+            ctx.fill();
+
+            // Reset shadow
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+
+            // Refined stroke - inner light ring
+            ctx.beginPath();
+            ctx.arc(px, py, radius - 1, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            // Outer ring for classification indicator
+            ctx.beginPath();
+            ctx.arc(px, py, radius, 0, Math.PI * 2);
+            if (isMisclassified) {
+                ctx.strokeStyle = '#ff6b6b';
+                ctx.lineWidth = isSelected ? 2.5 : 2;
+            } else {
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
+                ctx.lineWidth = isSelected ? 2 : 1.5;
+            }
+            ctx.stroke();
+
+            // Selection glow
+            if (isSelected) {
+                ctx.beginPath();
+                ctx.arc(px, py, radius + 4, 0, Math.PI * 2);
+                ctx.strokeStyle = isMisclassified ? 'rgba(255, 107, 107, 0.4)' : 'rgba(255, 255, 255, 0.3)';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+            }
+            
+            ctx.restore();
+        });
+
+        // Restore context (remove clipping) BEFORE drawing tooltip
+        ctx.restore();
+
+        // 4. Draw Tooltip LAST (topmost) - OUTSIDE clipping region
+        if (selectedNeighbors && selectedPointCoords) {
+            const counts = [0, 0, 0];
+            selectedNeighbors.forEach(n => counts[n.point.c]++);
+
+            let maxCount = -1;
+            let predictedClass = -1;
+            counts.forEach((count, clsIdx) => {
+                if (count > maxCount) {
+                    maxCount = count;
+                    predictedClass = clsIdx;
+                }
+            });
+
+            drawTooltip(ctx, selectedPointCoords.x, selectedPointCoords.y, counts, predictedClass, options.classNames || ['Class 0', 'Class 1', 'Class 2'], width, height);
+        }
+
         // Store scale functions on canvas for click detection
         canvas._scaleInfo = {
+            width, // Store original logical width
+            height, // Store original logical height
             padding,
             plotWidth,
             plotHeight,
@@ -232,29 +572,39 @@ const CanvasRenderer = (function() {
     }
 
     /**
-     * Find which test point was clicked (if any)
+     * Find which test point was clicked (if any) - finds CLOSEST point
      */
     function findClickedTestPoint(canvas, clickX, clickY, testPoints) {
         const rect = canvas.getBoundingClientRect();
-        const x = (clickX - rect.left);
-        const y = (clickY - rect.top);
-
         const scaleInfo = canvas._scaleInfo;
         if (!scaleInfo) return null;
 
-        const clickRadius = 12;
+        // Calculate scale factor between displayed size (CSS) and logical size (Render)
+        const scaleFactorX = scaleInfo.width / rect.width;
+        const scaleFactorY = scaleInfo.height / rect.height;
 
+        // Transform click coordinates to logical space
+        const x = (clickX - rect.left) * scaleFactorX;
+        const y = (clickY - rect.top) * scaleFactorY;
+
+        const clickRadius = 20; // Hit radius
+        let closestIdx = null;
+        let closestDist = Infinity;
+
+        // Find the CLOSEST point within click radius
         for (let i = 0; i < testPoints.length; i++) {
             const p = testPoints[i];
             const px = scaleInfo.scaleX(p.x);
             const py = scaleInfo.scaleY(p.y);
+            const dist = distance(x, y, px, py);
 
-            if (distance(x, y, px, py) < clickRadius) {
-                return i;
+            if (dist < clickRadius && dist < closestDist) {
+                closestDist = dist;
+                closestIdx = i;
             }
         }
 
-        return null;
+        return closestIdx;
     }
 
     /**
@@ -584,9 +934,10 @@ const KNNAnimation = (function() {
         currentK: 6,
         currentSampleIdx: 0,
         sampleSizes: [],
-        stepIncrement: 10,
+        stepIncrement: 5,
         isAutoRunning: false,
         autoIntervalId: null,
+        animationSpeed: 750,
         selectedTestIdx: null,
         blurTrain: false,
         blurTest: false,
@@ -647,6 +998,10 @@ const KNNAnimation = (function() {
         // Blur toggles
         els.blurTrainBtn = document.getElementById('blurTrainBtn');
         els.blurTestBtn = document.getElementById('blurTestBtn');
+        
+        // Speed slider
+        els.speedSlider = document.getElementById('speedSlider');
+        els.speedValue = document.getElementById('speedValue');
         
         // Metrics display
         els.metricAcc = document.getElementById('metricAcc');
@@ -725,6 +1080,27 @@ const KNNAnimation = (function() {
             els.autoRunBtn.addEventListener('click', toggleAutoRun);
         }
 
+        // Speed slider
+        if (els.speedSlider) {
+            els.speedSlider.addEventListener('input', (e) => {
+                state.animationSpeed = 2100 - parseInt(e.target.value);
+                if (els.speedValue) {
+                    els.speedValue.textContent = (1000 / state.animationSpeed).toFixed(1) + 'x';
+                }
+                // Restart interval if running
+                if (state.isAutoRunning) {
+                    clearInterval(state.autoIntervalId);
+                    state.autoIntervalId = setInterval(() => {
+                        let next = state.currentSampleIdx + 1;
+                        if (next >= state.sampleSizes.length) next = 0;
+                        state.currentSampleIdx = next;
+                        if (els.sampleSlider) els.sampleSlider.value = next;
+                        render();
+                    }, state.animationSpeed);
+                }
+            });
+        }
+
         // Feature button
         if (els.featureBtn) {
             els.featureBtn.addEventListener('click', () => {
@@ -779,6 +1155,52 @@ const KNNAnimation = (function() {
         const featureMin = document.getElementById('featureMinBtn');
         if (featureClose) featureClose.addEventListener('click', () => { state.featureWindowOpen = false; toggleFeatureWindow(); });
         if (featureMin) featureMin.addEventListener('click', () => els.featureWindow.classList.toggle('minimized'));
+
+        // Card zoom buttons in feature window (🔍 magnifying glass)
+        document.querySelectorAll('.knn-animation .card-zoom-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const panel = btn.dataset.panel;
+                if (panel) openZoom(panel);
+            });
+        });
+
+        // Zoom canvas click for test point selection
+        if (els.zoomCanvas) {
+            els.zoomCanvas.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!state.zoomPanel) return;
+                
+                let testPoints;
+                if (state.zoomPanel === 'pca') {
+                    testPoints = state.data.test_points_pca;
+                } else if (state.zoomPanel.startsWith('feature_')) {
+                    const featureKey = state.zoomPanel.replace('feature_', '');
+                    testPoints = state.data.test_points_features[featureKey];
+                } else {
+                    return; // metrics/roc don't have clickable points
+                }
+                
+                handleCanvasClick(e, els.zoomCanvas, testPoints);
+                renderZoom(); // Re-render zoom with selected point
+            });
+        }
+
+        // Feature canvas clicks for test point selection
+        FEATURE_PAIRS.forEach(([f1, f2]) => {
+            const key = `f${f1}_f${f2}`;
+            const canvas = document.getElementById(`featureCanvas_${key}`);
+            if (canvas) {
+                canvas.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const testPoints = state.data?.test_points_features?.[key];
+                    if (testPoints) {
+                        handleCanvasClick(e, canvas, testPoints);
+                        renderFeaturePairs(); // Re-render to show selection
+                    }
+                });
+            }
+        });
 
         // Back button
         if (els.backBtn) {
@@ -847,7 +1269,7 @@ const KNNAnimation = (function() {
                 state.currentSampleIdx = next;
                 if (els.sampleSlider) els.sampleSlider.value = next;
                 render();
-            }, 300);
+            }, state.animationSpeed);
         }
         updateRunButton();
     }
@@ -858,7 +1280,7 @@ const KNNAnimation = (function() {
     function updateRunButton() {
         if (els.autoRunBtn) {
             els.autoRunBtn.classList.toggle('active', state.isAutoRunning);
-            els.autoRunBtn.textContent = state.isAutoRunning ? '⏸ Pause' : '▶ Play';
+            els.autoRunBtn.textContent = state.isAutoRunning ? '⏸ PAUSE' : '▶ PLAY';
         }
     }
 
