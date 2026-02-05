@@ -48,12 +48,19 @@
     transition: transform 0.1s, background-color 0.2s;
 }
 
-.download-btn:hover {
+.download-btn:disabled {
+    background-color: #ccc !important;
+    color: white !important;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.download-btn:hover:not(:disabled) {
     background-color: #e53935;
     transform: translateY(-1px);
 }
 
-.download-btn:active {
+.download-btn:active:not(:disabled) {
     transform: translateY(1px);
 }
 

@@ -15,7 +15,7 @@
 		href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
 		rel="stylesheet">
 	<link rel="stylesheet" href="./css/main.css">
-	<link rel="stylesheet" href="./css/knn_animation.css">
+	<link rel="stylesheet" href="./css/knn_style.css">
 </head>
 
 <body>
@@ -89,6 +89,18 @@
 
 	<!-- KNN ANIMATION - Fullscreen Overlay (Ported from React App) -->
 	<div class="knn-animation" id="knnAnimationContainer" style="display: none;">
+		<!-- Loading Screen -->
+		<div class="loading-screen" id="knnLoadingScreen">
+			<div class="loading-content">
+				<h2>KNN Visualizer</h2>
+				<div class="progress-bar-container">
+					<div class="progress-bar-fill" id="loadingProgress"></div>
+				</div>
+				<p id="loadingText">Initializing core...</p>
+				<div class="loading-percent" id="loadingPercent">0%</div>
+			</div>
+		</div>
+
 		<!-- Header -->
 		<header>
 			<h1>KNN Visualizer Playground</h1>
@@ -121,7 +133,8 @@
 					<div class="slider-container">
 						<div class="slider-label">
 							<span>Sample Count</span>
-							<span class="slider-value"><span id="sampleValue">0</span>/<span id="trainTotal">105</span></span>
+							<span class="slider-value"><span id="sampleValue">0</span>/<span
+									id="trainTotal">105</span></span>
 						</div>
 						<div class="slider-with-controls">
 							<button class="slider-control-btn" id="decSamplesBtn">◀</button>
@@ -209,7 +222,7 @@
 							<span>PCA Decision Boundary</span>
 							<div class="panel-controls">
 								<div class="blur-toggles">
-									<button class="toggle-btn active" id="blurTrainBtn">
+									<button class="toggle-btn" id="blurTrainBtn">
 										<span class="toggle-dot train"></span> Train
 									</button>
 									<button class="toggle-btn active" id="blurTestBtn">
@@ -289,7 +302,7 @@
 				<span class="window-title">Feature Pair Decision Boundaries</span>
 				<div class="window-controls">
 					<div class="blur-toggles header-toggles">
-						<button class="toggle-btn small active" id="featureBlurTrainBtn">
+						<button class="toggle-btn small" id="featureBlurTrainBtn">
 							<span class="toggle-dot train"></span> Train
 						</button>
 						<button class="toggle-btn small active" id="featureBlurTestBtn">
@@ -392,8 +405,8 @@
 	</div>
 
 	<!-- Scripts -->
-	<script src="./js/knn_data.js"></script>
-	<script src="./js/knn_animation.js"></script>
+	<script src="./js/knn_canvas.js"></script>
+	<script src="./js/knn_logic.js"></script>
 	<script src="./js/main.js"></script>
 </body>
 

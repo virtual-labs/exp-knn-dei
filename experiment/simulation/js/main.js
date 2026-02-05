@@ -631,8 +631,24 @@ function renderSidebar() {
     downloadBtn.style.textAlign = 'center';
     downloadBtn.style.marginTop = "10px";
     downloadBtn.style.marginBottom = "20px";
-    downloadBtn.style.backgroundColor = "#ef5350";
-    downloadBtn.style.color = "white";
+    
+    // Check if all steps are completed
+    const allStepsCompleted = EXPERIMENT_STATE.stepsStatus.every(status => status.completed);
+    
+    if (allStepsCompleted) {
+        downloadBtn.style.backgroundColor = "#ef5350";
+        downloadBtn.style.color = "white";
+        downloadBtn.style.cursor = "pointer";
+        downloadBtn.disabled = false;
+        downloadBtn.onclick = downloadTrainingAsPDF;
+    } else {
+        downloadBtn.style.backgroundColor = "#ccc";
+        downloadBtn.style.color = "#888";
+        downloadBtn.style.cursor = "not-allowed";
+        downloadBtn.disabled = true;
+        downloadBtn.onclick = null;
+    }
+    
     downloadBtn.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -643,7 +659,6 @@ function renderSidebar() {
         </svg>
         Download Experiment
     `;
-    downloadBtn.onclick = downloadTrainingAsPDF;
     stepsContainer.appendChild(downloadBtn);
 }
 
@@ -842,12 +857,28 @@ function showCompletionMessage() {
 
 function highlightCode(code) {
   if (!code) return '';
-  return code
+  
+  // First, protect strings from keyword replacement
+  const stringPlaceholders = [];
+  let protectedCode = code.replace(/(["'])(?:(?!\1)[^\\]|\\.)*\1/g, (match) => {
+    stringPlaceholders.push(match);
+    return `__STRING_${stringPlaceholders.length - 1}__`;
+  });
+  
+  // Apply keyword highlighting (only on non-string parts)
+  protectedCode = protectedCode
     .replace(/\bimport\b/g, '<span class="kw">import</span>')
     .replace(/\bfrom\b/g, '<span class="kw">from</span>')
     .replace(/\bas\b/g, '<span class="kw">as</span>')
     .replace(/\bprint\b/g, '<span class="func">print</span>')
     .replace(/#.*$/gm, match => `<span class="comment">${match}</span>`);
+  
+  // Restore strings with string highlighting
+  protectedCode = protectedCode.replace(/__STRING_(\d+)__/g, (_, idx) => {
+    return `<span class="string">${stringPlaceholders[parseInt(idx)]}</span>`;
+  });
+  
+  return protectedCode;
 }
 
 function downloadTrainingAsPDF() {
