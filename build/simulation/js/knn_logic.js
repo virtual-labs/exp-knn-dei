@@ -22,7 +22,13 @@ const STATE = {
     selectedTestIdx: null,
     featureSelectedIdx: {},  // Local selection state per feature card
     autoIntervalId: null,
-    globalBounds: { x_min: -4.0, x_max: 4.0, y_min: -1.5, y_max: 1.5 }
+    globalBounds: { x_min: -4.0, x_max: 4.0, y_min: -1.5, y_max: 1.5 },
+    // Cached canvas dimensions to prevent jittering
+    cachedDimensions: {
+        boundary: null,
+        metrics: null,
+        roc: null
+    }
 };
 
 // ==================== DOM REFERENCES ====================
@@ -70,8 +76,15 @@ function renderAllCanvases() {
     if (DOM.boundaryCanvas) {
         const canvas = DOM.boundaryCanvas;
         const wrapper = canvas.parentElement;
-        const width = wrapper.clientWidth || 800;
-        const height = wrapper.clientHeight || 600;
+        
+        // Cache dimensions on first render to prevent jittering
+        if (!STATE.cachedDimensions.boundary) {
+            STATE.cachedDimensions.boundary = {
+                width: wrapper.clientWidth || 800,
+                height: wrapper.clientHeight || 600
+            };
+        }
+        const { width, height } = STATE.cachedDimensions.boundary;
 
         canvas.style.width = '100%';
         canvas.style.height = '100%';
@@ -95,8 +108,15 @@ function renderAllCanvases() {
     if (DOM.metricsCanvas) {
         const canvas = DOM.metricsCanvas;
         const wrapper = canvas.parentElement;
-        const width = wrapper.clientWidth || 500;
-        const height = wrapper.clientHeight || 300;
+        
+        // Cache dimensions on first render to prevent jittering
+        if (!STATE.cachedDimensions.metrics) {
+            STATE.cachedDimensions.metrics = {
+                width: wrapper.clientWidth || 500,
+                height: wrapper.clientHeight || 300
+            };
+        }
+        const { width, height } = STATE.cachedDimensions.metrics;
 
         canvas.style.width = '100%';
         canvas.style.height = '100%';
@@ -112,8 +132,15 @@ function renderAllCanvases() {
     if (DOM.rocCanvas) {
         const canvas = DOM.rocCanvas;
         const wrapper = canvas.parentElement;
-        const width = wrapper.clientWidth || 500;
-        const height = wrapper.clientHeight || 300;
+        
+        // Cache dimensions on first render to prevent jittering
+        if (!STATE.cachedDimensions.roc) {
+            STATE.cachedDimensions.roc = {
+                width: wrapper.clientWidth || 500,
+                height: wrapper.clientHeight || 300
+            };
+        }
+        const { width, height } = STATE.cachedDimensions.roc;
 
         canvas.style.width = '100%';
         canvas.style.height = '100%';
@@ -696,6 +723,52 @@ function attachEventListeners() {
 
             renderFeatureCanvases();
         });
+    });
+
+    // Info buttons - header info
+    const headerInfoBtn = document.getElementById('headerInfoBtn');
+    const headerInfoPopup = document.getElementById('headerInfoPopup');
+    const headerInfoClose = document.getElementById('headerInfoClose');
+    
+    if (headerInfoBtn && headerInfoPopup) {
+        headerInfoBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            headerInfoPopup.classList.toggle('active');
+        });
+    }
+    
+    if (headerInfoClose && headerInfoPopup) {
+        headerInfoClose.addEventListener('click', (e) => {
+            e.stopPropagation();
+            headerInfoPopup.classList.remove('active');
+        });
+    }
+
+    // Info buttons - panel info buttons
+    document.querySelectorAll('.panel-info-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const infoType = btn.dataset.info;
+            const popup = btn.nextElementSibling;
+            
+            // Close all other popups first
+            document.querySelectorAll('.panel-info-popup.active').forEach(p => {
+                if (p !== popup) p.classList.remove('active');
+            });
+            
+            if (popup) {
+                popup.classList.toggle('active');
+            }
+        });
+    });
+
+    // Close popups when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.info-btn') && !e.target.closest('.info-popup')) {
+            document.querySelectorAll('.info-popup.active').forEach(p => {
+                p.classList.remove('active');
+            });
+        }
     });
 }
 
