@@ -349,434 +349,434 @@
                         </div>
                     </div>
                 </div>
-          </div>            <div class="vlabs-page-content px-5 pb-4 flex-grow-1 markdown-body">
-              <div class="text-center fix-spacing">
-                <h2 id="k-nearest-neighbors-knn">k-Nearest Neighbors (KNN)</h2>
+          </div>          <div class="vlabs-page-content px-5 pb-4 flex-grow-1 markdown-body">
+            <div class="text-center fix-spacing">
+              <h2 id="k-nearest-neighbors-knn">k-Nearest Neighbors (KNN)</h2>
           
-              </div>
-              <div id="difficulty-container" style="border-bottom: 1px solid #eaecef; padding-bottom: .3em; margin: 0" class="row">
-                <div id="difficulty-label" class="col-12 col-md-3" style="display:none"><strong>Choose difficulty: </strong></div>
-                <div class="form-check col-12 col-md-3" style="display:none">
-                  <input id="beginner" type="checkbox" value="">
-                  <label class="form-check-label" for="beginner">
-                    <strong>Beginner</strong>
-                  </label>
-                </div>
-                <div class="form-check col-12 col-md-3" style="display:none">
-                  <input id="intermediate" type="checkbox" value="">
-                  <label class="form-check-label" for="intermediate">
-                    <strong>Intermediate</strong>
-                  </label>
-                </div>
-                <div class="form-check col-12 col-md-3" style="display:none">
-                  <input id="advanced" type="checkbox" value="">
-                  <label class="form-check-label" for="advanced">
-                    <strong>Advanced</strong>
-                  </label>
-                </div>
-              </div>
-          
-              <div id="quiz" class="versiontrue" style="margin-top: 1rem">
-          
-          
-                <div class="question beginner">
-                  KNN is a:
-                </div>
-          
-                <div class="answers">
-                  <div id="answer0a">
-                    <label>
-                      <input type="radio" name="question0" value="a">
-                      a: Unsupervised algorithm
-                    </label>
-                    <a href="#" id="explanation0a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer0b">
-                    <label>
-                      <input type="radio" name="question0" value="b">
-                      b: Supervised algorithm
-                    </label>
-                    <a href="#" id="explanation0b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer0c">
-                    <label>
-                      <input type="radio" name="question0" value="c">
-                      c: Reinforcement algorithm
-                    </label>
-                    <a href="#" id="explanation0c" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer0d">
-                    <label>
-                      <input type="radio" name="question0" value="d">
-                      d: Semi-supervised algorithm
-                    </label>
-                    <a href="#" id="explanation0d" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-          
-                <div class="question beginner">
-                  KNN stores:
-                </div>
-          
-                <div class="answers">
-                  <div id="answer1a">
-                    <label>
-                      <input type="radio" name="question1" value="a">
-                      a: Model parameters
-                    </label>
-                    <a href="#" id="explanation1a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer1b">
-                    <label>
-                      <input type="radio" name="question1" value="b">
-                      b: Training data
-                    </label>
-                    <a href="#" id="explanation1b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer1c">
-                    <label>
-                      <input type="radio" name="question1" value="c">
-                      c: Decision boundaries
-                    </label>
-                    <a href="#" id="explanation1c" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer1d">
-                    <label>
-                      <input type="radio" name="question1" value="d">
-                      d: Feature weights
-                    </label>
-                    <a href="#" id="explanation1d" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-          
-                <div class="question intermediate">
-                  Who originally developed the nearest neighbour classification concept?
-                </div>
-          
-                <div class="answers">
-                  <div id="answer2a">
-                    <label>
-                      <input type="radio" name="question2" value="a">
-                      a: Duda &amp; Hart
-                    </label>
-                    <a href="#" id="explanation2a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer2b">
-                    <label>
-                      <input type="radio" name="question2" value="b">
-                      b: Fisher
-                    </label>
-                    <a href="#" id="explanation2b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer2c">
-                    <label>
-                      <input type="radio" name="question2" value="c">
-                      c: Fix &amp; Hodges
-                    </label>
-                    <a href="#" id="explanation2c" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer2d">
-                    <label>
-                      <input type="radio" name="question2" value="d">
-                      d: Cover &amp; Hart
-                    </label>
-                    <a href="#" id="explanation2d" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-          
-                <div class="question beginner">
-                  If k = 1, classification is based on:
-                </div>
-          
-                <div class="answers">
-                  <div id="answer3a">
-                    <label>
-                      <input type="radio" name="question3" value="a">
-                      a: Majority voting
-                    </label>
-                    <a href="#" id="explanation3a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer3b">
-                    <label>
-                      <input type="radio" name="question3" value="b">
-                      b: Nearest neighbour
-                    </label>
-                    <a href="#" id="explanation3b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer3c">
-                    <label>
-                      <input type="radio" name="question3" value="c">
-                      c: Weighted average
-                    </label>
-                    <a href="#" id="explanation3c" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer3d">
-                    <label>
-                      <input type="radio" name="question3" value="d">
-                      d: Regression
-                    </label>
-                    <a href="#" id="explanation3d" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-          
-                <div class="question beginner">
-                  The Iris dataset contains:
-                </div>
-          
-                <div class="answers">
-                  <div id="answer4a">
-                    <label>
-                      <input type="radio" name="question4" value="a">
-                      a: 100 samples
-                    </label>
-                    <a href="#" id="explanation4a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer4b">
-                    <label>
-                      <input type="radio" name="question4" value="b">
-                      b: 120 samples
-                    </label>
-                    <a href="#" id="explanation4b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer4c">
-                    <label>
-                      <input type="radio" name="question4" value="c">
-                      c: 150 samples
-                    </label>
-                    <a href="#" id="explanation4c" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer4d">
-                    <label>
-                      <input type="radio" name="question4" value="d">
-                      d: 180 samples
-                    </label>
-                    <a href="#" id="explanation4d" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-          
-                <div class="question intermediate">
-                  Feature scaling is important in KNN because:
-                </div>
-          
-                <div class="answers">
-                  <div id="answer5a">
-                    <label>
-                      <input type="radio" name="question5" value="a">
-                      a: It removes noise
-                    </label>
-                    <a href="#" id="explanation5a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer5b">
-                    <label>
-                      <input type="radio" name="question5" value="b">
-                      b: It affects distance calculation
-                    </label>
-                    <a href="#" id="explanation5b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer5c">
-                    <label>
-                      <input type="radio" name="question5" value="c">
-                      c: It changes labels
-                    </label>
-                    <a href="#" id="explanation5c" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer5d">
-                    <label>
-                      <input type="radio" name="question5" value="d">
-                      d: It reduces data
-                    </label>
-                    <a href="#" id="explanation5d" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-          
-                <div class="question intermediate">
-                  A larger k value generally:
-                </div>
-          
-                <div class="answers">
-                  <div id="answer6a">
-                    <label>
-                      <input type="radio" name="question6" value="a">
-                      a: Increases variance
-                    </label>
-                    <a href="#" id="explanation6a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer6b">
-                    <label>
-                      <input type="radio" name="question6" value="b">
-                      b: Reduces noise sensitivity
-                    </label>
-                    <a href="#" id="explanation6b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer6c">
-                    <label>
-                      <input type="radio" name="question6" value="c">
-                      c: Increases overfitting
-                    </label>
-                    <a href="#" id="explanation6c" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer6d">
-                    <label>
-                      <input type="radio" name="question6" value="d">
-                      d: Removes need for scaling
-                    </label>
-                    <a href="#" id="explanation6d" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-          
-                <div class="question beginner">
-                  KNN is best described as:
-                </div>
-          
-                <div class="answers">
-                  <div id="answer7a">
-                    <label>
-                      <input type="radio" name="question7" value="a">
-                      a: Eager learner
-                    </label>
-                    <a href="#" id="explanation7a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer7b">
-                    <label>
-                      <input type="radio" name="question7" value="b">
-                      b: Lazy learner
-                    </label>
-                    <a href="#" id="explanation7b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer7c">
-                    <label>
-                      <input type="radio" name="question7" value="c">
-                      c: Reinforcement learner
-                    </label>
-                    <a href="#" id="explanation7c" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer7d">
-                    <label>
-                      <input type="radio" name="question7" value="d">
-                      d: Deep learner
-                    </label>
-                    <a href="#" id="explanation7d" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-          
-                <div class="question beginner">
-                  The Iris dataset feature count is:
-                </div>
-          
-                <div class="answers">
-                  <div id="answer8a">
-                    <label>
-                      <input type="radio" name="question8" value="a">
-                      a: 2
-                    </label>
-                    <a href="#" id="explanation8a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer8b">
-                    <label>
-                      <input type="radio" name="question8" value="b">
-                      b: 3
-                    </label>
-                    <a href="#" id="explanation8b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer8c">
-                    <label>
-                      <input type="radio" name="question8" value="c">
-                      c: 4
-                    </label>
-                    <a href="#" id="explanation8c" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer8d">
-                    <label>
-                      <input type="radio" name="question8" value="d">
-                      d: 5
-                    </label>
-                    <a href="#" id="explanation8d" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-          
-                <div class="question beginner">
-                  KNN can be used for:
-                </div>
-          
-                <div class="answers">
-                  <div id="answer9a">
-                    <label>
-                      <input type="radio" name="question9" value="a">
-                      a: Only classification
-                    </label>
-                    <a href="#" id="explanation9a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer9b">
-                    <label>
-                      <input type="radio" name="question9" value="b">
-                      b: Only regression
-                    </label>
-                    <a href="#" id="explanation9b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer9c">
-                    <label>
-                      <input type="radio" name="question9" value="c">
-                      c: Both classification and regression
-                    </label>
-                    <a href="#" id="explanation9c" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer9d">
-                    <label>
-                      <input type="radio" name="question9" value="d">
-                      d: Unsupervised clustering
-                    </label>
-                    <a href="#" id="explanation9d" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-              </div>
-              <button id="submit" class="btn btn-primary">Submit Quiz</button>
-              <div id="results"></div>
             </div>
-          
+                  <div id="difficulty-container" style="border-bottom: 1px solid #eaecef; padding-bottom: .3em; margin: 0" class="row">
+                    <div id="difficulty-label" class="col-12 col-md-3" style="display:none"><strong>Choose difficulty: </strong></div>
+                    <div class="form-check col-12 col-md-3" style="display:none">
+                      <input id="beginner" type="checkbox" value="">
+                      <label class="form-check-label" for="flexCheckDefault">
+                        <strong>Beginner</strong>
+                      </label>
+                    </div>
+                    <div class="form-check col-12 col-md-3" style="display:none">
+                      <input id="intermediate" type="checkbox" value="">
+                      <label class="form-check-label" for="flexCheckDefault">
+                        <strong>Intermediate</strong>
+                      </label>
+                    </div>
+                    <div class="form-check col-12 col-md-3" style="display:none">
+                      <input id="advanced" type="checkbox" value="">
+                      <label class="form-check-label" for="flexCheckDefault">
+                        <strong>Advanced</strong>
+                      </label>
+                    </div>
+                  </div>
+                  
+                  <div id="quiz" class="versiontrue" style="margin-top: 1rem">
+                
+                
+                  <div class="question beginner">
+                    KNN is a:
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer0a">
+                      <label>
+                        <input type="radio" name="question0" value="a">
+                        a: Unsupervised algorithm
+                      </label>
+                      <a href="#" id="explanation0a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer0b">
+                      <label>
+                        <input type="radio" name="question0" value="b">
+                        b: Supervised algorithm
+                      </label>
+                      <a href="#" id="explanation0b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer0c">
+                      <label>
+                        <input type="radio" name="question0" value="c">
+                        c: Reinforcement algorithm
+                      </label>
+                      <a href="#" id="explanation0c" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer0d">
+                      <label>
+                        <input type="radio" name="question0" value="d">
+                        d: Semi-supervised algorithm
+                      </label>
+                      <a href="#" id="explanation0d" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+                
+                  <div class="question beginner">
+                    KNN stores:
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer1a">
+                      <label>
+                        <input type="radio" name="question1" value="a">
+                        a: Model parameters
+                      </label>
+                      <a href="#" id="explanation1a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer1b">
+                      <label>
+                        <input type="radio" name="question1" value="b">
+                        b: Training data
+                      </label>
+                      <a href="#" id="explanation1b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer1c">
+                      <label>
+                        <input type="radio" name="question1" value="c">
+                        c: Decision boundaries
+                      </label>
+                      <a href="#" id="explanation1c" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer1d">
+                      <label>
+                        <input type="radio" name="question1" value="d">
+                        d: Feature weights
+                      </label>
+                      <a href="#" id="explanation1d" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+                
+                  <div class="question intermediate">
+                    Who originally developed the nearest neighbour classification concept?
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer2a">
+                      <label>
+                        <input type="radio" name="question2" value="a">
+                        a: Duda &amp; Hart
+                      </label>
+                      <a href="#" id="explanation2a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer2b">
+                      <label>
+                        <input type="radio" name="question2" value="b">
+                        b: Fisher
+                      </label>
+                      <a href="#" id="explanation2b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer2c">
+                      <label>
+                        <input type="radio" name="question2" value="c">
+                        c: Fix &amp; Hodges
+                      </label>
+                      <a href="#" id="explanation2c" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer2d">
+                      <label>
+                        <input type="radio" name="question2" value="d">
+                        d: Cover &amp; Hart
+                      </label>
+                      <a href="#" id="explanation2d" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+                
+                  <div class="question beginner">
+                    If k = 1, classification is based on:
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer3a">
+                      <label>
+                        <input type="radio" name="question3" value="a">
+                        a: Majority voting
+                      </label>
+                      <a href="#" id="explanation3a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer3b">
+                      <label>
+                        <input type="radio" name="question3" value="b">
+                        b: Nearest neighbour
+                      </label>
+                      <a href="#" id="explanation3b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer3c">
+                      <label>
+                        <input type="radio" name="question3" value="c">
+                        c: Weighted average
+                      </label>
+                      <a href="#" id="explanation3c" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer3d">
+                      <label>
+                        <input type="radio" name="question3" value="d">
+                        d: Regression
+                      </label>
+                      <a href="#" id="explanation3d" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+                
+                  <div class="question beginner">
+                    The Iris dataset contains:
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer4a">
+                      <label>
+                        <input type="radio" name="question4" value="a">
+                        a: 100 samples
+                      </label>
+                      <a href="#" id="explanation4a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer4b">
+                      <label>
+                        <input type="radio" name="question4" value="b">
+                        b: 120 samples
+                      </label>
+                      <a href="#" id="explanation4b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer4c">
+                      <label>
+                        <input type="radio" name="question4" value="c">
+                        c: 150 samples
+                      </label>
+                      <a href="#" id="explanation4c" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer4d">
+                      <label>
+                        <input type="radio" name="question4" value="d">
+                        d: 180 samples
+                      </label>
+                      <a href="#" id="explanation4d" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+                
+                  <div class="question intermediate">
+                    Feature scaling is important in KNN because:
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer5a">
+                      <label>
+                        <input type="radio" name="question5" value="a">
+                        a: It removes noise
+                      </label>
+                      <a href="#" id="explanation5a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer5b">
+                      <label>
+                        <input type="radio" name="question5" value="b">
+                        b: It affects distance calculation
+                      </label>
+                      <a href="#" id="explanation5b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer5c">
+                      <label>
+                        <input type="radio" name="question5" value="c">
+                        c: It changes labels
+                      </label>
+                      <a href="#" id="explanation5c" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer5d">
+                      <label>
+                        <input type="radio" name="question5" value="d">
+                        d: It reduces data
+                      </label>
+                      <a href="#" id="explanation5d" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+                
+                  <div class="question intermediate">
+                    A larger k value generally:
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer6a">
+                      <label>
+                        <input type="radio" name="question6" value="a">
+                        a: Increases variance
+                      </label>
+                      <a href="#" id="explanation6a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer6b">
+                      <label>
+                        <input type="radio" name="question6" value="b">
+                        b: Reduces noise sensitivity
+                      </label>
+                      <a href="#" id="explanation6b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer6c">
+                      <label>
+                        <input type="radio" name="question6" value="c">
+                        c: Increases overfitting
+                      </label>
+                      <a href="#" id="explanation6c" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer6d">
+                      <label>
+                        <input type="radio" name="question6" value="d">
+                        d: Removes need for scaling
+                      </label>
+                      <a href="#" id="explanation6d" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+                
+                  <div class="question beginner">
+                    KNN is best described as:
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer7a">
+                      <label>
+                        <input type="radio" name="question7" value="a">
+                        a: Eager learner
+                      </label>
+                      <a href="#" id="explanation7a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer7b">
+                      <label>
+                        <input type="radio" name="question7" value="b">
+                        b: Lazy learner
+                      </label>
+                      <a href="#" id="explanation7b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer7c">
+                      <label>
+                        <input type="radio" name="question7" value="c">
+                        c: Reinforcement learner
+                      </label>
+                      <a href="#" id="explanation7c" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer7d">
+                      <label>
+                        <input type="radio" name="question7" value="d">
+                        d: Deep learner
+                      </label>
+                      <a href="#" id="explanation7d" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+                
+                  <div class="question beginner">
+                    The Iris dataset feature count is:
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer8a">
+                      <label>
+                        <input type="radio" name="question8" value="a">
+                        a: 2
+                      </label>
+                      <a href="#" id="explanation8a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer8b">
+                      <label>
+                        <input type="radio" name="question8" value="b">
+                        b: 3
+                      </label>
+                      <a href="#" id="explanation8b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer8c">
+                      <label>
+                        <input type="radio" name="question8" value="c">
+                        c: 4
+                      </label>
+                      <a href="#" id="explanation8c" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer8d">
+                      <label>
+                        <input type="radio" name="question8" value="d">
+                        d: 5
+                      </label>
+                      <a href="#" id="explanation8d" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+                
+                  <div class="question beginner">
+                    KNN can be used for:
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer9a">
+                      <label>
+                        <input type="radio" name="question9" value="a">
+                        a: Only classification
+                      </label>
+                      <a href="#" id="explanation9a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer9b">
+                      <label>
+                        <input type="radio" name="question9" value="b">
+                        b: Only regression
+                      </label>
+                      <a href="#" id="explanation9b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer9c">
+                      <label>
+                        <input type="radio" name="question9" value="c">
+                        c: Both classification and regression
+                      </label>
+                      <a href="#" id="explanation9c" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer9d">
+                      <label>
+                        <input type="radio" name="question9" value="d">
+                        d: Unsupervised clustering
+                      </label>
+                      <a href="#" id="explanation9d" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+               </div>
+                <button id="submit" class="btn btn-primary">Submit Quiz</button>
+                <div id="results"></div>
+          </div>
+            
             <script>
               const myQuestions = [{"question":"KNN is a:","answers":{"a":"Unsupervised algorithm","b":"Supervised algorithm","c":"Reinforcement algorithm","d":"Semi-supervised algorithm"},"explanations":{"a":"Incorrect because unsupervised algorithms work without labelled data, whereas KNN requires labelled training data.","b":"Correct because KNN uses labelled examples to predict the class of new samples.","c":"Incorrect because reinforcement learning is based on rewards and actions, not labelled datasets.","d":"Incorrect because KNN does not combine labelled and unlabelled data during learning."},"correctAnswer":"b","difficulty":"beginner"},{"question":"KNN stores:","answers":{"a":"Model parameters","b":"Training data","c":"Decision boundaries","d":"Feature weights"},"explanations":{"a":"Incorrect because KNN does not learn parameters like weights or coefficients.","b":"Correct because KNN stores all training samples and uses them directly for prediction.","c":"Incorrect because KNN does not explicitly construct decision boundaries.","d":"Incorrect because standard KNN treats all features equally unless explicitly modified."},"correctAnswer":"b","difficulty":"beginner"},{"question":"Who originally developed the nearest neighbour classification concept?","answers":{"a":"Duda & Hart","b":"Fisher","c":"Fix & Hodges","d":"Cover & Hart"},"explanations":{"a":"Incorrect because they explained classification techniques but did not introduce KNN.","b":"Incorrect because Fisher introduced the Iris dataset, not the KNN algorithm.","c":"Correct because they introduced non-parametric nearest neighbour classification in 1951.","d":"Incorrect because they later extended the theory, not originally proposed it."},"correctAnswer":"c","difficulty":"intermediate"},{"question":"If k = 1, classification is based on:","answers":{"a":"Majority voting","b":"Nearest neighbour","c":"Weighted average","d":"Regression"},"explanations":{"a":"Incorrect because majority voting requires more than one neighbour.","b":"Correct because the closest data point alone decides the class.","c":"Incorrect because weighting is used only when multiple neighbours are involved.","d":"Incorrect because regression predicts continuous values, not class labels."},"correctAnswer":"b","difficulty":"beginner"},{"question":"The Iris dataset contains:","answers":{"a":"100 samples","b":"120 samples","c":"150 samples","d":"180 samples"},"explanations":{"a":"Incorrect because the Iris dataset is larger than 100 samples.","b":"Incorrect because this does not match the standard dataset size.","c":"Correct because the Iris dataset consists of exactly 150 samples.","d":"Incorrect because no standard version of the Iris dataset contains 180 samples."},"correctAnswer":"c","difficulty":"beginner"},{"question":"Feature scaling is important in KNN because:","answers":{"a":"It removes noise","b":"It affects distance calculation","c":"It changes labels","d":"It reduces data"},"explanations":{"a":"Incorrect because scaling does not remove noisy data points.","b":"Correct because KNN relies on distance metrics that are influenced by feature magnitude.","c":"Incorrect because scaling only affects feature values, not class labels.","d":"Incorrect because scaling does not reduce the number of samples."},"correctAnswer":"b","difficulty":"intermediate"},{"question":"A larger k value generally:","answers":{"a":"Increases variance","b":"Reduces noise sensitivity","c":"Increases overfitting","d":"Removes need for scaling"},"explanations":{"a":"Incorrect because increasing k actually reduces variance.","b":"Correct because averaging over more neighbours smooths decision boundaries.","c":"Incorrect because overfitting is more common with smaller k values.","d":"Incorrect because feature scaling is still required regardless of k."},"correctAnswer":"b","difficulty":"intermediate"},{"question":"KNN is best described as:","answers":{"a":"Eager learner","b":"Lazy learner","c":"Reinforcement learner","d":"Deep learner"},"explanations":{"a":"Incorrect because eager learners build a model during training.","b":"Correct because KNN delays computation until prediction time.","c":"Incorrect because reinforcement learning uses rewards and environment interaction.","d":"Incorrect because KNN does not use neural networks or deep architectures."},"correctAnswer":"b","difficulty":"beginner"},{"question":"The Iris dataset feature count is:","answers":{"a":"2","b":"3","c":"4","d":"5"},"explanations":{"a":"Incorrect because the dataset contains more than two features.","b":"Incorrect because there are four measured attributes.","c":"Correct because the Iris dataset has four features: sepal and petal measurements.","d":"Incorrect because no fifth feature exists in the dataset."},"correctAnswer":"c","difficulty":"beginner"},{"question":"KNN can be used for:","answers":{"a":"Only classification","b":"Only regression","c":"Both classification and regression","d":"Unsupervised clustering"},"explanations":{"a":"Incorrect because KNN can also predict continuous values.","b":"Incorrect because KNN is widely used for classification as well.","c":"Correct because KNN can perform both tasks depending on output type.","d":"Incorrect because clustering does not require labelled data."},"correctAnswer":"c","difficulty":"beginner"}];
             </script>
-            <script src="./assets/js/assessment_v2.js"></script>
+              <script src="./assets/js/assessment_v2.js"></script>  
           <div class="bug-report-mobile">
               <bug-report id="bug-report" title="[BUG REPORT] K-NEAREST NEIGHBORS (KNN)" page-type="assesment" context-info="{&quot;organisation&quot;:&quot;Virtual Labs&quot;,&quot;developer_institute&quot;:&quot;DLBG&quot;,&quot;expname&quot;:&quot;K-NEAREST NEIGHBORS (KNN)&quot;,&quot;labname&quot;:&quot;Virtual Lab&quot;,&quot;phase&quot;:&quot;Testing&quot;}" checkbox-json="{&quot;text&quot;:[&quot;Insufficient Content&quot;],&quot;video&quot;:[&quot;Insufficient Content&quot;],&quot;assesment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;assessment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;simulation&quot;:[&quot;Simulation Not Working&quot;,&quot;Incorrect Results/Observations&quot;,&quot;Insufficient/Incorrect Instructions&quot;],&quot;DEFAULT&quot;:[&quot;Page Not Loading&quot;,&quot;Content Not Visible&quot;,&quot;Incorrect Content&quot;]}" position="override" button_style="
                           position: fixed; 

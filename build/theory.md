@@ -33,3 +33,35 @@ The figure below illustrates how K-NN assigns a class to a new data point by con
 <div style="text-align: center; margin: 20px 0;">
 <img src="images/knn_new_data_assign.png" alt="KNN Classification" style="max-height: 300px; width: auto;">
 </div>
+
+#### 6. Algorithm
+
+1. **Step 1:** Store all training data
+2. **Step 2:** Choose the value of K
+3. **Step 3:** When a new data point arrives for classification:
+4. **Step 4:** Calculate distance from new point to all training points
+5. **Step 5:** Sort all training points by distance in ascending order
+6. **Step 6:** Select the K nearest neighbors
+7. **Step 7:** For **Classification**, use majority voting by counting how many of the K neighbors belong to each class
+8. **Step 8:** For **Regression**, take the average of target values of K neighbors and compute Prediction as `(value₁ + value₂ + ... + valueₖ) / K`
+
+**Handling Ties:**
+When K neighbors have equal votes:
+- Reduce K by 1 and re-vote
+- **OR** choose the class of the nearest neighbor among tied classes
+- **OR** randomly select among tied classes
+
+**Feature Scaling (Critical for KNN):**
+*Why needed:* KNN uses distance, so features with larger ranges dominate.
+Before applying KNN:
+- Apply **Min-Max Scaling**: `x' = (x - min) / (max - min)`
+- **OR** **Z-Score Normalization**: `x' = (x - mean) / std`
+
+**Choosing Optimal K:**
+*Cross-Validation Method:*
+1. Split data into training and validation sets
+2. For K = 1, 3, 5, 7, ... (try multiple values):
+    - Train KNN with that K
+    - Measure accuracy on validation set
+3. Select K with highest validation accuracy
+
