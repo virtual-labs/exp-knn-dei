@@ -415,6 +415,7 @@ ROC        : 0.9948148148148149
 // ==========================================
 // GLOBAL STATE
 // ==========================================
+let hasCompletedOnce = sessionStorage.getItem('knn_completed') === 'true';
 
 let STEPS = [];
 let EXPERIMENT_STATE = {
@@ -632,8 +633,8 @@ function renderSidebar() {
     downloadBtn.style.marginTop = "10px";
     downloadBtn.style.marginBottom = "20px";
     
-    // Check if all steps are completed (only true when we have status for every step)
-    const allStepsCompleted = (
+    // Check if all steps are completed (or were completed before a restart)
+    const allStepsCompleted = hasCompletedOnce || (
         Array.isArray(EXPERIMENT_STATE.stepsStatus) &&
         EXPERIMENT_STATE.stepsStatus.length === STEPS.length &&
         EXPERIMENT_STATE.stepsStatus.every(status => status.completed)
@@ -822,6 +823,8 @@ function nextSubStep() {
 }
 
 function showCompletionMessage() {
+    hasCompletedOnce = true;
+    sessionStorage.setItem('knn_completed', 'true');
     const outputDisplay = document.getElementById('outputDisplay');
     const runBtn = document.getElementById('runBtn');
 

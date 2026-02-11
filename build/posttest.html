@@ -349,274 +349,274 @@
                         </div>
                     </div>
                 </div>
-          </div>            <div class="vlabs-page-content px-5 pb-4 flex-grow-1 markdown-body">
-              <div class="text-center fix-spacing">
-                <h2 id="k-nearest-neighbors-knn">k-Nearest Neighbors (KNN)</h2>
+          </div>          <div class="vlabs-page-content px-5 pb-4 flex-grow-1 markdown-body">
+            <div class="text-center fix-spacing">
+              <h2 id="k-nearest-neighbors-knn">k-Nearest Neighbors (KNN)</h2>
           
-              </div>
-              <div id="difficulty-container" style="border-bottom: 1px solid #eaecef; padding-bottom: .3em; margin: 0" class="row">
-                <div id="difficulty-label" class="col-12 col-md-3" style="display:none"><strong>Choose difficulty: </strong></div>
-                <div class="form-check col-12 col-md-3" style="display:none">
-                  <input id="beginner" type="checkbox" value="">
-                  <label class="form-check-label" for="beginner">
-                    <strong>Beginner</strong>
-                  </label>
-                </div>
-                <div class="form-check col-12 col-md-3" style="display:none">
-                  <input id="intermediate" type="checkbox" value="">
-                  <label class="form-check-label" for="intermediate">
-                    <strong>Intermediate</strong>
-                  </label>
-                </div>
-                <div class="form-check col-12 col-md-3" style="display:none">
-                  <input id="advanced" type="checkbox" value="">
-                  <label class="form-check-label" for="advanced">
-                    <strong>Advanced</strong>
-                  </label>
-                </div>
-              </div>
-          
-              <div id="quiz" class="versiontrue" style="margin-top: 1rem">
-          
-          
-                <div class="question intermediate">
-                  Increasing k smooths the decision boundary.
-                </div>
-          
-                <div class="answers">
-                  <div id="answer0a">
-                    <label>
-                      <input type="radio" name="question0" value="a">
-                      a: True
-                    </label>
-                    <a href="#" id="explanation0a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer0b">
-                    <label>
-                      <input type="radio" name="question0" value="b">
-                      b: False
-                    </label>
-                    <a href="#" id="explanation0b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-          
-                <div class="question intermediate">
-                  Feature scaling is optional for KNN.
-                </div>
-          
-                <div class="answers">
-                  <div id="answer1a">
-                    <label>
-                      <input type="radio" name="question1" value="a">
-                      a: True
-                    </label>
-                    <a href="#" id="explanation1a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer1b">
-                    <label>
-                      <input type="radio" name="question1" value="b">
-                      b: False
-                    </label>
-                    <a href="#" id="explanation1b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-          
-                <div class="question beginner">
-                  The Iris dataset has three target classes.
-                </div>
-          
-                <div class="answers">
-                  <div id="answer2a">
-                    <label>
-                      <input type="radio" name="question2" value="a">
-                      a: True
-                    </label>
-                    <a href="#" id="explanation2a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer2b">
-                    <label>
-                      <input type="radio" name="question2" value="b">
-                      b: False
-                    </label>
-                    <a href="#" id="explanation2b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-          
-                <div class="question intermediate">
-                  KNN always builds a parameterized model.
-                </div>
-          
-                <div class="answers">
-                  <div id="answer3a">
-                    <label>
-                      <input type="radio" name="question3" value="a">
-                      a: True
-                    </label>
-                    <a href="#" id="explanation3a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer3b">
-                    <label>
-                      <input type="radio" name="question3" value="b">
-                      b: False
-                    </label>
-                    <a href="#" id="explanation3b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-          
-                <div class="question intermediate">
-                  ROC-AUC can be computed for multi-class KNN classification.
-                </div>
-          
-                <div class="answers">
-                  <div id="answer4a">
-                    <label>
-                      <input type="radio" name="question4" value="a">
-                      a: True
-                    </label>
-                    <a href="#" id="explanation4a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer4b">
-                    <label>
-                      <input type="radio" name="question4" value="b">
-                      b: False
-                    </label>
-                    <a href="#" id="explanation4b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-          
-                <div class="question beginner">
-                  Stratified sampling helps maintain class proportions.
-                </div>
-          
-                <div class="answers">
-                  <div id="answer5a">
-                    <label>
-                      <input type="radio" name="question5" value="a">
-                      a: True
-                    </label>
-                    <a href="#" id="explanation5a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer5b">
-                    <label>
-                      <input type="radio" name="question5" value="b">
-                      b: False
-                    </label>
-                    <a href="#" id="explanation5b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-          
-                <div class="question intermediate">
-                  Euclidean distance is sensitive to feature scaling.
-                </div>
-          
-                <div class="answers">
-                  <div id="answer6a">
-                    <label>
-                      <input type="radio" name="question6" value="a">
-                      a: True
-                    </label>
-                    <a href="#" id="explanation6a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer6b">
-                    <label>
-                      <input type="radio" name="question6" value="b">
-                      b: False
-                    </label>
-                    <a href="#" id="explanation6b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-          
-                <div class="question intermediate">
-                  KNN performs well on very high-dimensional data without issues.
-                </div>
-          
-                <div class="answers">
-                  <div id="answer7a">
-                    <label>
-                      <input type="radio" name="question7" value="a">
-                      a: True
-                    </label>
-                    <a href="#" id="explanation7a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer7b">
-                    <label>
-                      <input type="radio" name="question7" value="b">
-                      b: False
-                    </label>
-                    <a href="#" id="explanation7b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-          
-                <div class="question beginner">
-                  Iris dataset is originally published in 1936.
-                </div>
-          
-                <div class="answers">
-                  <div id="answer8a">
-                    <label>
-                      <input type="radio" name="question8" value="a">
-                      a: True
-                    </label>
-                    <a href="#" id="explanation8a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer8b">
-                    <label>
-                      <input type="radio" name="question8" value="b">
-                      b: False
-                    </label>
-                    <a href="#" id="explanation8b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-          
-                <div class="question beginner">
-                  Confusion matrix shows prediction errors by class.
-                </div>
-          
-                <div class="answers">
-                  <div id="answer9a">
-                    <label>
-                      <input type="radio" name="question9" value="a">
-                      a: True
-                    </label>
-                    <a href="#" id="explanation9a" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                  <div id="answer9b">
-                    <label>
-                      <input type="radio" name="question9" value="b">
-                      b: False
-                    </label>
-                    <a href="#" id="explanation9b" class="accordion" onclick="return false;">Explanation</a>
-                  </div>
-                  <p class="panel">Explanation</p>
-                </div>
-              </div>
-              <button id="submit" class="btn btn-primary">Submit Quiz</button>
-              <div id="results"></div>
             </div>
-          
+                  <div id="difficulty-container" style="border-bottom: 1px solid #eaecef; padding-bottom: .3em; margin: 0" class="row">
+                    <div id="difficulty-label" class="col-12 col-md-3" style="display:none"><strong>Choose difficulty: </strong></div>
+                    <div class="form-check col-12 col-md-3" style="display:none">
+                      <input id="beginner" type="checkbox" value="">
+                      <label class="form-check-label" for="flexCheckDefault">
+                        <strong>Beginner</strong>
+                      </label>
+                    </div>
+                    <div class="form-check col-12 col-md-3" style="display:none">
+                      <input id="intermediate" type="checkbox" value="">
+                      <label class="form-check-label" for="flexCheckDefault">
+                        <strong>Intermediate</strong>
+                      </label>
+                    </div>
+                    <div class="form-check col-12 col-md-3" style="display:none">
+                      <input id="advanced" type="checkbox" value="">
+                      <label class="form-check-label" for="flexCheckDefault">
+                        <strong>Advanced</strong>
+                      </label>
+                    </div>
+                  </div>
+                  
+                  <div id="quiz" class="versiontrue" style="margin-top: 1rem">
+                
+                
+                  <div class="question intermediate">
+                    Increasing k smooths the decision boundary.
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer0a">
+                      <label>
+                        <input type="radio" name="question0" value="a">
+                        a: True
+                      </label>
+                      <a href="#" id="explanation0a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer0b">
+                      <label>
+                        <input type="radio" name="question0" value="b">
+                        b: False
+                      </label>
+                      <a href="#" id="explanation0b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+                
+                  <div class="question intermediate">
+                    Feature scaling is optional for KNN.
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer1a">
+                      <label>
+                        <input type="radio" name="question1" value="a">
+                        a: True
+                      </label>
+                      <a href="#" id="explanation1a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer1b">
+                      <label>
+                        <input type="radio" name="question1" value="b">
+                        b: False
+                      </label>
+                      <a href="#" id="explanation1b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+                
+                  <div class="question beginner">
+                    The Iris dataset has three target classes.
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer2a">
+                      <label>
+                        <input type="radio" name="question2" value="a">
+                        a: True
+                      </label>
+                      <a href="#" id="explanation2a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer2b">
+                      <label>
+                        <input type="radio" name="question2" value="b">
+                        b: False
+                      </label>
+                      <a href="#" id="explanation2b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+                
+                  <div class="question intermediate">
+                    KNN always builds a parameterized model.
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer3a">
+                      <label>
+                        <input type="radio" name="question3" value="a">
+                        a: True
+                      </label>
+                      <a href="#" id="explanation3a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer3b">
+                      <label>
+                        <input type="radio" name="question3" value="b">
+                        b: False
+                      </label>
+                      <a href="#" id="explanation3b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+                
+                  <div class="question intermediate">
+                    ROC-AUC can be computed for multi-class KNN classification.
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer4a">
+                      <label>
+                        <input type="radio" name="question4" value="a">
+                        a: True
+                      </label>
+                      <a href="#" id="explanation4a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer4b">
+                      <label>
+                        <input type="radio" name="question4" value="b">
+                        b: False
+                      </label>
+                      <a href="#" id="explanation4b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+                
+                  <div class="question beginner">
+                    Stratified sampling helps maintain class proportions.
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer5a">
+                      <label>
+                        <input type="radio" name="question5" value="a">
+                        a: True
+                      </label>
+                      <a href="#" id="explanation5a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer5b">
+                      <label>
+                        <input type="radio" name="question5" value="b">
+                        b: False
+                      </label>
+                      <a href="#" id="explanation5b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+                
+                  <div class="question intermediate">
+                    Euclidean distance is sensitive to feature scaling.
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer6a">
+                      <label>
+                        <input type="radio" name="question6" value="a">
+                        a: True
+                      </label>
+                      <a href="#" id="explanation6a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer6b">
+                      <label>
+                        <input type="radio" name="question6" value="b">
+                        b: False
+                      </label>
+                      <a href="#" id="explanation6b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+                
+                  <div class="question intermediate">
+                    KNN performs well on very high-dimensional data without issues.
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer7a">
+                      <label>
+                        <input type="radio" name="question7" value="a">
+                        a: True
+                      </label>
+                      <a href="#" id="explanation7a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer7b">
+                      <label>
+                        <input type="radio" name="question7" value="b">
+                        b: False
+                      </label>
+                      <a href="#" id="explanation7b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+                
+                  <div class="question beginner">
+                    Iris dataset is originally published in 1936.
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer8a">
+                      <label>
+                        <input type="radio" name="question8" value="a">
+                        a: True
+                      </label>
+                      <a href="#" id="explanation8a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer8b">
+                      <label>
+                        <input type="radio" name="question8" value="b">
+                        b: False
+                      </label>
+                      <a href="#" id="explanation8b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+                
+                  <div class="question beginner">
+                    Confusion matrix shows prediction errors by class.
+                  </div>
+                  
+                  <div class="answers">
+                    <div id="answer9a">
+                      <label>
+                        <input type="radio" name="question9" value="a">
+                        a: True
+                      </label>
+                      <a href="#" id="explanation9a" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                    <div id="answer9b">
+                      <label>
+                        <input type="radio" name="question9" value="b">
+                        b: False
+                      </label>
+                      <a href="#" id="explanation9b" class="accordion" onclick="return false;">Explanation</a>
+                    </div>
+                    <p class="panel">Explanation</p>
+                </div>
+               </div>
+                <button id="submit" class="btn btn-primary">Submit Quiz</button>
+                <div id="results"></div>
+          </div>
+            
             <script>
               const myQuestions = [{"question":"Increasing k smooths the decision boundary.","answers":{"a":"True","b":"False"},"explanations":{"a":"Correct. Increasing k smooths the decision boundary because predictions are averaged over more neighbours, reducing sensitivity to noise.","b":"Incorrect. Larger k values do smooth decision boundaries by considering more neighbours."},"correctAnswer":"a","difficulty":"intermediate"},{"question":"Feature scaling is optional for KNN.","answers":{"a":"True","b":"False"},"explanations":{"a":"Incorrect. Feature scaling is essential for KNN as distance calculations are strongly affected by feature magnitudes.","b":"Correct. Feature scaling is not optional for KNN since distance-based calculations are strongly affected by feature magnitudes."},"correctAnswer":"b","difficulty":"intermediate"},{"question":"The Iris dataset has three target classes.","answers":{"a":"True","b":"False"},"explanations":{"a":"Correct. The Iris dataset has three target classes: Setosa, Versicolor, and Virginica.","b":"Incorrect. The Iris dataset does have exactly three species classes."},"correctAnswer":"a","difficulty":"beginner"},{"question":"KNN always builds a parameterized model.","answers":{"a":"True","b":"False"},"explanations":{"a":"Incorrect. KNN is a non-parametric, instance-based algorithm that does not build an explicit model.","b":"Correct. KNN does not build a parameterized model because it stores training data and classifies samples directly at prediction time."},"correctAnswer":"b","difficulty":"intermediate"},{"question":"ROC-AUC can be computed for multi-class KNN classification.","answers":{"a":"True","b":"False"},"explanations":{"a":"Correct. ROC-AUC can be computed for multi-class KNN using one-vs-rest or one-vs-one evaluation strategies.","b":"Incorrect. Multi-class ROC-AUC computation is possible using appropriate strategies."},"correctAnswer":"a","difficulty":"intermediate"},{"question":"Stratified sampling helps maintain class proportions.","answers":{"a":"True","b":"False"},"explanations":{"a":"Correct. Stratified sampling maintains class proportions by ensuring each class is equally represented in training and testing sets.","b":"Incorrect. Stratified sampling is specifically designed to preserve class distribution."},"correctAnswer":"a","difficulty":"beginner"},{"question":"Euclidean distance is sensitive to feature scaling.","answers":{"a":"True","b":"False"},"explanations":{"a":"Correct. Euclidean distance is sensitive to feature scaling because features with larger ranges dominate distance calculations.","b":"Incorrect. Distance metrics like Euclidean distance are strongly influenced by feature magnitudes."},"correctAnswer":"a","difficulty":"intermediate"},{"question":"KNN performs well on very high-dimensional data without issues.","answers":{"a":"True","b":"False"},"explanations":{"a":"Incorrect. KNN suffers from the curse of dimensionality in high-dimensional spaces.","b":"Correct. KNN does not perform well in high-dimensional spaces due to the curse of dimensionality reducing distance reliability."},"correctAnswer":"b","difficulty":"intermediate"},{"question":"Iris dataset is originally published in 1936.","answers":{"a":"True","b":"False"},"explanations":{"a":"Correct. The Iris dataset was published in 1936 by Ronald A. Fisher in his study on discriminant analysis.","b":"Incorrect. Fisher published the Iris dataset in 1936."},"correctAnswer":"a","difficulty":"beginner"},{"question":"Confusion matrix shows prediction errors by class.","answers":{"a":"True","b":"False"},"explanations":{"a":"Correct. A confusion matrix shows prediction errors by class by comparing actual labels with predicted labels.","b":"Incorrect. Confusion matrices are specifically designed to show classification performance across classes."},"correctAnswer":"a","difficulty":"beginner"}];
             </script>
-            <script src="./assets/js/assessment_v2.js"></script>
+              <script src="./assets/js/assessment_v2.js"></script>  
           <div class="bug-report-mobile">
               <bug-report id="bug-report" title="[BUG REPORT] K-NEAREST NEIGHBORS (KNN)" page-type="assesment" context-info="{&quot;organisation&quot;:&quot;Virtual Labs&quot;,&quot;developer_institute&quot;:&quot;DLBG&quot;,&quot;expname&quot;:&quot;K-NEAREST NEIGHBORS (KNN)&quot;,&quot;labname&quot;:&quot;Virtual Lab&quot;,&quot;phase&quot;:&quot;Testing&quot;}" checkbox-json="{&quot;text&quot;:[&quot;Insufficient Content&quot;],&quot;video&quot;:[&quot;Insufficient Content&quot;],&quot;assesment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;assessment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;simulation&quot;:[&quot;Simulation Not Working&quot;,&quot;Incorrect Results/Observations&quot;,&quot;Insufficient/Incorrect Instructions&quot;],&quot;DEFAULT&quot;:[&quot;Page Not Loading&quot;,&quot;Content Not Visible&quot;,&quot;Incorrect Content&quot;]}" position="override" button_style="
                           position: fixed; 

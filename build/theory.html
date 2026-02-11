@@ -349,11 +349,11 @@
                         </div>
                     </div>
                 </div>
-          </div>            <div class="vlabs-page-content px-5 pb-4 flex-grow-1 markdown-body">
-              <div class="text-center fix-spacing">
-                <h2 id="k-nearest-neighbors-knn">k-Nearest Neighbors (KNN)</h2>
+          </div>          <div class="vlabs-page-content px-5 pb-4 flex-grow-1 markdown-body">
+            <div class="text-center fix-spacing">
+              <h2 id="k-nearest-neighbors-knn">k-Nearest Neighbors (KNN)</h2>
           
-              </div>
+            </div>
               <p>The k-Nearest Neighbours (KNN) algorithm is a supervised machine learning algorithm used for classification and regression. It is a non-parametric method, as it does not assume any prior distribution of the data. In KNN, classification is performed based on the similarity between data samples, which is commonly measured using distance metrics such as Euclidean distance.</p>
           <h4 id="1-algorithm-overview">1. Algorithm Overview</h4>
           <p>The nearest neighbour classification concept was introduced by Fix and Hodges and later extended by Cover and Hart. In this method, a test sample is assigned a class label by identifying the k nearest training samples in the feature space and applying majority voting. The value of k represents the number of nearest neighbours considered for classification.</p>
@@ -381,7 +381,45 @@
           <div style="text-align: center; margin: 20px 0;">
           <img src="images/knn_new_data_assign.png" alt="KNN Classification" style="max-height: 300px; width: auto;">
           </div>
-            </div>
+          
+          <h4 id="6-algorithm">6. Algorithm</h4>
+          <ol>
+          <li><strong>Step 1:</strong> Store all training data</li>
+          <li><strong>Step 2:</strong> Choose the value of K</li>
+          <li><strong>Step 3:</strong> When a new data point arrives for classification:</li>
+          <li><strong>Step 4:</strong> Calculate distance from new point to all training points</li>
+          <li><strong>Step 5:</strong> Sort all training points by distance in ascending order</li>
+          <li><strong>Step 6:</strong> Select the K nearest neighbors</li>
+          <li><strong>Step 7:</strong> For <strong>Classification</strong>, use majority voting by counting how many of the K neighbors belong to each class</li>
+          <li><strong>Step 8:</strong> For <strong>Regression</strong>, take the average of target values of K neighbors and compute Prediction as <code>(value₁ + value₂ + ... + valueₖ) / K</code></li>
+          </ol>
+          <p><strong>Handling Ties:</strong>
+          When K neighbors have equal votes:</p>
+          <ul>
+          <li>Reduce K by 1 and re-vote</li>
+          <li><strong>OR</strong> choose the class of the nearest neighbor among tied classes</li>
+          <li><strong>OR</strong> randomly select among tied classes</li>
+          </ul>
+          <p><strong>Feature Scaling (Critical for KNN):</strong>
+          <em>Why needed:</em> KNN uses distance, so features with larger ranges dominate.
+          Before applying KNN:</p>
+          <ul>
+          <li>Apply <strong>Min-Max Scaling</strong>: <code>x' = (x - min) / (max - min)</code></li>
+          <li><strong>OR</strong> <strong>Z-Score Normalization</strong>: <code>x' = (x - mean) / std</code></li>
+          </ul>
+          <p><strong>Choosing Optimal K:</strong>
+          <em>Cross-Validation Method:</em></p>
+          <ol>
+          <li>Split data into training and validation sets</li>
+          <li>For K = 1, 3, 5, 7, ... (try multiple values):<ul>
+          <li>Train KNN with that K</li>
+          <li>Measure accuracy on validation set</li>
+          </ul>
+          </li>
+          <li>Select K with highest validation accuracy</li>
+          </ol>
+          
+          </div>
           <div class="bug-report-mobile">
               <bug-report id="bug-report" title="[BUG REPORT] K-NEAREST NEIGHBORS (KNN)" page-type="text" context-info="{&quot;organisation&quot;:&quot;Virtual Labs&quot;,&quot;developer_institute&quot;:&quot;DLBG&quot;,&quot;expname&quot;:&quot;K-NEAREST NEIGHBORS (KNN)&quot;,&quot;labname&quot;:&quot;Virtual Lab&quot;,&quot;phase&quot;:&quot;Testing&quot;}" checkbox-json="{&quot;text&quot;:[&quot;Insufficient Content&quot;],&quot;video&quot;:[&quot;Insufficient Content&quot;],&quot;assesment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;assessment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;simulation&quot;:[&quot;Simulation Not Working&quot;,&quot;Incorrect Results/Observations&quot;,&quot;Insufficient/Incorrect Instructions&quot;],&quot;DEFAULT&quot;:[&quot;Page Not Loading&quot;,&quot;Content Not Visible&quot;,&quot;Incorrect Content&quot;]}" position="override" button_style="
                           position: fixed; 
