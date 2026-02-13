@@ -36,14 +36,14 @@ The figure below illustrates how K-NN assigns a class to a new data point by con
 
 #### 6. Algorithm
 
-1. **Step 1:** Store all training data
-2. **Step 2:** Choose the value of K
-3. **Step 3:** When a new data point arrives for classification:
-4. **Step 4:** Calculate distance from new point to all training points
-5. **Step 5:** Sort all training points by distance in ascending order
-6. **Step 6:** Select the K nearest neighbors
-7. **Step 7:** For **Classification**, use majority voting by counting how many of the K neighbors belong to each class
-8. **Step 8:** For **Regression**, take the average of target values of K neighbors and compute Prediction as `(value₁ + value₂ + ... + valueₖ) / K`
+- **Step 1:** Store all training data
+- **Step 2:** Choose the value of K
+- **Step 3:** When a new data point arrives for classification:
+- **Step 4:** Calculate distance from new point to all training points
+- **Step 5:** Sort all training points by distance in ascending order
+- **Step 6:** Select the K nearest neighbors
+- **Step 7:** For **Classification**, use majority voting by counting how many of the K neighbors belong to each class
+- **Step 8:** For **Regression**, take the average of target values of K neighbors and compute Prediction as `(value₁ + value₂ + ... + valueₖ) / K`
 
 **Handling Ties:**
 When K neighbors have equal votes:
