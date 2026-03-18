@@ -1,3 +1,3 @@
 ### Aim
 
-To implement the k-Nearest Neighbors (KNN) algorithm for classification, analyse the effect of different values of k on classification performance, and evaluate the results using standard performance metrics.
+To apply the k-Nearest Neighbours (KNN) algorithm for distance-based classification, investigate the influence of the number of neighbours (k) on model behaviour, and assess its performance using appropriate evaluation measures.

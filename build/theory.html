@@ -354,70 +354,196 @@
               <h2 id="k-nearest-neighbors-knn">k-Nearest Neighbors (KNN)</h2>
           
             </div>
-              <p>The k-Nearest Neighbours (KNN) algorithm is a supervised machine learning algorithm used for classification and regression. It is a non-parametric method, as it does not assume any prior distribution of the data. In KNN, classification is performed based on the similarity between data samples, which is commonly measured using distance metrics such as Euclidean distance.</p>
-          <h4 id="1-algorithm-overview">1. Algorithm Overview</h4>
-          <p>The nearest neighbour classification concept was introduced by Fix and Hodges and later extended by Cover and Hart. In this method, a test sample is assigned a class label by identifying the k nearest training samples in the feature space and applying majority voting. The value of k represents the number of nearest neighbours considered for classification.</p>
-          <h4 id="2-lazy-learning">2. Lazy Learning</h4>
-          <p>KNN does not involve an explicit training phase. Instead, it stores the entire training dataset and performs computation during the testing phase. Hence, it is referred to as a <strong>lazy learning</strong> or <strong>instance-based learning</strong> algorithm. The choice of k significantly affects classifier performance. Smaller values of k may result in overfitting, while larger values of k may lead to underfitting.</p>
-          <h4 id="3-feature-scaling">3. Feature Scaling</h4>
-          <p>Since KNN is based on distance calculations, feature scaling is important to ensure that all features contribute equally. Without proper scaling, features with larger numerical ranges may dominate the distance computation.</p>
-          <h4 id="4-merits-of-k-nearest-neighbours-knn">4. Merits of k-Nearest Neighbours (KNN)</h4>
+              <style>
+          .formula-block {
+              text-align: center;
+              margin: 18px 0;
+          }
+          
+          .formula-text {
+              display: inline-block;
+              font-family: "Cambria Math", "Times New Roman", "Georgia", serif;
+              font-size: 1.15em;
+              line-height: 1.4;
+          }
+          
+          .figure-block {
+              text-align: center;
+              margin: 18px 0;
+          }
+          
+          .figure-block img {
+              max-height: 320px;
+              width: auto;
+          }
+          
+          .figure-caption {
+              color: #64748b;
+              font-size: 0.92rem;
+              margin-top: 8px;
+              font-style: italic;
+          }
+          </style>
+          
+          <h4 id="1-overview">1. Overview</h4>
+          <p>The k-Nearest Neighbours (KNN) algorithm is a supervised machine learning algorithm commonly used for both classification and regression tasks. It is considered a non-parametric method because it does not assume any predefined distribution for the data. Instead of learning a mathematical model during training, KNN makes predictions by comparing new data points with existing training samples based on similarity.</p>
+          <p>This similarity is usually measured using distance metrics such as Euclidean distance in feature space. The concept of nearest neighbour classification was introduced by Fix and Hodges and later extended by Cover and Hart.</p>
+          <p>When a new test sample is given, KNN identifies the k nearest training samples and assigns a class label by majority voting among those neighbours. The value of k plays an important role in model behaviour and prediction quality.</p>
+          <p>Unlike many machine learning algorithms, KNN does not involve an explicit training phase. It stores the full training set and computes neighbours only at prediction time, so it is called a lazy learning or instance-based learning algorithm.</p>
+          <p>Since KNN relies on distance calculations, feature scaling is important; otherwise, features with larger ranges may dominate distance values and degrade model performance.</p>
+          <h4 id="2-working-of-knn">2. Working of KNN</h4>
+          <p>The KNN workflow is:</p>
+          <ol>
+          <li>Choose the number of neighbours k.</li>
+          <li>Compute distance from the new sample to all training samples.</li>
+          <li>Sort distances and select the k nearest neighbours.</li>
+          <li>Count class labels among those neighbours.</li>
+          <li>Assign the majority class to the new sample.</li>
+          </ol>
+          <p>Thus, a prediction is based directly on proximity and local voting.</p>
+          <h4 id="3-determining-the-value-of-k">3. Determining the Value of k</h4>
+          <p>Choosing k is critical:</p>
           <ul>
-          <li>Simple and easy to understand</li>
-          <li>Does not require an explicit training phase</li>
-          <li>Makes no assumption about data distribution</li>
-          <li>Works well for small and well-separated datasets</li>
-          <li>Can be used for both classification and regression</li>
+          <li>If k is too small, the model becomes sensitive to noise and may overfit.</li>
+          <li>If k is too large, distant neighbours influence prediction and may cause underfitting.</li>
           </ul>
-          <h4 id="5-demerits-of-k-nearest-neighbours-knn">5. Demerits of k-Nearest Neighbours (KNN)</h4>
-          <ul>
-          <li>High computational cost during prediction</li>
-          <li>Requires large memory to store training data</li>
-          <li>Highly sensitive to feature scaling</li>
-          <li>Performance degrades in high-dimensional data</li>
-          <li>Sensitive to noise and outliers</li>
-          </ul>
-          <p>The figure below illustrates how K-NN assigns a class to a new data point by considering the majority class among its nearest neighbours.</p>
-          <div style="text-align: center; margin: 20px 0;">
-          <img src="images/knn_new_data_assign.png" alt="KNN Classification" style="max-height: 300px; width: auto;">
+          <p>In practice, several k values are tested, and the value with best validation performance is selected.</p>
+          <h4 id="4-distance-metrics-in-knn">4. Distance Metrics in KNN</h4>
+          <h4 id="41-euclidean-distance-l2-norm">4.1 Euclidean Distance (L2 norm)</h4>
+          <p>Euclidean distance is the most common metric for KNN. It is the straight-line distance between two points.</p>
+          <div class="formula-block">
+              <span class="formula-text">
+                  <i>d</i> = √( ∑<sub><i>i</i>=1</sub><sup><i>n</i></sup> (<i>x</i><sub>i</sub> - <i>y</i><sub>i</sub>)<sup>2</sup> )
+              </span>
           </div>
           
-          <h4 id="6-algorithm">6. Algorithm</h4>
+          <p>Where:</p>
           <ul>
-          <li><strong>Step 1:</strong> Store all training data</li>
-          <li><strong>Step 2:</strong> Choose the value of K</li>
-          <li><strong>Step 3:</strong> When a new data point arrives for classification:</li>
-          <li><strong>Step 4:</strong> Calculate distance from new point to all training points</li>
-          <li><strong>Step 5:</strong> Sort all training points by distance in ascending order</li>
-          <li><strong>Step 6:</strong> Select the K nearest neighbors</li>
-          <li><strong>Step 7:</strong> For <strong>Classification</strong>, use majority voting by counting how many of the K neighbors belong to each class</li>
-          <li><strong>Step 8:</strong> For <strong>Regression</strong>, take the average of target values of K neighbors and compute Prediction as <code>(value₁ + value₂ + ... + valueₖ) / K</code></li>
+          <li>x<sub>i</sub>: value of the i-th feature of point X</li>
+          <li>y<sub>i</sub>: value of the i-th feature of point Y</li>
+          <li>n: total number of features</li>
           </ul>
-          <p><strong>Handling Ties:</strong>
-          When K neighbors have equal votes:</p>
+          <p>For 2D:</p>
+          <div class="formula-block">
+              <span class="formula-text">
+                  <i>d</i> = √((<i>x</i><sub>1</sub>-<i>y</i><sub>1</sub>)<sup>2</sup> + (<i>x</i><sub>2</sub>-<i>y</i><sub>2</sub>)<sup>2</sup>)
+              </span>
+          </div>
+          
+          <h4 id="42-manhattan-distance-l1-norm">4.2 Manhattan Distance (L1 norm)</h4>
+          <p>Manhattan distance sums absolute coordinate differences:</p>
+          <div class="formula-block">
+              <span class="formula-text">
+                  <i>d</i> = ∑<sub><i>i</i>=1</sub><sup><i>n</i></sup> |<i>x</i><sub>i</sub>-<i>y</i><sub>i</sub>|
+              </span>
+          </div>
+          
+          <p>For 2D:</p>
+          <div class="formula-block">
+              <span class="formula-text">
+                  <i>d</i> = |<i>x</i><sub>1</sub>-<i>y</i><sub>1</sub>| + |<i>x</i><sub>2</sub>-<i>y</i><sub>2</sub>|
+              </span>
+          </div>
+          
+          <p>It is often more robust to outliers and useful in high-dimensional settings where axis-wise differences are meaningful.</p>
+          <h4 id="5-non-parametric-nature-of-knn">5. Non-Parametric Nature of KNN</h4>
+          <p>KNN is called non-parametric because it does not fit a fixed functional form and does not estimate model parameters from assumptions about the data distribution. Predictions are made directly from stored training instances.</p>
+          <h4 id="6-hyperparameter-selection-choosing-k">6. Hyperparameter Selection (Choosing k)</h4>
+          <p>The value of k is a hyperparameter controlling the number of neighbours used in classification.</p>
           <ul>
-          <li>Reduce K by 1 and re-vote</li>
-          <li><strong>OR</strong> choose the class of the nearest neighbor among tied classes</li>
-          <li><strong>OR</strong> randomly select among tied classes</li>
+          <li>Small k (for example, k=1): low bias, high variance, noise sensitive.</li>
+          <li>Large k: smoother boundaries, higher bias, possible underfitting.</li>
           </ul>
-          <p><strong>Feature Scaling (Critical for KNN):</strong>
-          <em>Why needed:</em> KNN uses distance, so features with larger ranges dominate.
-          Before applying KNN:</p>
+          <p>Therefore, k should be selected to balance bias and variance, typically using cross-validation.</p>
+          <div class="figure-block">
+          <img src="images/fig1_knn.png" alt="Illustration of KNN classification showing reassignment of a new data point">
+          <p class="figure-caption">Figure 1: Illustration of KNN classification showing reassignment of a new data point based on nearest neighbours.</p>
+          </div>
+          
+          <p>The figure shows how a new sample is assigned to a class after checking the majority class among nearby points.</p>
+          <h4 id="7-algorithm">7. Algorithm</h4>
+          <p>Step 1: Store all training data<br>Step 2: Choose value of k<br>Step 3: For a new sample, compute distance to all training samples<br>Step 4: Sort distances in ascending order<br>Step 5: Select k nearest neighbours<br>Step 6: For classification, use majority voting among the k neighbours  </p>
+          <div class="formula-block">
+              <span class="formula-text">
+                  <i>ŷ</i> = mode({<i>y</i><sub>(1)</sub>, <i>y</i><sub>(2)</sub>, ..., <i>y</i><sub>(<i>k</i>)</sub>})
+              </span>
+          </div>
+          
+          <p>Step 7: For regression, average the k neighbour target values:</p>
+          <div class="formula-block">
+              <span class="formula-text">
+                  <i>ŷ</i> = (1 / <i>k</i>) ∑<sub><i>j</i>=1</sub><sup><i>k</i></sup> <i>y</i><sub>(<i>j</i>)</sub>
+              </span>
+          </div>
+          
+          <h4 id="8-practical-considerations-in-knn">8. Practical Considerations in KNN</h4>
+          <h4 id="81-handling-ties">8.1 Handling Ties</h4>
+          <p>If tied votes occur:</p>
           <ul>
-          <li>Apply <strong>Min-Max Scaling</strong>: <code>x' = (x - min) / (max - min)</code></li>
-          <li><strong>OR</strong> <strong>Z-Score Normalization</strong>: <code>x' = (x - mean) / std</code></li>
+          <li>Reduce k by 1 and re-vote, or</li>
+          <li>Choose class of the nearest sample among tied classes, or</li>
+          <li>Randomly choose among tied classes.</li>
           </ul>
-          <p><strong>Choosing Optimal K:</strong>
-          <em>Cross-Validation Method:</em></p>
+          <h4 id="82-feature-scaling-critical">8.2 Feature Scaling (Critical)</h4>
+          <p>KNN depends on distance; larger-scale features dominate without scaling.</p>
+          <p>Use either:</p>
+          <ul>
+          <li>Min-Max scaling:  <div class="formula-block">
+                <span class="formula-text">
+                    <i>x</i><sub>scaled</sub> = (<i>x</i> - <i>x</i><sub>min</sub>) / (<i>x</i><sub>max</sub> - <i>x</i><sub>min</sub>)
+                </span>
+            </div></li>
+          <li>Z-score normalization:  <div class="formula-block">
+                <span class="formula-text">
+                    <i>z</i> = (<i>x</i> - μ) / σ
+                </span>
+            </div></li>
+          </ul>
+          <h4 id="83-choosing-optimal-k-via-cross-validation">8.3 Choosing Optimal k via Cross-Validation</h4>
           <ol>
-          <li>Split data into training and validation sets</li>
-          <li>For K = 1, 3, 5, 7, ... (try multiple values):<ul>
-          <li>Train KNN with that K</li>
-          <li>Measure accuracy on validation set</li>
-          </ul>
-          </li>
-          <li>Select K with highest validation accuracy</li>
+          <li>Split into training and validation data.</li>
+          <li>Try multiple k values (1, 3, 5, 7, ...).</li>
+          <li>Evaluate validation accuracy for each k.</li>
+          <li>Select k with best validation performance.</li>
           </ol>
+          <h4 id="9-merits-and-demerits-of-knn">9. Merits and Demerits of KNN</h4>
+          <table>
+          <thead>
+          <tr>
+          <th>Merits of KNN</th>
+          <th>Demerits of KNN</th>
+          </tr>
+          </thead>
+          <tbody><tr>
+          <td>Simple and easy to understand</td>
+          <td>High computational cost during prediction</td>
+          </tr>
+          <tr>
+          <td>No explicit training phase</td>
+          <td>High memory usage for training data storage</td>
+          </tr>
+          <tr>
+          <td>No distribution assumptions</td>
+          <td>Sensitive to feature scaling</td>
+          </tr>
+          <tr>
+          <td>Works well for small, well-separated datasets</td>
+          <td>Performance degrades in high dimensions</td>
+          </tr>
+          <tr>
+          <td>Supports classification and regression</td>
+          <td>Sensitive to noise and outliers</td>
+          </tr>
+          </tbody></table>
+          <h4 id="10-applications">10. Applications</h4>
+          <p>KNN is used in:</p>
+          <ul>
+          <li>Image recognition</li>
+          <li>Recommendation systems</li>
+          <li>Medical diagnosis support</li>
+          <li>Pattern recognition (such as handwriting and speech)</li>
+          <li>Credit scoring and fraud detection</li>
+          </ul>
           
           </div>
           <div class="bug-report-mobile">

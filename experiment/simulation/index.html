@@ -89,10 +89,393 @@
 
 	<!-- KNN ANIMATION - Fullscreen Overlay (Ported from React App) -->
 	<div class="knn-animation" id="knnAnimationContainer" style="display: none;">
-		<!-- Loading Screen -->
+
+		<!-- ========== MODE SELECTION LOADING SCREEN ========== -->
+		<div class="loading-screen" id="modeSelectionLoading" style="display: none;">
+			<div class="loading-content">
+				<h2>Connecting to Mode Selection</h2>
+				<div class="progress-bar-container">
+					<div class="progress-bar-fill" id="modeLoadingProgress"></div>
+				</div>
+				<p id="modeLoadingText">Establishing connection...</p>
+				<div class="loading-percent" id="modeLoadingPercent">0%</div>
+			</div>
+		</div>
+
+		<!-- ========== MODE SELECTION SCREEN ========== -->
+		<div class="mode-selection-screen" id="modeSelectionScreen" style="display: none;">
+			<div class="mode-selection-wrapper">
+				<div class="mode-selection-header">
+					<h1>KNN Experiment Modes</h1>
+					<p class="mode-selection-subtitle">Select an analysis mode to proceed</p>
+				</div>
+				<div class="mode-cards-container">
+					<!-- Card 1: Parametric Analysis -->
+					<div class="mode-card" id="modeCardParametric" onclick="handleModeChoice('parametric')">
+						<div class="mode-card-icon">
+							<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+								<line x1="18" y1="20" x2="18" y2="10"></line>
+								<line x1="12" y1="20" x2="12" y2="4"></line>
+								<line x1="6" y1="20" x2="6" y2="14"></line>
+							</svg>
+						</div>
+						<h2 class="mode-card-title">Parametric Analysis of KNN</h2>
+						<p class="mode-card-desc">Systematically explore how K value, sample size, distance metric, and feature scaling influence classifier performance and decision boundaries.</p>
+						<div class="mode-card-tags">
+							<span class="mode-tag">4 Scenarios</span>
+							<span class="mode-tag">Guided Analysis</span>
+						</div>
+					</div>
+					<!-- Card 2: Deep Dive Playground -->
+					<div class="mode-card" id="modeCardPlayground" onclick="handleModeChoice('playground')">
+						<div class="mode-card-icon">
+							<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+								<polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+								<polyline points="2 17 12 22 22 17"></polyline>
+								<polyline points="2 12 12 17 22 12"></polyline>
+							</svg>
+						</div>
+						<h2 class="mode-card-title">Deep Dive Playground</h2>
+						<p class="mode-card-desc">Interactive visualization environment with PCA decision boundaries, ROC curves, metrics evolution graphs, and feature pair analysis.</p>
+						<div class="mode-card-tags">
+							<span class="mode-tag">Interactive</span>
+							<span class="mode-tag">Free Exploration</span>
+						</div>
+					</div>
+				</div>
+				<button class="back-btn mode-back-btn" id="modeBackToExpBtn" onclick="handleBackToExperimentFromModeSelection()">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+						stroke="currentColor" stroke-width="2">
+						<path d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+					</svg>
+					Back to Experiment
+				</button>
+			</div>
+		</div>
+
+		<!-- ========== CHOICE LOADING SCREEN ========== -->
+		<div class="loading-screen" id="choiceLoadingScreen" style="display: none;">
+			<div class="loading-content">
+				<h2 id="choiceLoadingTitle">Launching...</h2>
+				<div class="progress-bar-container">
+					<div class="progress-bar-fill" id="choiceLoadingProgress"></div>
+				</div>
+				<p id="choiceLoadingText">Preparing environment...</p>
+				<div class="loading-percent" id="choiceLoadingPercent">0%</div>
+			</div>
+		</div>
+
+		<!-- ========== PARAMETRIC ANALYSIS SCREEN ========== -->
+		<div class="parametric-screen" id="parametricAnalysisScreen" style="display: none;">
+			<!-- Parametric Header -->
+			<header class="parametric-header">
+				<div class="header-center">
+					<h1>Parametric Analysis of KNN</h1>
+					<p style="font-size: 0.9em; color: #a5d6a7; margin-top: 5px; font-weight: 500;">
+						<b>Systematically explore how different hyperparameters affect KNN classification performance. Configure K, sample size, distance metric, and scaling, then train the model to observe changes in metrics and the feature space visualization. <br/> <span style="color: #ffff00;">Click buttons to make a configuration and train model</span></b>
+					</p>
+				</div>
+				<button class="back-btn" id="parametricBackBtn" onclick="handleBackToModeSelection()">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+						stroke="currentColor" stroke-width="2">
+						<path d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+					</svg>
+					Back to Mode Selection
+				</button>
+			</header>
+
+			<!-- Parametric Content -->
+			<div class="parametric-content">
+				<!-- Left: Controls Panel -->
+				<aside class="parametric-controls">
+					<div class="parametric-control-group">
+						<div class="control-header">
+							<h3>K VALUE (Neighbours)</h3>
+						</div>
+						<div class="control-description">
+							The number of nearest neighbours used for classification. Smaller K is more sensitive to noise (overfitting), larger K produces smoother boundaries (underfitting).
+						</div>
+						<div class="k-buttons" id="paramKButtons">
+							<button class="k-btn" data-k="6">K = 6</button>
+							<button class="k-btn" data-k="8">K = 8</button>
+							<button class="k-btn" data-k="10">K = 10</button>
+						</div>
+					</div>
+
+					<div class="parametric-control-group">
+						<div class="control-header">
+							<h3>TRAINING SAMPLE SIZE</h3>
+						</div>
+						<div class="control-description">
+							Number of training samples used. More samples generally improve classification but with diminishing returns. The test set remains fixed at 45 samples.
+						</div>
+						<div class="param-sample-buttons" id="paramSampleButtons">
+							<button class="param-sample-btn" data-samples="30">30</button>
+							<button class="param-sample-btn" data-samples="60">60</button>
+							<button class="param-sample-btn" data-samples="90">90</button>
+							<button class="param-sample-btn" data-samples="105">105</button>
+						</div>
+					</div>
+
+					<div class="parametric-control-group">
+						<div class="control-header">
+							<h3>DISTANCE METRIC</h3>
+						</div>
+						<div class="control-description">
+							Euclidean measures straight-line distance. Manhattan measures axis-aligned distance (sum of absolute differences). Click a test point after training to see the difference visually.
+						</div>
+						<div class="param-radio-group" id="paramDistanceMetric">
+							<label class="param-radio">
+								<input type="radio" name="paramDistance" value="euclidean">
+								<span class="param-radio-custom"></span>
+								<span class="param-radio-label">Euclidean Distance</span>
+							</label>
+							<label class="param-radio">
+								<input type="radio" name="paramDistance" value="manhattan">
+								<span class="param-radio-custom"></span>
+								<span class="param-radio-label">Manhattan Distance</span>
+							</label>
+						</div>
+					</div>
+
+					<div class="parametric-control-group">
+						<div class="control-header">
+							<h3>FEATURE SCALING</h3>
+						</div>
+						<div class="control-description">
+							Standard Scaling normalizes features to zero mean and unit variance. This prevents features with larger ranges from dominating the distance calculation. Observe the axis values change after training with scaling enabled.
+						</div>
+						<div class="param-radio-group" id="paramFeatureScaling">
+							<label class="param-radio">
+								<input type="radio" name="paramScaling" value="none">
+								<span class="param-radio-custom"></span>
+								<span class="param-radio-label">No Scaling</span>
+							</label>
+							<label class="param-radio">
+								<input type="radio" name="paramScaling" value="standard">
+								<span class="param-radio-custom"></span>
+								<span class="param-radio-label">Standard Scaling</span>
+							</label>
+						</div>
+					</div>
+
+					<button class="param-train-btn" id="paramTrainBtn">
+						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<polygon points="5 3 19 12 5 21 5 3"></polygon>
+						</svg>
+						TRAIN MODEL
+					</button>
+
+					<!-- Current Config Summary -->
+					<div class="param-config-summary" id="paramConfigSummary">
+						<h3>CURRENT CONFIGURATION</h3>
+						<div class="config-items">
+							<div class="config-item"><span>K Value</span><span id="configK">6</span></div>
+							<div class="config-item"><span>Samples</span><span id="configSamples">30</span></div>
+							<div class="config-item"><span>Distance</span><span id="configDistance">Euclidean</span></div>
+							<div class="config-item"><span>Scaling</span><span id="configScaling">None</span></div>
+						</div>
+					</div>
+				</aside>
+
+				<!-- Center: Visualization -->
+				<div class="parametric-viz-area">
+					<!-- Feature Space Panel -->
+					<div class="parametric-viz-panel">
+						<div class="panel-header">
+							<div class="header-title-group">
+								<span>Feature Space Plot</span>
+								<div class="feature-axis-selectors">
+									<div class="axis-selector-group">
+										<label for="paramXAxis">X:</label>
+										<select id="paramXAxis" class="feature-select">
+											<option value="0" selected>Sepal Length</option>
+											<option value="1">Sepal Width</option>
+											<option value="2">Petal Length</option>
+											<option value="3">Petal Width</option>
+										</select>
+									</div>
+									<div class="axis-selector-group">
+										<label for="paramYAxis">Y:</label>
+										<select id="paramYAxis" class="feature-select">
+											<option value="0">Sepal Length</option>
+											<option value="1" selected>Sepal Width</option>
+											<option value="2">Petal Length</option>
+											<option value="3">Petal Width</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="canvas-wrapper parametric-canvas-wrapper">
+							<canvas id="paramBoundaryCanvas" class="viz-canvas clickable"></canvas>
+						</div>
+						<div class="param-click-hint" id="paramClickHint">Train the model, then click a test point to see K nearest neighbours</div>
+					</div>
+
+					<!-- Metrics Bar Chart Panel -->
+					<div class="parametric-metrics-panel">
+						<div class="panel-header">
+							<div class="header-title-group">
+								<span>Performance Metrics</span>
+							</div>
+						</div>
+						<div class="param-metrics-chart" id="paramMetricsChart">
+							<div class="param-metric-bar-row">
+								<span class="param-metric-label">Accuracy</span>
+								<div class="param-bar-track">
+									<div class="param-bar-fill" id="paramBarAccuracy" style="width: 0%"></div>
+								</div>
+								<span class="param-metric-val" id="paramValAccuracy">--</span>
+							</div>
+							<div class="param-metric-bar-row">
+								<span class="param-metric-label">Precision</span>
+								<div class="param-bar-track">
+									<div class="param-bar-fill" id="paramBarPrecision" style="width: 0%"></div>
+								</div>
+								<span class="param-metric-val" id="paramValPrecision">--</span>
+							</div>
+							<div class="param-metric-bar-row">
+								<span class="param-metric-label">Recall</span>
+								<div class="param-bar-track">
+									<div class="param-bar-fill" id="paramBarRecall" style="width: 0%"></div>
+								</div>
+								<span class="param-metric-val" id="paramValRecall">--</span>
+							</div>
+							<div class="param-metric-bar-row">
+								<span class="param-metric-label">F1 Score</span>
+								<div class="param-bar-track">
+									<div class="param-bar-fill" id="paramBarF1" style="width: 0%"></div>
+								</div>
+								<span class="param-metric-val" id="paramValF1">--</span>
+							</div>
+						</div>
+						<div class="param-no-data-msg" id="paramNoDataMsg">
+							Configure parameters and click TRAIN MODEL to see results
+						</div>
+					</div>
+				</div>
+
+				<!-- Right: Scenario Guide -->
+				<div class="parametric-guide">
+					<h3 class="guide-title">Analysis Scenarios</h3>
+					<div class="guide-scroll-area">
+						<!-- Scenario 1 -->
+						<div class="scenario-card" id="scenario1">
+							<div class="scenario-header">
+								<span class="scenario-number">01</span>
+								<h4>Effect of the Number of Neighbours (K)</h4>
+							</div>
+							<div class="scenario-body">
+								<div class="scenario-procedure">
+									<strong>Procedure:</strong>
+									<ol>
+										<li>Select different values of K (for example 6, 8 and 10).</li>
+										<li>Train the model for each value of K.</li>
+										<li>Observe the decision boundary visualization and performance metrics.</li>
+										<li>Record the values of Accuracy, Precision, Recall and F1-Score.</li>
+									</ol>
+								</div>
+								<div class="scenario-observations">
+									<strong>Expected Observations:</strong>
+									<ul>
+										<li>Smaller values of K produce irregular or noisy decision boundaries, leading to possible overfitting.</li>
+										<li>Larger values of K produce smoother boundaries, leading to possible underfitting.</li>
+										<li>Moderate values of K produce balanced boundaries, leading to better generalization.</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<!-- Scenario 2 -->
+						<div class="scenario-card" id="scenario2">
+							<div class="scenario-header">
+								<span class="scenario-number">02</span>
+								<h4>Effect of Training Sample Size</h4>
+							</div>
+							<div class="scenario-body">
+								<div class="scenario-procedure">
+									<strong>Procedure:</strong>
+									<ol>
+										<li>Use the Sample Size buttons to change the number of training samples.</li>
+										<li>Train the model with different sample sizes (for example 30, 60, 90 and 105).</li>
+										<li>Observe how the performance metrics change.</li>
+									</ol>
+								</div>
+								<div class="scenario-observations">
+									<strong>Expected Observations:</strong>
+									<ul>
+										<li>When the number of training samples is small, the model has limited information, leading to unstable predictions and irregular decision boundaries.</li>
+										<li>As the number of training samples increases, the classifier captures the data distribution more effectively, improving classification performance.</li>
+										<li>Performance metrics such as Accuracy, Precision, Recall and F1-Score become more stable with more training data.</li>
+										<li>The decision boundary becomes more consistent and reliable as the model learns better class separation from a larger dataset.</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<!-- Scenario 3 -->
+						<div class="scenario-card" id="scenario3">
+							<div class="scenario-header">
+								<span class="scenario-number">03</span>
+								<h4>Effect of Distance Metric on Classification</h4>
+							</div>
+							<div class="scenario-body">
+								<div class="scenario-procedure">
+									<strong>Procedure:</strong>
+									<ol>
+										<li>Select Euclidean Distance as the distance metric.</li>
+										<li>Train the model and record metrics.</li>
+										<li>Switch to Manhattan Distance while keeping the same value of K.</li>
+										<li>Train again and observe the changes in classification predictions and decision boundaries.</li>
+									</ol>
+								</div>
+								<div class="scenario-observations">
+									<strong>Expected Observations:</strong>
+									<ul>
+										<li>Different distance metrics may select different neighbouring points for the same test sample because the method of distance calculation varies.</li>
+										<li>Due to this difference in neighbour selection, the predicted class for some samples may change when the distance metric is altered.</li>
+										<li>Compare the performance metrics to determine which distance metric provides better classification performance for the given dataset.</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<!-- Scenario 4 -->
+						<div class="scenario-card" id="scenario4">
+							<div class="scenario-header">
+								<span class="scenario-number">04</span>
+								<h4>Effect of Feature Scaling</h4>
+							</div>
+							<div class="scenario-body">
+								<div class="scenario-procedure">
+									<strong>Procedure:</strong>
+									<ol>
+										<li>Select No Scaling as the scaling option.</li>
+										<li>Train the KNN model and record metrics.</li>
+										<li>Switch to Standard Scaling.</li>
+										<li>Train again and observe the decision boundary and performance metrics.</li>
+									</ol>
+								</div>
+								<div class="scenario-observations">
+									<strong>Expected Observations:</strong>
+									<ul>
+										<li>Without feature scaling, features with larger numerical values may dominate the distance calculation, which can influence neighbour selection and reduce classification performance.</li>
+										<li>After applying feature scaling, all features contribute more equally to the distance computation, which may improve the classification results.</li>
+										<li>The decision boundary often becomes more balanced and consistent when normalization is applied.</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ========== PLAYGROUND LOADING SCREEN ========== -->
 		<div class="loading-screen" id="knnLoadingScreen">
 			<div class="loading-content">
-				<h2>KNN Visualizer</h2>
+				<h2>Deep Dive Playground</h2>
 				<div class="progress-bar-container">
 					<div class="progress-bar-fill" id="loadingProgress"></div>
 				</div>
@@ -101,47 +484,56 @@
 			</div>
 		</div>
 
-		<!-- Header -->
-		<header>
+		<!-- ========== PLAYGROUND HEADER ========== -->
+		<header id="playgroundHeader">
 			<div class="header-center">
 				<h1>KNN Visualizer Playground</h1>
-				<button class="info-btn" id="headerInfoBtn" title="About this playground">
-					i
-				</button>
-				<div class="info-popup" id="headerInfoPopup">
-					<div class="info-popup-header">
-						<strong>Playground Objective</strong>
-						<button class="info-popup-close" id="headerInfoClose">×</button>
-					</div>
-					<p>This simulation environment facilitates the empirical analysis of K-Nearest Neighbors classification dynamics. It visualizes the perturbation of performance metrics concerning hyperparameter modulation and progressive sample acquisition, whilst maintaining a static holdout set to isolate generalization behavior.</p>
-				</div>
+				<p style="font-size: 0.9em; color: #a5d6a7; margin-top: 5px; font-weight: 500;">
+					<b>This simulation environment facilitates the empirical analysis of K-Nearest Neighbors classification dynamics. It visualizes the perturbation of performance metrics concerning hyperparameter modulation and progressive sample acquisition, whilst maintaining a static holdout set to isolate generalization behavior.</b>
+				</p>
 			</div>
 			<button class="back-btn" id="knnBackBtn">
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
 					stroke="currentColor" stroke-width="2">
 					<path d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
 				</svg>
-				Back to Experiment
+				Back to Mode Selection
 			</button>
 		</header>
 
 		<!-- Content: Sidebar + Main -->
-		<div class="content">
+		<div class="content" id="playgroundContent">
 			<!-- Sidebar -->
 			<aside class="sidebar">
-				<!-- K Value Selection -->
+				<!-- K Value Selection Slider -->
 				<div class="control-group">
-					<h3>K VALUE</h3>
-					<div class="k-buttons">
-						<button class="k-btn" data-k="6">6</button>
-						<button class="k-btn" data-k="8">8</button>
-						<button class="k-btn" data-k="10">10</button>
+					<div class="control-header">
+						<h3>K VALUE</h3>
+					</div>
+					<div class="control-description">
+						The number of nearest neighbours used for classification. Smaller K is more sensitive to noise (overfitting), larger K produces smoother boundaries (underfitting).
+					</div>
+					<div class="slider-container">
+						<div class="slider-label">
+							<span>Number of Neighbors</span>
+							<span class="slider-value" id="kValueDisplay">6</span>
+						</div>
+						<div class="slider-with-controls">
+							<button class="slider-control-btn" id="decKBtn">&#9664;</button>
+							<input type="range" id="kSlider" min="4" max="15" value="6">
+							<button class="slider-control-btn" id="incKBtn">&#9654;</button>
+						</div>
 					</div>
 				</div>
 
 				<!-- Training Samples Slider -->
 				<div class="control-group">
-					<h3>TRAINING SAMPLES</h3>
+					<div class="control-header">
+						<h3>TRAINING SAMPLES</h3>
+					</div>
+					<div class="control-description">
+						Number of training samples used. More samples generally improve classification but with diminishing returns. The test set remains fixed at 45 samples.
+					</div>
 					<div class="slider-container">
 						<div class="slider-label">
 							<span>Sample Count</span>
@@ -149,25 +541,77 @@
 									id="trainTotal">105</span></span>
 						</div>
 						<div class="slider-with-controls">
-							<button class="slider-control-btn" id="decSamplesBtn">◀</button>
-							<input type="range" id="sampleSlider" min="0" max="10" value="0">
-							<button class="slider-control-btn" id="incSamplesBtn">▶</button>
+							<button class="slider-control-btn" id="decSamplesBtn">&#9664;</button>
+							<input type="range" id="sampleSlider" min="0" max="100" value="0">
+							<button class="slider-control-btn" id="incSamplesBtn">&#9654;</button>
 						</div>
+					</div>
+				</div>
+
+				<!-- Distance Metric Switch -->
+				<div class="control-group">
+					<div class="control-header">
+						<h3>DISTANCE METRIC</h3>
+					</div>
+					<div class="control-description">
+						Euclidean measures straight-line distance. Manhattan measures axis-aligned distance (sum of absolute differences). Click a test point after training to see the difference visually.
+					</div>
+					<div class="param-radio-group" id="distanceToggleGroup" style="margin-top: 10px;">
+						<label class="param-radio">
+							<input type="radio" name="distanceToggle" value="euclidean" checked>
+							<span class="param-radio-custom"></span>
+							<span class="param-radio-label">Euclidean</span>
+						</label>
+						<label class="param-radio">
+							<input type="radio" name="distanceToggle" value="manhattan">
+							<span class="param-radio-custom"></span>
+							<span class="param-radio-label">Manhattan</span>
+						</label>
+					</div>
+				</div>
+
+				<!-- Feature Scaling Switch -->
+				<div class="control-group">
+					<div class="control-header">
+						<h3>FEATURE SCALING</h3>
+					</div>
+					<div class="control-description">
+						Standard Scaling normalizes features to zero mean and unit variance. This prevents features with larger ranges from dominating the distance calculation. Observe the axis values change after training with scaling enabled.
+					</div>
+					<div class="param-radio-group" id="scalingToggleGroup" style="margin-top: 10px;">
+						<label class="param-radio">
+							<input type="radio" name="scalingToggle" value="none" checked>
+							<span class="param-radio-custom"></span>
+							<span class="param-radio-label">None</span>
+						</label>
+						<label class="param-radio">
+							<input type="radio" name="scalingToggle" value="standard">
+							<span class="param-radio-custom"></span>
+							<span class="param-radio-label">Standard</span>
+						</label>
 					</div>
 				</div>
 
 				<!-- Feature Pairs Button -->
 				<div class="control-group">
 					<button class="feature-btn" id="featureBtn">FEATURE PAIR VISUALIZATION</button>
+					<div class="control-description" style="margin-top: 10px;">
+						Opens a grid view comparing all feature combinations (e.g., Sepal vs Petal) to understand class separability.
+					</div>
 				</div>
 
 				<div class="thick-separator"></div>
 
 				<!-- Auto-Pilot Control -->
 				<div class="control-group">
-					<h3>AUTO-PILOT</h3>
+					<div class="control-header">
+						<h3>AUTO-PILOT</h3>
+					</div>
+					<div class="control-description">
+						Automatically adds training samples and updates the model to visualize learning progression over time.
+					</div>
 					<div class="auto-pilot-section">
-						<button class="run-btn" id="autoRunBtn">▶ PLAY</button>
+						<button class="run-btn" id="autoRunBtn">&#9654; PLAY</button>
 						<div class="speed-control">
 							<div class="slider-label">
 								<span>Animation Speed</span>
@@ -233,15 +677,11 @@
 						<div class="panel-header">
 							<div class="header-title-group">
 								<span>PCA Decision Boundary</span>
-								<button class="info-btn panel-info-btn" data-info="pca" title="Info">
-									i
-								</button>
-								<div class="info-popup panel-info-popup" data-panel="pca">
-									<p><strong>PCA Decision Boundary:</strong> Visualizes the decision regions generated by the KNN classifier projected onto the first two principal components.</p>
-									<p style="margin-top: 8px;"><strong>Interaction:</strong><br>• <strong>Click</strong> on a test point (white/red outline) to see its K nearest neighbors.</p>
-								</div>
 							</div>
-							<div class="panel-controls">
+							<div class="panel-description">
+								Visualizes the decision regions generated by the KNN classifier projected onto the first two principal components. <span style="color: #ffff00;">Click on a test point to see its K nearest neighbors.</span>
+							</div>
+							<div class="panel-controls" style="margin-top: 10px;">
 								<div class="blur-toggles">
 									<button class="toggle-btn" id="blurTrainBtn">
 										<span class="toggle-dot train"></span> Train
@@ -250,7 +690,14 @@
 										<span class="toggle-dot test"></span> Test
 									</button>
 								</div>
-								<button class="zoom-btn" data-panel="pca">🔍</button>
+								<button class="zoom-btn" data-panel="pca">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="11" cy="11" r="8"></circle>
+										<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+										<line x1="11" y1="8" x2="11" y2="14"></line>
+										<line x1="8" y1="11" x2="14" y2="11"></line>
+									</svg>
+								</button>
 							</div>
 						</div>
 						<div class="canvas-wrapper">
@@ -297,16 +744,19 @@
 						<div class="panel-header">
 							<div class="header-title-group">
 								<span>Testing Metrics Evolution</span>
-								<button class="info-btn panel-info-btn" data-info="metrics" title="Info">
-									i
-								</button>
-								<div class="info-popup panel-info-popup" data-panel="metrics">
-									<p><strong>Metrics:</strong> accuracy, precision, recall, F1 score, and ROC-AUC tracked over sample growth.</p>
-									<p style="margin-top: 8px; color: #ffcc80;"><strong>Why F1 overlaps Accuracy:</strong><br>F1 score is the harmonic mean of precision and recall. In balanced datasets where precision and recall are similar, F1 will closely track accuracy, often overlapping it.</p>
-								</div>
 							</div>
-							<div class="panel-controls">
-								<button class="zoom-btn" data-panel="metrics">🔍</button>
+							<div class="panel-description">
+								Metrics: accuracy, precision, recall, F1 score, and ROC-AUC tracked over sample growth. F1 score overlaps Accuracy closely.
+							</div>
+							<div class="panel-controls" style="margin-top: 10px;">
+								<button class="zoom-btn" data-panel="metrics">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="11" cy="11" r="8"></circle>
+										<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+										<line x1="11" y1="8" x2="11" y2="14"></line>
+										<line x1="8" y1="11" x2="14" y2="11"></line>
+									</svg>
+								</button>
 							</div>
 						</div>
 						<div class="canvas-wrapper">
@@ -319,16 +769,19 @@
 						<div class="panel-header">
 							<div class="header-title-group">
 								<span>ROC Curve (Test Set)</span>
-								<button class="info-btn panel-info-btn" data-info="roc" title="Info">
-									i
-								</button>
-								<div class="info-popup panel-info-popup" data-panel="roc">
-									<p><strong>ROC (Receiver Operating Characteristic):</strong> Plots True Positive Rate vs. False Positive Rate at different thresholds.</p>
-									<p style="margin-top: 8px;"><strong>AUC (Area Under Curve):</strong> A measure of separability. Higher AUC (closer to 1.0) means better model performance.</p>
-								</div>
 							</div>
-							<div class="panel-controls">
-								<button class="zoom-btn" data-panel="roc">🔍</button>
+							<div class="panel-description">
+								ROC (Receiver Operating Characteristic): Plots TPR vs. FPR. Higher AUC (Area Under Curve) means better performance.
+							</div>
+							<div class="panel-controls" style="margin-top: 10px;">
+								<button class="zoom-btn" data-panel="roc">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="11" cy="11" r="8"></circle>
+										<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+										<line x1="11" y1="8" x2="11" y2="14"></line>
+										<line x1="8" y1="11" x2="14" y2="11"></line>
+									</svg>
+								</button>
 							</div>
 						</div>
 						<div class="canvas-wrapper">
@@ -352,8 +805,8 @@
 							<span class="toggle-dot test"></span> Test
 						</button>
 					</div>
-					<button class="window-btn minimize" id="featureMinBtn">−</button>
-					<button class="window-btn close" id="featureCloseBtn">×</button>
+					<button class="window-btn minimize" id="featureMinBtn">&minus;</button>
+					<button class="window-btn close" id="featureCloseBtn">&times;</button>
 				</div>
 			</div>
 			<div class="feature-window-content">
@@ -394,42 +847,84 @@
 					<div class="feature-card">
 						<div class="feature-card-header">
 							<h4>Sepal Length vs Sepal Width</h4>
-							<button class="card-zoom-btn" data-panel="feature_f0_f1">🔍</button>
+							<button class="card-zoom-btn" data-panel="feature_f0_f1">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="11" cy="11" r="8"></circle>
+									<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+									<line x1="11" y1="8" x2="11" y2="14"></line>
+									<line x1="8" y1="11" x2="14" y2="11"></line>
+								</svg>
+							</button>
 						</div>
 						<canvas id="featureCanvas_f0_f1" class="feature-canvas clickable"></canvas>
 					</div>
 					<div class="feature-card">
 						<div class="feature-card-header">
 							<h4>Sepal Length vs Petal Length</h4>
-							<button class="card-zoom-btn" data-panel="feature_f0_f2">🔍</button>
+							<button class="card-zoom-btn" data-panel="feature_f0_f2">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="11" cy="11" r="8"></circle>
+									<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+									<line x1="11" y1="8" x2="11" y2="14"></line>
+									<line x1="8" y1="11" x2="14" y2="11"></line>
+								</svg>
+							</button>
 						</div>
 						<canvas id="featureCanvas_f0_f2" class="feature-canvas clickable"></canvas>
 					</div>
 					<div class="feature-card">
 						<div class="feature-card-header">
 							<h4>Sepal Length vs Petal Width</h4>
-							<button class="card-zoom-btn" data-panel="feature_f0_f3">🔍</button>
+							<button class="card-zoom-btn" data-panel="feature_f0_f3">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="11" cy="11" r="8"></circle>
+									<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+									<line x1="11" y1="8" x2="11" y2="14"></line>
+									<line x1="8" y1="11" x2="14" y2="11"></line>
+								</svg>
+							</button>
 						</div>
 						<canvas id="featureCanvas_f0_f3" class="feature-canvas clickable"></canvas>
 					</div>
 					<div class="feature-card">
 						<div class="feature-card-header">
 							<h4>Sepal Width vs Petal Length</h4>
-							<button class="card-zoom-btn" data-panel="feature_f1_f2">🔍</button>
+							<button class="card-zoom-btn" data-panel="feature_f1_f2">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="11" cy="11" r="8"></circle>
+									<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+									<line x1="11" y1="8" x2="11" y2="14"></line>
+									<line x1="8" y1="11" x2="14" y2="11"></line>
+								</svg>
+							</button>
 						</div>
 						<canvas id="featureCanvas_f1_f2" class="feature-canvas clickable"></canvas>
 					</div>
 					<div class="feature-card">
 						<div class="feature-card-header">
 							<h4>Sepal Width vs Petal Width</h4>
-							<button class="card-zoom-btn" data-panel="feature_f1_f3">🔍</button>
+							<button class="card-zoom-btn" data-panel="feature_f1_f3">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="11" cy="11" r="8"></circle>
+									<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+									<line x1="11" y1="8" x2="11" y2="14"></line>
+									<line x1="8" y1="11" x2="14" y2="11"></line>
+								</svg>
+							</button>
 						</div>
 						<canvas id="featureCanvas_f1_f3" class="feature-canvas clickable"></canvas>
 					</div>
 					<div class="feature-card">
 						<div class="feature-card-header">
 							<h4>Petal Length vs Petal Width</h4>
-							<button class="card-zoom-btn" data-panel="feature_f2_f3">🔍</button>
+							<button class="card-zoom-btn" data-panel="feature_f2_f3">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="11" cy="11" r="8"></circle>
+									<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+									<line x1="11" y1="8" x2="11" y2="14"></line>
+									<line x1="8" y1="11" x2="14" y2="11"></line>
+								</svg>
+							</button>
 						</div>
 						<canvas id="featureCanvas_f2_f3" class="feature-canvas clickable"></canvas>
 					</div>
@@ -440,7 +935,7 @@
 		<!-- Zoom Modal -->
 		<div class="zoom-modal" id="zoomModal" style="display: none;">
 			<div class="zoom-content">
-				<button class="zoom-close">×</button>
+				<button class="zoom-close">&times;</button>
 				<canvas id="zoomCanvas" class="zoom-canvas clickable"></canvas>
 				<div class="zoom-hint">Click on a test point to show K nearest neighbors</div>
 			</div>
@@ -448,9 +943,13 @@
 	</div>
 
 	<!-- Scripts -->
+	<script src="./js/knn_engine.js"></script>
 	<script src="./js/knn_canvas.js"></script>
 	<script src="./js/knn_logic.js"></script>
+	<script src="./js/parametric.js"></script>
+	<script src="./js/mode_selection.js"></script>
 	<script src="./js/main.js"></script>
+
 </body>
 
 </html>
