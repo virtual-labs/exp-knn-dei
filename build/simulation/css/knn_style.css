@@ -273,12 +273,13 @@
 #knnAnimationContainer header {
   background: linear-gradient(135deg, #1f2823, #242830);
   color: #ffffff;
-  padding: 12px 20px;
+  padding: 15px 20px;
   flex-shrink: 0;
   border-bottom: 1px solid rgba(76, 175, 80, 0.2);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   z-index: 20;
   display: flex;
+  flex-direction: column; /* Stack to center vertically */
   align-items: center;
   justify-content: center;
   position: relative;
@@ -1193,10 +1194,20 @@
 /* ==================== INFO BUTTONS & POPUPS ==================== */
 #knnAnimationContainer .header-center {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 4px;
   position: relative;
+  text-align: center;
+  flex: 1;
+  width: 100%;
+}
+
+#knnAnimationContainer .header-center p {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 900px;
 }
 
 #knnAnimationContainer .info-btn {
@@ -1297,4 +1308,742 @@
   align-items: center;
   gap: 8px;
   position: relative;
+}
+
+/* ==================== MODE SELECTION / CHOICE LOADING Z-INDEX ==================== */
+/* These overlays must be above knnLoadingScreen (z-index: 9999) */
+
+#modeSelectionLoading {
+  z-index: 10002 !important;
+}
+
+#choiceLoadingScreen {
+  z-index: 10002 !important;
+}
+
+/* ==================== MODE SELECTION SCREEN ==================== */
+
+#knnAnimationContainer .mode-selection-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, #1e2520, #1a1d21);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10001;
+}
+
+#knnAnimationContainer .mode-selection-wrapper {
+  text-align: center;
+  max-width: 900px;
+  width: 90%;
+  position: relative;
+}
+
+#knnAnimationContainer .mode-selection-header h1 {
+  font-size: 2.2em;
+  font-weight: 700;
+  background: linear-gradient(135deg, #4CAF50, #81C784);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+
+#knnAnimationContainer .mode-selection-subtitle {
+  color: #888;
+  font-size: 1em;
+  margin-bottom: 40px;
+}
+
+#knnAnimationContainer .mode-cards-container {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+#knnAnimationContainer .mode-card {
+  background: rgba(30, 37, 32, 0.9);
+  border: 1px solid rgba(76, 175, 80, 0.25);
+  border-radius: 16px;
+  padding: 35px 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  width: 380px;
+  position: relative;
+  overflow: hidden;
+}
+
+#knnAnimationContainer .mode-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #4CAF50, #81C784);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#knnAnimationContainer .mode-card:hover {
+  background: rgba(40, 55, 42, 0.95);
+  border-color: rgba(76, 175, 80, 0.5);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(76, 175, 80, 0.15);
+}
+
+#knnAnimationContainer .mode-card:hover::before {
+  opacity: 1;
+}
+
+#knnAnimationContainer .mode-card-icon {
+  color: #81C784;
+  margin-bottom: 18px;
+}
+
+#knnAnimationContainer .mode-card-title {
+  font-size: 1.2em;
+  font-weight: 700;
+  color: #e0e0e0;
+  margin-bottom: 10px;
+}
+
+#knnAnimationContainer .mode-card-desc {
+  font-size: 0.85em;
+  color: #999;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+#knnAnimationContainer .mode-card-tags {
+  display: flex;
+  gap: 8px;
+}
+
+#knnAnimationContainer .mode-tag {
+  font-size: 0.72em;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(76, 175, 80, 0.12);
+  color: #81C784;
+  border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+#knnAnimationContainer .mode-back-btn {
+  position: static;
+  transform: none;
+  margin-top: 20px;
+}
+
+#knnAnimationContainer .mode-back-btn:hover {
+  transform: translateX(-2px);
+}
+
+/* ==================== PARAMETRIC ANALYSIS SCREEN ==================== */
+
+#knnAnimationContainer .parametric-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, #1e2520, #1a1d21);
+  display: flex;
+  flex-direction: column;
+  z-index: 10001;
+  overflow: hidden;
+}
+
+#knnAnimationContainer .parametric-header {
+  background: linear-gradient(135deg, #1f2823, #242830);
+  color: #ffffff;
+  padding: 15px 20px;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+#knnAnimationContainer .parametric-header h1 {
+  font-size: 1.4em;
+  margin: 0;
+  font-weight: 700;
+  background: linear-gradient(135deg, #4CAF50, #81C784);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#knnAnimationContainer .parametric-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Parametric Controls (Left Panel) */
+#knnAnimationContainer .parametric-controls {
+  width: 300px;
+  flex-shrink: 0;
+  background: #111;
+  border-right: 1px solid #333;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#knnAnimationContainer .parametric-control-group h3 {
+  color: #81C784;
+  font-size: 0.8em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+/* Sample Buttons */
+#knnAnimationContainer .param-sample-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+#knnAnimationContainer .param-sample-btn {
+  padding: 10px;
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.25);
+  border-radius: 6px;
+  color: #b0bec5;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+#knnAnimationContainer .param-sample-btn:hover {
+  background: rgba(76, 175, 80, 0.2);
+  transform: translateY(-1px);
+}
+
+#knnAnimationContainer .param-sample-btn.active {
+  background: rgba(76, 175, 80, 0.25);
+  border-color: #4CAF50;
+  color: #4CAF50;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+}
+
+/* Radio Buttons */
+#knnAnimationContainer .param-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#knnAnimationContainer .param-radio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+#knnAnimationContainer .param-radio:hover {
+  background: rgba(76, 175, 80, 0.08);
+}
+
+#knnAnimationContainer .param-radio input[type="radio"] {
+  display: none;
+}
+
+#knnAnimationContainer .param-radio-custom {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(76, 175, 80, 0.4);
+  position: relative;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+#knnAnimationContainer .param-radio input[type="radio"]:checked + .param-radio-custom {
+  border-color: #4CAF50;
+}
+
+#knnAnimationContainer .param-radio input[type="radio"]:checked + .param-radio-custom::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4CAF50;
+}
+
+#knnAnimationContainer .param-radio-label {
+  color: #b0bec5;
+  font-size: 0.85em;
+}
+
+/* Train Button */
+#knnAnimationContainer .param-train-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #2e7d32, #388e3c);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  font-size: 1em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+#knnAnimationContainer .param-train-btn:hover {
+  background: linear-gradient(135deg, #388e3c, #43a047);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+}
+
+#knnAnimationContainer .param-train-btn.training {
+  background: #555;
+  cursor: wait;
+}
+
+@keyframes paramSpinner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#knnAnimationContainer .train-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  display: inline-block;
+  animation: paramSpinner 0.6s linear infinite;
+}
+
+/* Config Summary */
+#knnAnimationContainer .param-config-summary {
+  margin-top: auto;
+  padding-top: 15px;
+  border-top: 1px solid rgba(76, 175, 80, 0.15);
+}
+
+#knnAnimationContainer .param-config-summary h3 {
+  color: #81C784;
+  font-size: 0.75em;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-bottom: 10px;
+}
+
+#knnAnimationContainer .config-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#knnAnimationContainer .config-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82em;
+  color: #999;
+}
+
+#knnAnimationContainer .config-item span:last-child {
+  color: #a2cf6e;
+  font-weight: 600;
+  font-family: 'Consolas', monospace;
+}
+
+/* Parametric Viz Area (Center) */
+#knnAnimationContainer .parametric-viz-area {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+#knnAnimationContainer .parametric-viz-panel {
+  flex: 1;
+  background: rgba(30, 35, 33, 0.6);
+  border: 1px solid rgba(76, 175, 80, 0.2);
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  min-height: 0;
+}
+
+#knnAnimationContainer .parametric-canvas-wrapper {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Parametric Metrics Panel */
+#knnAnimationContainer .parametric-metrics-panel {
+  flex-shrink: 0;
+  background: rgba(30, 35, 33, 0.6);
+  border: 1px solid rgba(76, 175, 80, 0.2);
+  border-radius: 12px;
+  padding: 15px;
+  backdrop-filter: blur(8px);
+}
+
+#knnAnimationContainer .param-metrics-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 10px 0;
+}
+
+#knnAnimationContainer .param-metric-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#knnAnimationContainer .param-metric-label {
+  width: 80px;
+  font-size: 0.82em;
+  color: #b0bec5;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+#knnAnimationContainer .param-bar-track {
+  flex: 1;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#knnAnimationContainer .param-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #4CAF50, #81C784);
+  border-radius: 4px;
+  transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#knnAnimationContainer .param-metric-val {
+  width: 60px;
+  font-size: 0.82em;
+  color: #a2cf6e;
+  font-weight: 700;
+  font-family: 'Consolas', monospace;
+  flex-shrink: 0;
+}
+
+#knnAnimationContainer .param-no-data-msg {
+  text-align: center;
+  color: #666;
+  font-size: 0.9em;
+  padding: 20px;
+  font-style: italic;
+}
+
+/* Parametric Guide (Right Panel) */
+#knnAnimationContainer .parametric-guide {
+  width: 360px;
+  flex-shrink: 0;
+  background: #111;
+  border-left: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+#knnAnimationContainer .guide-title {
+  color: #81C784;
+  font-size: 0.9em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 20px 20px 15px;
+  border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+  flex-shrink: 0;
+}
+
+#knnAnimationContainer .guide-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#knnAnimationContainer .guide-scroll-area::-webkit-scrollbar {
+  width: 5px;
+}
+
+#knnAnimationContainer .guide-scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#knnAnimationContainer .guide-scroll-area::-webkit-scrollbar-thumb {
+  background: rgba(76, 175, 80, 0.3);
+  border-radius: 3px;
+}
+
+/* Scenario Cards */
+#knnAnimationContainer .scenario-card {
+  background: rgba(30, 37, 32, 0.7);
+  border: 1px solid rgba(76, 175, 80, 0.15);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+  flex-shrink: 0;
+}
+
+#knnAnimationContainer .scenario-card:hover {
+  border-color: rgba(76, 175, 80, 0.35);
+}
+
+#knnAnimationContainer .scenario-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: rgba(76, 175, 80, 0.06);
+  border-bottom: 1px solid rgba(76, 175, 80, 0.1);
+}
+
+#knnAnimationContainer .scenario-number {
+  font-size: 1.4em;
+  font-weight: 800;
+  color: rgba(76, 175, 80, 0.3);
+  font-family: 'Consolas', monospace;
+  line-height: 1;
+}
+
+#knnAnimationContainer .scenario-header h4 {
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #e0e0e0;
+  margin: 0;
+}
+
+#knnAnimationContainer .scenario-body {
+  padding: 14px 16px;
+}
+
+#knnAnimationContainer .scenario-procedure,
+#knnAnimationContainer .scenario-observations {
+  margin-bottom: 10px;
+}
+
+#knnAnimationContainer .scenario-procedure:last-child,
+#knnAnimationContainer .scenario-observations:last-child {
+  margin-bottom: 0;
+}
+
+#knnAnimationContainer .scenario-body strong {
+  font-size: 0.78em;
+  color: #81C784;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#knnAnimationContainer .scenario-body ol,
+#knnAnimationContainer .scenario-body ul {
+  margin: 8px 0 0 0;
+  padding-left: 20px;
+}
+
+#knnAnimationContainer .scenario-body li {
+  font-size: 0.78em;
+  color: #b0bec5;
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
+/* ==================== FEATURE AXIS SELECTORS ==================== */
+
+#knnAnimationContainer .feature-axis-selectors {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+#knnAnimationContainer .axis-selector-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#knnAnimationContainer .axis-selector-group label {
+  font-size: 0.75em;
+  color: #888;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#knnAnimationContainer .feature-select {
+  padding: 4px 8px;
+  background: rgba(30, 37, 32, 0.9);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 4px;
+  color: #b0bec5;
+  font-family: 'Consolas', monospace;
+  font-size: 0.75em;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#knnAnimationContainer .feature-select:hover {
+  border-color: rgba(76, 175, 80, 0.6);
+}
+
+#knnAnimationContainer .feature-select:focus {
+  border-color: #4CAF50;
+}
+
+#knnAnimationContainer .feature-select option {
+  background: #1a1d21;
+  color: #b0bec5;
+}
+
+/* ==================== PARAMETRIC INFO BUTTONS ==================== */
+
+#knnAnimationContainer .param-info-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(76, 175, 80, 0.4);
+  background: rgba(76, 175, 80, 0.1);
+  color: #81C784;
+  font-size: 0.65em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  flex-shrink: 0;
+  position: relative;
+}
+
+#knnAnimationContainer .param-info-btn:hover {
+  background: rgba(76, 175, 80, 0.25);
+  border-color: #4CAF50;
+}
+
+#knnAnimationContainer .param-info-popup {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 15, 20, 0.95);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 8px;
+  padding: 12px 14px;
+  width: 260px;
+  z-index: 10010;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  display: none;
+  font-style: normal;
+}
+
+#knnAnimationContainer .param-info-popup.visible {
+  display: block;
+}
+
+#knnAnimationContainer .param-info-popup p {
+  font-size: 0.78em;
+  color: #b0bec5;
+  line-height: 1.5;
+  margin: 0;
+}
+
+#knnAnimationContainer .param-info-popup .popup-title {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: #81C784;
+  margin-bottom: 6px;
+}
+
+/* ==================== PARAMETRIC CLICK HINT ==================== */
+
+#knnAnimationContainer .param-click-hint {
+  text-align: center;
+  color: #ffff00;
+  font-size: 0.8em;
+  padding: 6px 0 0;
+  font-weight: bold;
+}
+
+/* ==================== CONTROL DESCRIPTIONS ==================== */
+#knnAnimationContainer .control-description {
+  font-size: 0.85em;
+  color: #ffffff;
+  font-weight: bold;
+  padding-top: 10px;
+  margin-top: 6px;
+  margin-bottom: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  line-height: 1.5;
+  letter-spacing: 0.2px;
+}
+
+#knnAnimationContainer .panel-description {
+  font-size: 0.85em;
+  color: #ffffff;
+  font-weight: bold;
+  padding: 10px 15px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  line-height: 1.5;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+#knnAnimationContainer .control-header h3 {
+  margin-bottom: 0;
+}
+
+#knnAnimationContainer .panel-header {
+  border-bottom: none; /* We use panel-description border instead */
 }

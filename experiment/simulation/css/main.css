@@ -33,14 +33,35 @@
 }
 
 .download-btn {
+    background-color: #ef5350;
+    /* Reddish like image */
+    color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 8px;
     font-weight: 600;
     font-family: 'Outfit', sans-serif;
+    cursor: pointer;
     display: flex;
     align-items: center;
+    box-shadow: 0 4px 6px rgba(239, 83, 80, 0.3);
     transition: transform 0.1s, background-color 0.2s;
+}
+
+.download-btn:disabled {
+    background-color: #ccc !important;
+    color: white !important;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.download-btn:hover:not(:disabled) {
+    background-color: #e53935;
+    transform: translateY(-1px);
+}
+
+.download-btn:active:not(:disabled) {
+    transform: translateY(1px);
 }
 
 
@@ -842,20 +863,28 @@ body {
 
 /* Override Step Button Styles for Special Buttons */
 .download-btn {
+    background-color: #F57C2A !important;
+    color: white !important;
     border: none;
-    padding: 10px 10px;
+    padding: 10px 10px; /* Reduced from 20px */
     white-space: nowrap !important;
     border-radius: 8px;
     font-weight: 600;
     font-family: 'Outfit', sans-serif;
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: none;
+    box-shadow: 0 4px 6px rgba(245, 124, 42, 0.3) !important;
     transition: transform 0.1s, background-color 0.2s;
     margin-top: 10px;
     margin-bottom: 20px;
     width: 100%;
+}
+
+.download-btn:hover {
+    background-color: #d66a20 !important;
+    transform: translateY(-1px);
 }
 
 .restart-btn {

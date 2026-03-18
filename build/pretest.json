@@ -2,55 +2,55 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "KNN is a:",
+      "question": "The parameter k in the KNN algorithm represents:",
       "answers": {
-        "a": "Unsupervised algorithm",
-        "b": "Supervised algorithm",
-        "c": "Reinforcement algorithm",
-        "d": "Semi-supervised algorithm"
+        "a": "Number of clusters in the dataset",
+        "b": "Number of nearest neighbours used for classification",
+        "c": "Number of features in the dataset",
+        "d": "Number of training samples"
       },
       "explanations": {
-        "a": "Incorrect because unsupervised algorithms work without labelled data, whereas KNN requires labelled training data.",
-        "b": "Correct because KNN uses labelled examples to predict the class of new samples.",
-        "c": "Incorrect because reinforcement learning is based on rewards and actions, not labelled datasets.",
-        "d": "Incorrect because KNN does not combine labelled and unlabelled data during learning."
+        "a": "Incorrect because clustering refers to unsupervised algorithms like K-Means.",
+        "b": "Correct because k determines how many nearby data points participate in majority voting.",
+        "c": "Incorrect because features are attributes of the data and are not related to k.",
+        "d": "Incorrect because k only specifies the number of neighbours considered for prediction."
       },
       "correctAnswer": "b",
       "difficulty": "beginner"
     },
     {
-      "question": "KNN stores:",
+      "question": "Which distance metric is most commonly used in KNN?",
       "answers": {
-        "a": "Model parameters",
-        "b": "Training data",
-        "c": "Decision boundaries",
-        "d": "Feature weights"
+        "a": "Manhattan distance",
+        "b": "Euclidean distance",
+        "c": "Cosine similarity",
+        "d": "Jaccard similarity"
       },
       "explanations": {
-        "a": "Incorrect because KNN does not learn parameters like weights or coefficients.",
-        "b": "Correct because KNN stores all training samples and uses them directly for prediction.",
-        "c": "Incorrect because KNN does not explicitly construct decision boundaries.",
-        "d": "Incorrect because standard KNN treats all features equally unless explicitly modified."
+        "a": "Incorrect because although Manhattan distance can be used, it is not the most commonly used metric in basic KNN.",
+        "b": "Correct because Euclidean distance is the standard distance measure used to compute similarity between data points.",
+        "c": "Incorrect because cosine similarity is mainly used in text similarity and vector space models.",
+        "d": "Incorrect because Jaccard similarity is used for set comparisons rather than numeric distance."
       },
       "correctAnswer": "b",
       "difficulty": "beginner"
     },
     {
-      "question": "Who originally developed the nearest neighbour classification concept?",
+      "question": "How does the KNN algorithm determine the class of a new data point?",
       "answers": {
-        "a": "Duda & Hart",
-        "b": "Fisher",
-        "c": "Fix & Hodges",
-        "d": "Cover & Hart"
+        "a": "By calculating regression equations",
+        "b": "By majority voting among the nearest neighbours",
+        "c": "By clustering data points",
+        "d": "By calculating probability distributions"
       },
       "explanations": {
-        "a": "Incorrect because they explained classification techniques but did not introduce KNN.",
-        "b": "Incorrect because Fisher introduced the Iris dataset, not the KNN algorithm.",
-        "c": "Correct because they introduced non-parametric nearest neighbour classification in 1951.",
-        "d": "Incorrect because they later extended the theory, not originally proposed it."
+        "a": "Incorrect because regression equations are used in linear regression models.",
+        "b": "Correct because the class label with the highest frequency among the k nearest neighbours is assigned.",
+        "c": "Incorrect because clustering belongs to unsupervised learning algorithms.",
+        "d": "Incorrect because KNN primarily uses distance-based voting rather than probability models."
       },
-      "correctAnswer": "c",
-      "difficulty": "intermediate"
+      "correctAnswer": "b",
+      "difficulty": "beginner"
     },
     {
       "question": "If k = 1, classification is based on:",
@@ -87,72 +87,72 @@
       "difficulty": "beginner"
     },
     {
-      "question": "Feature scaling is important in KNN because:",
+      "question": "The KNN algorithm is considered a non-parametric model because:",
       "answers": {
-        "a": "It removes noise",
-        "b": "It affects distance calculation",
-        "c": "It changes labels",
-        "d": "It reduces data"
+        "a": "It assumes the data follows a normal distribution",
+        "b": "It does not assume any predefined data distribution",
+        "c": "It estimates parameters using gradient descent",
+        "d": "It uses neural networks"
       },
       "explanations": {
-        "a": "Incorrect because scaling does not remove noisy data points.",
-        "b": "Correct because KNN relies on distance metrics that are influenced by feature magnitude.",
-        "c": "Incorrect because scaling only affects feature values, not class labels.",
-        "d": "Incorrect because scaling does not reduce the number of samples."
+        "a": "Incorrect because non-parametric models do not assume any specific data distribution.",
+        "b": "Correct because KNN works directly with data without assuming a statistical model.",
+        "c": "Incorrect because parameter estimation is typical in parametric models.",
+        "d": "Incorrect because KNN is not based on neural network architecture."
       },
       "correctAnswer": "b",
-      "difficulty": "intermediate"
+      "difficulty": "advanced"
     },
     {
-      "question": "A larger k value generally:",
+      "question": "A very small value of k (for example k = 1) may lead to:",
       "answers": {
-        "a": "Increases variance",
-        "b": "Reduces noise sensitivity",
-        "c": "Increases overfitting",
-        "d": "Removes need for scaling"
+        "a": "Underfitting",
+        "b": "High bias",
+        "c": "High sensitivity to noise",
+        "d": "Reduced computational cost"
       },
       "explanations": {
-        "a": "Incorrect because increasing k actually reduces variance.",
-        "b": "Correct because averaging over more neighbours smooths decision boundaries.",
-        "c": "Incorrect because overfitting is more common with smaller k values.",
-        "d": "Incorrect because feature scaling is still required regardless of k."
-      },
-      "correctAnswer": "b",
-      "difficulty": "intermediate"
-    },
-    {
-      "question": "KNN is best described as:",
-      "answers": {
-        "a": "Eager learner",
-        "b": "Lazy learner",
-        "c": "Reinforcement learner",
-        "d": "Deep learner"
-      },
-      "explanations": {
-        "a": "Incorrect because eager learners build a model during training.",
-        "b": "Correct because KNN delays computation until prediction time.",
-        "c": "Incorrect because reinforcement learning uses rewards and environment interaction.",
-        "d": "Incorrect because KNN does not use neural networks or deep architectures."
-      },
-      "correctAnswer": "b",
-      "difficulty": "beginner"
-    },
-    {
-      "question": "The Iris dataset feature count is:",
-      "answers": {
-        "a": "2",
-        "b": "3",
-        "c": "4",
-        "d": "5"
-      },
-      "explanations": {
-        "a": "Incorrect because the dataset contains more than two features.",
-        "b": "Incorrect because there are four measured attributes.",
-        "c": "Correct because the Iris dataset has four features: sepal and petal measurements.",
-        "d": "Incorrect because no fifth feature exists in the dataset."
+        "a": "Incorrect because underfitting usually occurs when the model is too simple.",
+        "b": "Incorrect because smaller k generally reduces bias but increases variance.",
+        "c": "Correct because classification depends heavily on a single neighbour.",
+        "d": "Incorrect because the number of distance calculations remains the same."
       },
       "correctAnswer": "c",
-      "difficulty": "beginner"
+      "difficulty": "advanced"
+    },
+    {
+      "question": "When the number of features becomes very large, KNN suffers from:",
+      "answers": {
+        "a": "Data imbalance",
+        "b": "Curse of dimensionality",
+        "c": "Gradient explosion",
+        "d": "Over-regularization"
+      },
+      "explanations": {
+        "a": "Incorrect because data imbalance refers to unequal class distribution.",
+        "b": "Correct because distance measures become less meaningful in high-dimensional space.",
+        "c": "Incorrect because gradient explosion is related to neural networks.",
+        "d": "Incorrect because regularization is mainly used in parametric models."
+      },
+      "correctAnswer": "b",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "The major computational disadvantage of KNN is:",
+      "answers": {
+        "a": "Long training time",
+        "b": "High prediction time due to distance calculations",
+        "c": "Requirement of labelled data",
+        "d": "Difficulty handling small datasets"
+      },
+      "explanations": {
+        "a": "Incorrect because KNN does not require an extensive training phase.",
+        "b": "Correct because distances must be computed with many training samples during prediction.",
+        "c": "Incorrect because labelled data is common for all supervised learning algorithms.",
+        "d": "Incorrect because KNN actually performs well with small datasets."
+      },
+      "correctAnswer": "b",
+      "difficulty": "advanced"
     },
     {
       "question": "KNN can be used for:",
@@ -169,7 +169,7 @@
         "d": "Incorrect because clustering does not require labelled data."
       },
       "correctAnswer": "c",
-      "difficulty": "beginner"
+      "difficulty": "advanced"
     }
   ]
 }

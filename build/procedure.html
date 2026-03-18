@@ -354,29 +354,30 @@
               <h2 id="k-nearest-neighbors-knn">k-Nearest Neighbors (KNN)</h2>
           
             </div>
-              <p>The objective of this experiment is to classify iris flowers into three categories - Setosa, Versicolor, and Virginica based on a set of morphological features. The input to the model consists of four independent variables representing sepal and petal measurements, while the output is a categorical dependent variable indicating the species of the flower. In this experiment, the k-Nearest Neighbours (KNN) algorithm is used to perform the classification based on distance similarity.The effectiveness of the model is evaluated using standard performance metrics.</p>
-          <p><strong>Step 1:</strong> Import the required libraries such as NumPy, Pandas, Matplotlib, Seaborn, and Scikit-learn.</p>
-          <p><strong>Step 2:</strong> Load the Iris dataset using <code>load_iris()</code> from <code>sklearn.datasets</code>. The dataset consists of 150 samples and 5 columns, where four columns correspond to input features (X) representing sepal and petal measurements, and one column corresponds to the output variable (Y) indicating the flower species.</p>
-          <p><strong>Step 3:</strong> Extract the feature matrix X, target labels y, feature names, and target class names from the dataset.</p>
-          <p><strong>Step 4:</strong> Create a Pandas DataFrame using the extracted feature values.</p>
-          <p><strong>Step 5:</strong> Add the class label names as a separate column in the DataFrame to improve interpretability.</p>
-          <p><strong>Step 6:</strong> Perform exploratory data analysis (EDA) using <code>head()</code>, <code>info()</code>, and <code>describe()</code> to understand the structure and summary statistics of the dataset.</p>
-          <p><strong>Step 7:</strong> Check the distribution of classes using <code>value_counts()</code>.</p>
-          <p><strong>Step 8:</strong> Check for missing values in the dataset using <code>isnull().sum()</code>.</p>
-          <p><strong>Step 9:</strong> Visualize feature distributions using histograms with kernel density estimation (KDE) for each feature across different classes.</p>
-          <p><strong>Step 10:</strong> Generate a correlation heatmap to analyse relationships among the numerical features.</p>
-          <p><strong>Step 11:</strong> Encode the target labels using the already encoded target values provided by the dataset and add them as a new column in the DataFrame.</p>
-          <p><strong>Step 12:</strong> Define the feature set X using the four numerical attributes: sepal length, sepal width, petal length, and petal width.</p>
-          <p><strong>Step 13:</strong> Define the target variable y as the encoded class labels.</p>
-          <p><strong>Step 14:</strong> Split the dataset into training and testing sets using a 70%–30% ratio with stratified sampling and a fixed random state to ensure reproducibility.</p>
-          <p><strong>Step 15:</strong> Apply feature scaling using <code>StandardScaler()</code> by fitting the scaler on the training data and transforming both training and testing datasets to ensure fair distance computation.</p>
-          <p><strong>Step 16:</strong> Binarize the test labels using <code>label_binarize()</code> to enable multi-class ROC–AUC computation.</p>
-          <p><strong>Step 17:</strong> Initialize the k-Nearest Neighbours classifier with the number of neighbours set to k = 10.</p>
-          <p><strong>Step 18:</strong> Train the KNN model using the scaled training dataset.</p>
-          <p><strong>Step 19:</strong> Predict the class labels using <code>predict()</code> and class probabilities using <code>predict_proba()</code> on the test dataset.</p>
-          <p><strong>Step 20:</strong> Evaluate the model performance using Accuracy, Precision (macro average), Recall (macro average), F1-Score (macro average), and ROC–AUC (One-vs-Rest, multi-class).</p>
-          <p><strong>Step 21:</strong> Generate a classification report showing precision, recall, and F1-score for each class.</p>
-          <p><strong>Step 22:</strong> Plot a confusion matrix heatmap to visualize the classification performance of the model.</p>
+              <h2 id="procedure">Procedure</h2>
+          <p>The objective of this experiment is to classify iris flowers into three categories - Setosa, Versicolor, and Virginica based on a set of morphological features. The input to the model consists of four independent variables representing sepal and petal measurements, while the output is a categorical dependent variable indicating the species of the flower. In this experiment, the k-Nearest Neighbours (KNN) algorithm is used to perform classification based on distance similarity. The effectiveness of the model is evaluated using standard performance metrics.</p>
+          <p><strong>Step 1:</strong> Import required libraries such as NumPy, Pandas, Matplotlib, Seaborn, and Scikit-learn.</p>
+          <p><strong>Step 2:</strong> Load the Iris dataset using <code>load_iris()</code> from <code>sklearn.datasets</code>. The dataset has 150 samples and 5 columns, where four columns are input features (X) and one column is the output label (Y).</p>
+          <p><strong>Step 3:</strong> Extract the feature matrix X, target labels y, feature names, and target class names.</p>
+          <p><strong>Step 4:</strong> Create a Pandas DataFrame from extracted feature values.</p>
+          <p><strong>Step 5:</strong> Add class label names as a separate column in the DataFrame for interpretability.</p>
+          <p><strong>Step 6:</strong> Perform exploratory data analysis using <code>head()</code>, <code>info()</code>, and <code>describe()</code>.</p>
+          <p><strong>Step 7:</strong> Check class distribution with <code>value_counts()</code>.</p>
+          <p><strong>Step 8:</strong> Check missing values using <code>isnull().sum()</code>.</p>
+          <p><strong>Step 9:</strong> Visualize feature distributions using histograms with KDE for each class.</p>
+          <p><strong>Step 10:</strong> Generate a correlation heatmap for numerical features.</p>
+          <p><strong>Step 11:</strong> Use encoded target values and add them as a new DataFrame column.</p>
+          <p><strong>Step 12:</strong> Define feature set X using four numerical attributes: sepal length, sepal width, petal length, and petal width.</p>
+          <p><strong>Step 13:</strong> Define target variable y using encoded class labels.</p>
+          <p><strong>Step 14:</strong> Split dataset into training and testing sets in 70%–30% ratio with stratified sampling and fixed random state.</p>
+          <p><strong>Step 15:</strong> Apply feature scaling with <code>StandardScaler()</code> by fitting on training data and transforming both train and test sets.</p>
+          <p><strong>Step 16:</strong> Binarize test labels using <code>label_binarize()</code> for multi-class ROC–AUC computation.</p>
+          <p><strong>Step 17:</strong> Initialize the KNN classifier with <code>k = 10</code> neighbours.</p>
+          <p><strong>Step 18:</strong> Train the KNN model on scaled training data.</p>
+          <p><strong>Step 19:</strong> Predict class labels with <code>predict()</code> and class probabilities with <code>predict_proba()</code> on test data.</p>
+          <p><strong>Step 20:</strong> Evaluate model performance using Accuracy, Precision (macro), Recall (macro), F1-Score (macro), and ROC–AUC (One-vs-Rest, multi-class).</p>
+          <p><strong>Step 21:</strong> Generate classification report for all classes.</p>
+          <p><strong>Step 22:</strong> Plot confusion matrix heatmap to visualize class-wise performance.</p>
           
           </div>
           <div class="bug-report-mobile">

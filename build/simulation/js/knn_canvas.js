@@ -111,11 +111,15 @@ function distance(x1, y1, x2, y2) {
 /**
  * Find K nearest neighbors from training points to a given point
  */
-function findKNearestNeighbors(targetPoint, trainPoints, k) {
+function findKNearestNeighbors(targetPoint, trainPoints, k, isManhattan = false) {
+    const distFn = isManhattan 
+        ? (x1, y1, x2, y2) => Math.abs(x1 - x2) + Math.abs(y1 - y2)
+        : (x1, y1, x2, y2) => Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
+
     const distances = trainPoints.map((p, idx) => ({
         point: p,
         idx,
-        dist: distance(targetPoint.x, targetPoint.y, p.x, p.y)
+        dist: distFn(targetPoint.x, targetPoint.y, p.x, p.y)
     }));
 
     distances.sort((a, b) => a.dist - b.dist);
@@ -151,6 +155,52 @@ function drawArrow(ctx, fromX, fromY, toX, toY, color = COLORS.arrow) {
     // Clean arrowhead
     ctx.shadowBlur = 0;
     ctx.globalAlpha = 0.85;
+    ctx.beginPath();
+    ctx.moveTo(toX, toY);
+    ctx.lineTo(
+        toX - headLength * Math.cos(angle - Math.PI / 6),
+        toY - headLength * Math.sin(angle - Math.PI / 6)
+    );
+    ctx.lineTo(
+        toX - headLength * Math.cos(angle + Math.PI / 6),
+        toY - headLength * Math.sin(angle + Math.PI / 6)
+    );
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.restore();
+}
+
+/**
+ * Draw Manhattan distance line (L-shape) from source to target
+ */
+function drawManhattanLine(ctx, fromX, fromY, toX, toY, color = COLORS.arrow) {
+    const headLength = 7;
+    ctx.save();
+    
+    ctx.shadowColor = color;
+    ctx.shadowBlur = 4;
+    
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.lineWidth = 1.5;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.globalAlpha = 0.75;
+
+    // Draw L-shape line (horizontal then vertical)
+    ctx.beginPath();
+    ctx.moveTo(fromX, fromY);
+    ctx.lineTo(toX, fromY);
+    ctx.lineTo(toX, toY);
+    ctx.stroke();
+
+    // Arrowhead at the end (pointing vertical)
+    ctx.shadowBlur = 0;
+    ctx.globalAlpha = 0.85;
+    const isUp = toY < fromY;
+    const angle = isUp ? -Math.PI / 2 : Math.PI / 2;
+    
     ctx.beginPath();
     ctx.moveTo(toX, toY);
     ctx.lineTo(
@@ -287,11 +337,11 @@ function renderDecisionBoundary(canvas, data, options = {}) {
     const height = options.height || 400;
     const ctx = setupHighDPICanvas(canvas, width, height);
 
-    const padding = options.padding || { top: 25, right: 25, bottom: 25, left: 25 }; // Increased padding
+    const padding = options.padding || { top: 30, right: 30, bottom: 60, left: 65 };
     const plotWidth = width - padding.left - padding.right;
     const plotHeight = height - padding.top - padding.bottom;
 
-    // Clear canvas with dark background
+    // Draw background with dark background
     ctx.fillStyle = COLORS.background;
     ctx.fillRect(0, 0, width, height);
 
@@ -303,83 +353,70 @@ function renderDecisionBoundary(canvas, data, options = {}) {
     const selectedTestIdx = options.selectedTestIdx;
     const k = options.k || 6;
 
-    // Determine bounds - dynamic scaling based on data
+    // ... (rest of the bounds calculation)
+    // Actually I'll just write the whole block to be safe.
+    
+    // Determine bounds
     let bounds = options.bounds;
-
     if (!bounds) {
-        // Calculate bounds from points if not provided or if boundary is packed string
         let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-
         const allPoints = [...trainPoints, ...testPoints];
         if (allPoints.length > 0) {
             allPoints.forEach(p => {
-                if (p.x < minX) minX = p.x;
-                if (p.x > maxX) maxX = p.x;
-                if (p.y < minY) minY = p.y;
-                if (p.y > maxY) maxY = p.y;
+                if (p.x < minX) minX = p.x; if (p.x > maxX) maxX = p.x;
+                if (p.y < minY) minY = p.y; if (p.y > maxY) maxY = p.y;
             });
-
-            // Add 10% padding
-            const paddingX = (maxX - minX) * 0.1;
-            const paddingY = (maxY - minY) * 0.1;
-
+            const paddingX = (maxX - minX) * 0.1 || 1.0;
+            const paddingY = (maxY - minY) * 0.1 || 1.0;
             bounds = {
-                x_min: minX - paddingX,
-                x_max: maxX + paddingX,
-                y_min: minY - paddingY,
-                y_max: maxY + paddingY
+                x_min: minX - paddingX, x_max: maxX + paddingX,
+                y_min: minY - paddingY, y_max: maxY + paddingY
             };
         } else {
-            // Fallback default
             bounds = { x_min: -3, x_max: 3, y_min: -3, y_max: 3 };
         }
     }
 
-    // Scale functions
     const scaleX = (x) => padding.left + ((x - bounds.x_min) / (bounds.x_max - bounds.x_min)) * plotWidth;
     const scaleY = (y) => padding.top + plotHeight - ((y - bounds.y_min) / (bounds.y_max - bounds.y_min)) * plotHeight;
 
-    // Draw decision boundary
+    // 1. Draw Grid Lines (Subtle)
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+    ctx.lineWidth = 1;
+    for (let i = 0; i <= 10; i++) {
+        const x = scaleX(bounds.x_min + (bounds.x_max - bounds.x_min) * (i / 10));
+        ctx.beginPath(); ctx.moveTo(x, padding.top); ctx.lineTo(x, padding.top + plotHeight); ctx.stroke();
+    }
+    for (let i = 0; i <= 10; i++) {
+        const y = scaleY(bounds.y_min + (bounds.y_max - bounds.y_min) * (i / 10));
+        ctx.beginPath(); ctx.moveTo(padding.left, y); ctx.lineTo(padding.left + plotWidth, y); ctx.stroke();
+    }
+
+    // 2. Draw Decision Boundary
     if (options.showBoundary) {
-        // Handle packed bitmap (string) or legacy 2D array
-        let gridData = boundary; // Legacy: assume it's the grid
+        let gridData = boundary;
         if (typeof boundary === 'string') {
             const resolution = options.resolution || 200;
             gridData = decodeBitmap(boundary, resolution * resolution);
-
-            // Render from flat array
             const cellWidth = plotWidth / resolution;
             const cellHeight = plotHeight / resolution;
-
-            // OPTIMIZATION: Use fewer fill interactions or just iterate
-            // For 200x200 = 40,000 rects, fillRect is fast enough on modern canvas
-            // But let's be cleaner.
-
             for (let i = 0; i < resolution; i++) {
                 for (let j = 0; j < resolution; j++) {
                     const idx = i * resolution + j;
-                    const classIdx = gridData[idx];
-
-                    ctx.fillStyle = COLORS.classesAlpha[classIdx];
-                    // Note: i is row (y), j is col (x)
-                    // In meshgrid, usually rows are Y. Our generation matches this.
-                    // Draw 1px larger to avoid anti-aliasing gaps
+                    ctx.fillStyle = COLORS.classesAlpha[gridData[idx]];
                     const x = padding.left + j * cellWidth;
                     const y = padding.top + (resolution - 1 - i) * cellHeight;
                     ctx.fillRect(x, y, cellWidth + 0.5, cellHeight + 0.5);
                 }
             }
-        } else if (boundary.grid) {
-            // Legacy object with .grid property
+        } else if (boundary && boundary.grid) {
             const grid = boundary.grid;
             const gridSize = grid.length;
             const cellWidth = plotWidth / (gridSize - 1);
             const cellHeight = plotHeight / (gridSize - 1);
-
             for (let i = 0; i < gridSize; i++) {
                 for (let j = 0; j < gridSize; j++) {
-                    const classIdx = grid[i][j];
-                    ctx.fillStyle = COLORS.classesAlpha[classIdx];
+                    ctx.fillStyle = COLORS.classesAlpha[grid[i][j]];
                     const x = padding.left + j * cellWidth;
                     const y = padding.top + (gridSize - 1 - i) * cellHeight;
                     ctx.fillRect(x, y, cellWidth + 1, cellHeight + 1);
@@ -388,26 +425,45 @@ function renderDecisionBoundary(canvas, data, options = {}) {
         }
     }
 
-    // Draw finer grid lines (30 divisions, more visible)
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; // More visible grid
-    ctx.lineWidth = 0.5;
-    const GRID_DIVISIONS_FINE = 30;
+    // 3. Draw Axes Lines
+    ctx.strokeStyle = COLORS.axis;
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, padding.top);
+    ctx.lineTo(padding.left, padding.top + plotHeight);
+    ctx.lineTo(padding.left + plotWidth, padding.top + plotHeight);
+    ctx.stroke();
 
-    for (let i = 0; i <= GRID_DIVISIONS_FINE; i++) {
-        const x = padding.left + (plotWidth / GRID_DIVISIONS_FINE) * i;
-        ctx.beginPath();
-        ctx.moveTo(x, padding.top);
-        ctx.lineTo(x, padding.top + plotHeight);
-        ctx.stroke();
+    // 4. Draw Ticks and Labels
+    ctx.fillStyle = COLORS.textMuted;
+    ctx.font = FONT.tick;
+    ctx.textAlign = 'center';
+    for (let i = 0; i <= 5; i++) {
+        const xVal = bounds.x_min + (bounds.x_max - bounds.x_min) * (i / 5);
+        const x = scaleX(xVal);
+        ctx.beginPath(); ctx.moveTo(x, padding.top + plotHeight); ctx.lineTo(x, padding.top + plotHeight + 5); ctx.stroke();
+        ctx.fillText(xVal.toFixed(1), x, padding.top + plotHeight + 16);
+    }
+    ctx.textAlign = 'right';
+    for (let i = 0; i <= 5; i++) {
+        const yVal = bounds.y_min + (bounds.y_max - bounds.y_min) * (i / 5);
+        const y = scaleY(yVal);
+        ctx.beginPath(); ctx.moveTo(padding.left, y); ctx.lineTo(padding.left - 5, y); ctx.stroke();
+        ctx.fillText(yVal.toFixed(1), padding.left - 8, y + 4);
     }
 
-    for (let i = 0; i <= GRID_DIVISIONS_FINE; i++) {
-        const y = padding.top + (plotHeight / GRID_DIVISIONS_FINE) * i;
-        ctx.beginPath();
-        ctx.moveTo(padding.left, y);
-        ctx.lineTo(padding.left + plotWidth, y);
-        ctx.stroke();
-    }
+    // 5. Draw Axis Titles
+    ctx.fillStyle = COLORS.text;
+    ctx.font = FONT.label;
+    ctx.textAlign = 'center';
+    const xAxisLabel = options.xAxisLabel || (options.isFeaturePair ? 'Feature 1' : 'Principal Component 1');
+    const yAxisLabel = options.yAxisLabel || (options.isFeaturePair ? 'Feature 2' : 'Principal Component 2');
+    ctx.fillText(xAxisLabel, padding.left + plotWidth / 2, padding.top + plotHeight + 40);
+    ctx.save();
+    ctx.translate(padding.left - 45, padding.top + plotHeight / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText(yAxisLabel, 0, 0);
+    ctx.restore();
 
     // CLIP TO PLOT AREA to prevent points from leaking outside
     ctx.save();
@@ -422,12 +478,15 @@ function renderDecisionBoundary(canvas, data, options = {}) {
     let selectedPointCoords = null;
     if (selectedTestIdx !== undefined && selectedTestIdx !== null && testPoints[selectedTestIdx]) {
         const selectedPoint = testPoints[selectedTestIdx];
-        selectedNeighbors = findKNearestNeighbors(selectedPoint, trainPoints, k);
+        const isManhattan = options.distanceMetric === 'manhattan';
+        selectedNeighbors = findKNearestNeighbors(selectedPoint, trainPoints, k, isManhattan);
         selectedPointCoords = { x: scaleX(selectedPoint.x), y: scaleY(selectedPoint.y) };
+
+        const drawLineFn = isManhattan ? drawManhattanLine : drawArrow;
 
         // Draw arrows
         selectedNeighbors.forEach(neighbor => {
-            drawArrow(
+            drawLineFn(
                 ctx,
                 selectedPointCoords.x,
                 selectedPointCoords.y,
@@ -505,8 +564,9 @@ function renderDecisionBoundary(canvas, data, options = {}) {
     const testAlpha = blurTest ? 0.15 : 1;
     testPoints.forEach((p, idx) => {
         const isSelected = selectedTestIdx === idx;
+        const isManhattan = options.distanceMetric === 'manhattan';
 
-        const neighbors = findKNearestNeighbors(p, trainPoints, k);
+        const neighbors = findKNearestNeighbors(p, trainPoints, k, isManhattan);
         const counts = [0, 0, 0];
         neighbors.forEach(n => counts[n.point.c]++);
         let maxCount = -1;
@@ -974,6 +1034,55 @@ function renderDemoFrame(canvas, plotData, k, samples) {
     });
 }
 
+/**
+ * Draw Manhattan-style L-shaped line from source to target (horizontal then vertical)
+ */
+function drawManhattanLine(ctx, fromX, fromY, toX, toY, color = COLORS.arrow) {
+    const headLength = 7;
+    // Corner point: go horizontal first, then vertical
+    const cornerX = toX;
+    const cornerY = fromY;
+
+    ctx.save();
+    
+    // Subtle glow
+    ctx.shadowColor = color;
+    ctx.shadowBlur = 4;
+    
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.lineWidth = 1.5;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.globalAlpha = 0.75;
+
+    // Draw L-shaped path
+    ctx.beginPath();
+    ctx.moveTo(fromX, fromY);
+    ctx.lineTo(cornerX, cornerY);  // Horizontal segment
+    ctx.lineTo(toX, toY);          // Vertical segment
+    ctx.stroke();
+
+    // Arrowhead at the end (pointing in the vertical direction)
+    ctx.shadowBlur = 0;
+    ctx.globalAlpha = 0.85;
+    const angle = Math.atan2(toY - cornerY, toX - cornerX);
+    ctx.beginPath();
+    ctx.moveTo(toX, toY);
+    ctx.lineTo(
+        toX - headLength * Math.cos(angle - Math.PI / 6),
+        toY - headLength * Math.sin(angle - Math.PI / 6)
+    );
+    ctx.lineTo(
+        toX - headLength * Math.cos(angle + Math.PI / 6),
+        toY - headLength * Math.sin(angle + Math.PI / 6)
+    );
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.restore();
+}
+
 // Expose functions globally via window.CanvasRenderer
 window.CanvasRenderer = {
     renderDecisionBoundary,
@@ -982,5 +1091,12 @@ window.CanvasRenderer = {
     renderDemoFrame,
     findClickedTestPoint,
     findKNearestNeighbors,
-    COLORS
+    drawArrow,
+    drawManhattanLine,
+    drawTooltip,
+    setupHighDPICanvas,
+    lightenColor,
+    darkenColor,
+    COLORS,
+    FONT
 };
