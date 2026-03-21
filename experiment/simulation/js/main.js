@@ -428,76 +428,22 @@ let currentConfig = {
     metric: 'euclidean'
 };
 
-// ==========================================
-// INITIALIZATION
-// ==========================================
-
-document.addEventListener('DOMContentLoaded', () => {
-    init();
-});
-
-// DOM Elements
-let stepsContainer, codeDisplay, outputDisplay, runBtn, bottomPane;
-
-function init() {
-    stepsContainer = document.getElementById('stepsContainer');
-    codeDisplay = document.getElementById('codeDisplay');
-    outputDisplay = document.getElementById('outputDisplay');
-    bottomPane = document.querySelector('.bottom-pane');
-    runBtn = document.getElementById('runBtn');
-
-    // Load all 7 steps from STEPS_KNN (23 cells mapped across 7 categories)
-    STEPS = STEPS_KNN.map(step => ({ ...step }));
-
-    // Initialize State
-    EXPERIMENT_STATE.stepIndex = 0;
-    EXPERIMENT_STATE.subStepIndex = 0;
-    EXPERIMENT_STATE.stepsStatus = STEPS.map((_, i) => ({ unlocked: i === 0, completed: false, partial: false }));
-
-    renderSidebar();
-    loadStep(0);
-}
-
-// Global exposure
-window.selectDistanceMetric = selectDistanceMetric;
-window.runStep = runStep;
-window.nextSubStep = nextSubStep;
-window.restartExperiment = restartExperiment;
-window.showMetricSelector = showMetricSelector;
-
-// Show Metric Selector
-function showMetricSelector() {
-    document.querySelector('.top-pane').style.display = 'none';
-    document.querySelector('.bottom-pane').style.display = 'none';
-    document.getElementById('metricSelectorPane').style.display = 'flex';
-}
-
-function selectDistanceMetric(metric) {
-    currentConfig.metric = metric;
-    document.getElementById('metricSelectorPane').style.display = 'none';
-    document.querySelector('.top-pane').style.display = '';
-    document.querySelector('.bottom-pane').style.display = '';
-
-    const label = metric.charAt(0).toUpperCase() + metric.slice(1);
-    
-    // Update Model Training step (Step 5) with selected metric
-    STEPS[4] = {
-        title: `Model Training (${label})`,
+const EUCLIDEAN_STEPS = {
+    training: {
+        title: "Model Training",
         blocks: [{
-            comment: `Initialize and fit KNN model with ${label} distance (k=10)`,
+            comment: "Initialize and fit KNN model with Euclidean distance (k=10)",
             code: `# Model Training
 
 # k = 10 (Heuristic Rule)
-model = KNeighborsClassifier(n_neighbors=10, metric='${metric}')
+model = KNeighborsClassifier(n_neighbors=10, metric='euclidean')
 model.fit(X_train_s, y_train)
-print("Model trained using ${label} distance with k=10")`,
-            output: `<div class="output-success">Model trained using ${label} distance with k=10<br>KNeighborsClassifier(metric='${metric}', n_neighbors=10)</div>`
+print("Model trained using Euclidean distance with k=10")`,
+            output: `<div class="output-success">Model trained using Euclidean distance with k=10<br>KNeighborsClassifier(metric='euclidean', n_neighbors=10)</div>`
         }]
-    };
-
-    // Update Model Evaluation step (Step 6) with selected metric
-    STEPS[5] = {
-        title: `Model Evaluation (${label})`,
+    },
+    evaluation: {
+        title: "Model Evaluation",
         blocks: [
             {
                 comment: "Generate predictions on test data",
@@ -521,7 +467,7 @@ y_prob[:5]`,
             },
             {
                 comment: "Generate classification report",
-                code: `print("\\nClassification Report (${label}, k=10):")
+                code: `print("\\nClassification Report (Euclidean, k=10):")
 print(classification_report(
     y_test,
     y_pred,
@@ -529,7 +475,7 @@ print(classification_report(
     digits=4
 ))`,
                 output: `<div class="output-text"><pre style="font-family: monospace; margin: 0;">
-Classification Report (${label}, k=10):
+Classification Report (Euclidean, k=10):
               precision    recall  f1-score   support
 
       setosa     1.0000    1.0000    1.0000        15
@@ -550,20 +496,18 @@ sns.heatmap(
     )
 plt.xlabel("Predicted", fontweight='bold')
 plt.ylabel("True", fontweight='bold')
-plt.title("Confusion Matrix Heatmap (KNN, ${label}, k=10)", fontweight='bold')
+plt.title("Confusion Matrix Heatmap (KNN, Euclidean, k=10)", fontweight='bold')
 plt.tight_layout()
 plt.show()`,
                 output: `<img src="images/Confusion_Matrix_Heatmap_KNN_k_10.png" style="max-width:100%; height:auto; border: 1px solid #ddd; padding: 5px;">`
             }
         ]
-    };
-
-    // Keep Model Simulation step (Step 7)
-    STEPS[6] = {
+    },
+    simulation: {
         title: "Model Simulation",
         blocks: [
             {
-                comment: `Final Metrics - Accuracy, Precision, Recall, F1 and ROC-AUC (${label})`,
+                comment: "Final Metrics - Accuracy, Precision, Recall, F1 and ROC-AUC (Euclidean)",
                 code: `# Final Metrics
 
 # Accuracy will be same as F1 score as dataset is perfectly balanced and stratified
@@ -581,8 +525,59 @@ ROC        : 0.9948148148148149
 </div>`
             }
         ]
-    };
+    }
+};
 
+// ==========================================
+// INITIALIZATION
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    init();
+});
+
+// DOM Elements
+let stepsContainer, codeDisplay, outputDisplay, runBtn, bottomPane;
+
+function init() {
+    stepsContainer = document.getElementById('stepsContainer');
+    codeDisplay = document.getElementById('codeDisplay');
+    outputDisplay = document.getElementById('outputDisplay');
+    bottomPane = document.querySelector('.bottom-pane');
+    runBtn = document.getElementById('runBtn');
+
+    // Load all 7 steps from STEPS_KNN (23 cells mapped across 7 categories)
+    STEPS = STEPS_KNN.map(step => ({ ...step }));
+    STEPS[4] = { ...EUCLIDEAN_STEPS.training };
+    STEPS[5] = { ...EUCLIDEAN_STEPS.evaluation };
+    STEPS[6] = { ...EUCLIDEAN_STEPS.simulation };
+
+    // Initialize State
+    EXPERIMENT_STATE.stepIndex = 0;
+    EXPERIMENT_STATE.subStepIndex = 0;
+    EXPERIMENT_STATE.stepsStatus = STEPS.map((_, i) => ({ unlocked: i === 0, completed: false, partial: false }));
+
+    renderSidebar();
+    loadStep(0);
+}
+
+// Global exposure
+window.selectDistanceMetric = selectDistanceMetric;
+window.runStep = runStep;
+window.nextSubStep = nextSubStep;
+window.restartExperiment = restartExperiment;
+window.showMetricSelector = showMetricSelector;
+
+// Show Metric Selector
+function showMetricSelector() {
+    loadStep(4);
+}
+
+function selectDistanceMetric(metric) {
+    currentConfig.metric = 'euclidean';
+    STEPS[4] = { ...EUCLIDEAN_STEPS.training };
+    STEPS[5] = { ...EUCLIDEAN_STEPS.evaluation };
+    STEPS[6] = { ...EUCLIDEAN_STEPS.simulation };
     EXPERIMENT_STATE.stepsStatus[4].unlocked = true;
     renderSidebar();
     loadStep(4);
@@ -599,7 +594,7 @@ function renderSidebar() {
         
         let label = `${index + 1}. ${step.title}`;
         if (status.completed) label = `✓ ${step.title}`;
-        btn.innerText = label;
+        btn.textContent = label;
 
         if (status.unlocked) {
             if (status.completed) btn.classList.add('completed');
@@ -783,7 +778,7 @@ function runStep() {
                 EXPERIMENT_STATE.stepsStatus[EXPERIMENT_STATE.stepIndex + 1].unlocked = true;
                 renderSidebar();
                 
-                // After Data Preprocessing (step 3), show metric selector
+                // After Data Preprocessing (step 3), continue directly to Model Training
                 if (EXPERIMENT_STATE.stepIndex === 3) {
                     setTimeout(() => {
                         runBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
@@ -791,7 +786,7 @@ function runStep() {
                         runBtn.classList.add('arrow-mode');
                         runBtn.style.backgroundColor = '#5FA8E4';
                         runBtn.disabled = false;
-                        runBtn.onclick = showMetricSelector;
+                        runBtn.onclick = function() { loadStep(EXPERIMENT_STATE.stepIndex + 1); };
                     }, 500);
                 } else {
                     setTimeout(() => {
