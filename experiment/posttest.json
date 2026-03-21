@@ -163,7 +163,7 @@
         "d": "To normalize the feature values"
       },
       "explanations": {
-        "a": "Incorrect because stratified sampling does not change dataset size.",
+        "a": "Incorrect because stratified sampling does not change the dataset size.",
         "b": "Correct because stratified sampling maintains the same class distribution in both subsets.",
         "c": "Incorrect because feature selection and stratified sampling are different processes.",
         "d": "Incorrect because normalization is performed during feature scaling."
