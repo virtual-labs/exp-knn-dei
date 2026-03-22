@@ -1,5 +1,3 @@
-## Procedure
-
 The objective of this experiment is to classify iris flowers into three categories - Setosa, Versicolor, and Virginica based on a set of morphological features. The input to the model consists of four independent variables representing sepal and petal measurements, while the output is a categorical dependent variable indicating the species of the flower. In this experiment, the k-Nearest Neighbours (KNN) algorithm is used to perform the classification based on distance similarity. The effectiveness of the model is evaluated using standard performance metrics.
 
 **Step 1:** Import the required libraries such as NumPy, Pandas, Matplotlib, Seaborn, and Scikit-learn.
