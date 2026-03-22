@@ -6,4 +6,4 @@
 
 3. https://www.scaler.com/topics/machine-learning/knn-algorithm-in-machine-learning/
 
-4. Scikit-learn developers. *Nearest neighbours Classification example*.
+4. [Scikit-learn developers. *Nearest neighbours Classification example*.](https://scikit-learn.org/stable/auto_examples/neighbors/plot_classification.html)
