@@ -1,0 +1,2059 @@
+/* ==================== SCOPED TO ANIMATION CONTAINER ONLY ==================== */
+/* All styles are scoped to #knnAnimationContainer to avoid affecting experiment steps */
+
+#knnAnimationContainer * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#knnAnimationContainer {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  font-family: 'Consolas', 'Monaco', 'SF Mono', monospace;
+  background: #1a1d21;
+  background: radial-gradient(circle at center, #1e2520, #1a1d21);
+  color: #e0e0e0;
+  line-height: 1.6;
+  z-index: 10000 !important;
+  display: none; /* Hidden by default */
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#knnAnimationContainer.active {
+  display: flex;
+}
+
+/* ==================== LOADING SCREEN ==================== */
+#knnAnimationContainer .loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, #1e2520, #1a1d21);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#knnAnimationContainer .loading-screen.hidden {
+  display: none;
+}
+
+#knnAnimationContainer .loading-content {
+  text-align: center;
+}
+
+#knnAnimationContainer .progress-bar-container {
+  width: 300px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  margin: 20px auto 10px;
+  overflow: hidden;
+}
+
+#knnAnimationContainer .progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #4CAF50, #81C784);
+  transition: width 0.3s ease;
+}
+
+#knnAnimationContainer .loading-content h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #4CAF50, #81C784);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+#knnAnimationContainer .loading-content p {
+  color: #9e9e9e;
+  font-size: 0.9em;
+}
+
+#knnAnimationContainer .loading-percent {
+  margin-top: 5px;
+  font-size: 0.8em;
+  color: #666;
+}
+
+/* ==================== BACK BUTTON ==================== */
+#knnAnimationContainer .back-btn {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 8px;
+  color: #81C784;
+  font-size: 0.85em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+#knnAnimationContainer .back-btn:hover {
+  background: rgba(76, 175, 80, 0.2);
+  border-color: rgba(76, 175, 80, 0.5);
+  transform: translateY(-50%) translateX(-2px);
+}
+
+#knnAnimationContainer .back-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ==================== CHOICE SCREEN ==================== */
+#knnAnimationContainer .choice-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(26, 29, 33, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(10px);
+}
+
+#knnAnimationContainer .choice-content {
+  text-align: center;
+  max-width: 600px;
+  padding: 40px;
+  background: rgba(30, 37, 32, 0.9);
+  border-radius: 20px;
+  border: 1px solid rgba(18, 63, 19, 0.3);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+#knnAnimationContainer .choice-content h1 {
+  font-size: 2em;
+  margin-bottom: 5px;
+  background: linear-gradient(135deg, #4d6639, #81C784);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#knnAnimationContainer .choice-content .subtitle {
+  color: #999;
+  margin-bottom: 30px;
+}
+
+#knnAnimationContainer .choice-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+#knnAnimationContainer .choice-btn {
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 12px;
+  padding: 15px 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  min-width: 200px;
+}
+
+#knnAnimationContainer .choice-btn:hover {
+  background: rgba(76, 175, 80, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+}
+
+#knnAnimationContainer .choice-btn .btn-title {
+  display: block;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+#knnAnimationContainer .choice-btn .btn-desc {
+  display: block;
+  font-size: 0.8em;
+  color: #aaa;
+}
+
+#knnAnimationContainer .choice-btn.warning .btn-desc {
+  color: #ffcc80;
+}
+
+#knnAnimationContainer .demo-gif-container {
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+#knnAnimationContainer .demo-canvas {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 8px;
+  background: #0d0d0d;
+}
+
+/* ==================== LOADING SCREEN ==================== */
+#knnAnimationContainer .loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, #1e2520, #1a1d21);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#knnAnimationContainer .loading-content {
+  text-align: center;
+}
+
+#knnAnimationContainer .progress-bar-container {
+  width: 300px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  margin: 20px auto 10px;
+  overflow: hidden;
+}
+
+#knnAnimationContainer .progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4CAF50, #81C784);
+  transition: width 0.3s ease;
+}
+
+#knnAnimationContainer .loading-content h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #4CAF50, #81C784);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+#knnAnimationContainer .loading-content p {
+  color: #9e9e9e;
+  font-size: 0.9em;
+}
+
+/* ==================== CONTAINER ==================== */
+#knnAnimationContainer .container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at center, #1e2823, #1a1d21);
+}
+
+/* ==================== HEADER ==================== */
+#knnAnimationContainer header {
+  background: linear-gradient(135deg, #1f2823, #242830);
+  color: #ffffff;
+  padding: 15px 20px;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  z-index: 20;
+  display: flex;
+  flex-direction: column; /* Stack to center vertically */
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+#knnAnimationContainer header h1 {
+  font-size: 1.5em;
+  margin: 0;
+  font-weight: 700;
+  background: linear-gradient(135deg, #4CAF50, #81C784);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ==================== CONTENT LAYOUT ==================== */
+#knnAnimationContainer .content {
+  display: flex !important;
+  flex: 1 !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  position: relative !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+}
+
+/* ==================== SIDEBAR ==================== */
+#knnAnimationContainer .sidebar {
+  width: 380px !important;
+  flex-shrink: 0 !important;  /* Prevent sidebar from shrinking */
+  background: #111 !important;
+  border-right: 1px solid #333 !important;
+  padding: 20px !important;
+  overflow-y: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 15px !important;
+  z-index: 20 !important;
+}
+
+#knnAnimationContainer .sidebar-section {
+  margin-bottom: 5px;
+}
+
+#knnAnimationContainer .control-group {
+  margin-bottom: 20px;
+}
+
+#knnAnimationContainer .control-group:last-child {
+  margin-bottom: 0;
+}
+
+#knnAnimationContainer .sidebar h3 {
+  color: #81C784;
+  font-size: 0.85em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(76, 175, 80, 0.3);
+  /* Separation line */
+  padding-bottom: 5px;
+  padding-left: 0;
+}
+
+#knnAnimationContainer .section-subtitle {
+  color: #9e9e9e;
+  font-size: 0.8em;
+  margin-top: -10px;
+  margin-bottom: 15px;
+  font-family: monospace;
+}
+
+#knnAnimationContainer .sidebar-divider {
+  border: 0;
+  display: block;
+  width: 100%;
+}
+
+#knnAnimationContainer .sidebar-divider.thick {
+  height: 4px !important;
+  background: #2e7d32;
+  /* Fallback */
+  background: linear-gradient(90deg, rgba(76, 175, 80, 0.2), rgba(76, 175, 80, 0.9), rgba(76, 175, 80, 0.2)) !important;
+  margin: 25px 0 !important;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+  opacity: 1 !important;
+}
+
+#knnAnimationContainer .thick-separator {
+  height: 4px;
+  background: linear-gradient(90deg, rgba(76, 175, 80, 0.2), rgba(76, 175, 80, 0.9), rgba(76, 175, 80, 0.2));
+  margin: 25px 0;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+#knnAnimationContainer .auto-pilot-section {
+  border: 1px solid rgba(129, 199, 132, 0.3);
+  border-radius: 8px;
+  padding: 15px;
+  background: rgba(129, 199, 132, 0.05);
+}
+
+/* ==================== K VALUE BUTTONS ==================== */
+#knnAnimationContainer .k-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+#knnAnimationContainer .k-btn {
+  flex: 1;
+  padding: 10px;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(76, 175, 80, 0.1));
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 6px;
+  color: #3bbfa0;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-size: 0.9em;
+}
+
+#knnAnimationContainer .k-btn:hover {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(76, 175, 80, 0.15));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+#knnAnimationContainer .k-btn.active {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.35), rgba(76, 175, 80, 0.2));
+  border-color: #4CAF50;
+  color: #4CAF50;
+  box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
+}
+
+/* ==================== FEATURE BUTTON ==================== */
+/* ==================== FEATURE BUTTON ==================== */
+#knnAnimationContainer .feature-btn {
+  width: 100%;
+  padding: 12px;
+  background: rgba(30, 60, 40, 0.6);
+  border: 1px solid #4CAF50;
+  color: #4CAF50;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85em;
+  margin-bottom: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 0 10px rgba(76, 175, 80, 0.4);
+}
+
+#knnAnimationContainer .feature-btn:hover {
+  background: rgba(76, 175, 80, 0.2);
+  box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+  transform: translateY(-1px);
+}
+
+/* ==================== SPEED CONTROL ==================== */
+#knnAnimationContainer .speed-control {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(76, 175, 80, 0.15);
+}
+
+#knnAnimationContainer .run-btn {
+  width: 100%;
+  padding: 12px;
+  background: #388e3c;
+  /* Darker green */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  font-size: 0.95em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+#knnAnimationContainer .run-btn:hover {
+  background: #43a047;
+  /* Slightly lighter on hover */
+  transform: translateY(-1px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
+}
+
+#knnAnimationContainer .run-btn.active {
+  background: linear-gradient(135deg, #2e7d32, #1b5e20);
+  border: 1px solid #81C784;
+}
+
+/* ==================== SLIDERS ==================== */
+#knnAnimationContainer .slider-container {
+  margin-bottom: 15px;
+  position: relative;
+}
+
+#knnAnimationContainer .slider-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #bdbdbd;
+  font-size: 0.85em;
+}
+
+#knnAnimationContainer .slider-value {
+  color: #4CAF50;
+  font-weight: 700;
+  font-family: 'Consolas', 'Monaco', monospace;
+}
+
+#knnAnimationContainer .slider-with-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#knnAnimationContainer .slider-control-btn {
+  background: rgba(76, 175, 80, 0.15);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #d4d45a;
+  font-size: 0.7em;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+#knnAnimationContainer .slider-control-btn:hover {
+  background: rgba(76, 175, 80, 0.25);
+  border-color: rgba(76, 175, 80, 0.5);
+  transform: scale(1.05);
+}
+
+#knnAnimationContainer input[type="range"] {
+  flex: 1;
+  height: 5px;
+  border-radius: 3px;
+  background: #424242;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+#knnAnimationContainer input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #4CAF50;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#knnAnimationContainer input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 12px rgba(76, 175, 80, 0.6);
+}
+
+/* ==================== METRICS PANEL ==================== */
+#knnAnimationContainer .metrics-panel {
+  background: rgba(76, 175, 80, 0.05);
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+#knnAnimationContainer .metric-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 10px;
+  align-items: center;
+}
+
+#knnAnimationContainer .metric-divider {
+  border: 0;
+  height: 1px;
+  background: rgba(76, 175, 80, 0.1);
+  margin: 0;
+  width: 100%;
+}
+
+#knnAnimationContainer .metric-item:last-child {
+  border-bottom: none;
+}
+
+#knnAnimationContainer .metric-name {
+  color: #b0bec5;
+  font-size: 0.85em;
+}
+
+#knnAnimationContainer .metric-value {
+  font-weight: 700;
+  color: #a2cf6e;
+  /* Duller, softer green */
+  font-family: 'Consolas', monospace;
+}
+
+/* ==================== DATASET INFO ==================== */
+#knnAnimationContainer .dataset-info {
+  font-size: 0.82em;
+  color: #9e9e9e;
+  line-height: 1.6;
+}
+
+#knnAnimationContainer .dataset-info p {
+  margin-bottom: 6px;
+}
+
+#knnAnimationContainer .dataset-info strong {
+  color: #538856;
+}
+
+/* ==================== MAIN CONTENT ==================== */
+#knnAnimationContainer .main-content {
+  flex: 1 !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  position: relative !important;
+  background: radial-gradient(circle at center, #1a1f1d, #15171a) !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  padding: 20px !important;
+  min-height: 0 !important;
+}
+
+#knnAnimationContainer .visualization-grid {
+  display: grid !important;
+  grid-template-columns: 1.5fr 1fr !important;
+  grid-template-rows: 1fr 1fr !important;
+  gap: 20px !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 100% !important;
+}
+
+#knnAnimationContainer .viz-panel {
+  background: rgba(30, 35, 33, 0.6);
+  border: 1px solid rgba(76, 175, 80, 0.2);
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  backdrop-filter: blur(8px);
+}
+
+#knnAnimationContainer .viz-panel.large {
+  grid-row: span 2;
+}
+
+#knnAnimationContainer .panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(76, 175, 80, 0.15);
+  position: relative;
+  z-index: 100;
+}
+
+#knnAnimationContainer .panel-header span {
+  color: #81C784;
+  font-size: 0.9em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#knnAnimationContainer .panel-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#knnAnimationContainer .zoom-btn {
+  background: rgba(76, 175, 80, 0.15);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  color: #81C784;
+  font-size: 1em;
+  transition: all 0.2s ease;
+}
+
+#knnAnimationContainer .zoom-btn:hover {
+  background: rgba(76, 175, 80, 0.25);
+  transform: scale(1.1);
+}
+
+#knnAnimationContainer .canvas-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  cursor: zoom-in;
+  position: relative;
+  z-index: 1;
+}
+
+#knnAnimationContainer .viz-canvas {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 4px;
+}
+
+/* ==================== BLUR TOGGLES ==================== */
+#knnAnimationContainer .blur-toggles {
+  display: flex;
+  gap: 6px;
+}
+
+#knnAnimationContainer .toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  color: #888;
+  font-size: 0.75em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+#knnAnimationContainer .toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+#knnAnimationContainer .toggle-btn.active {
+  background: rgba(76, 175, 80, 0.15);
+  border-color: rgba(76, 175, 80, 0.4);
+  color: #e0e0e0;
+}
+
+#knnAnimationContainer .toggle-btn.small {
+  padding: 3px 6px;
+  font-size: 0.7em;
+}
+
+#knnAnimationContainer .toggle-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+#knnAnimationContainer .toggle-dot.train {
+  background: transparent;
+  /* Removed blue fill */
+  border: 2px solid #888;
+  /* Gray border for visibility */
+}
+
+#knnAnimationContainer .toggle-dot.test {
+  background: transparent;
+  /* Removed blue fill */
+  border: 2px solid #fff;
+  /* White border */
+}
+
+/* ==================== FEATURE PAIRS WINDOW ==================== */
+#knnAnimationContainer .feature-window {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+  max-width: 1400px;
+  height: 90vh;
+  min-width: 700px;
+  min-height: 500px;
+  background: radial-gradient(circle at center, #1e2823, #1a1d21);
+  /* Matched to main screen */
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+#knnAnimationContainer .feature-window.minimized {
+  height: 42px !important;
+}
+
+#knnAnimationContainer .feature-window-header {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.05));
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+  cursor: move;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+#knnAnimationContainer .window-title {
+  color: #7fd9d6;
+  font-weight: 600;
+  font-size: 0.95em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#knnAnimationContainer .window-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+#knnAnimationContainer .header-toggles {
+  margin-right: 15px;
+}
+
+#knnAnimationContainer .window-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: #e0e0e0;
+  font-size: 1.2em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+#knnAnimationContainer .window-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+#knnAnimationContainer .window-btn.minimize:hover {
+  background: rgba(255, 193, 7, 0.2);
+  border-color: rgba(255, 193, 7, 0.5);
+}
+
+#knnAnimationContainer .window-btn.close:hover {
+  background: rgba(239, 83, 80, 0.2);
+  border-color: rgba(239, 83, 80, 0.5);
+}
+
+#knnAnimationContainer .feature-window-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+#knnAnimationContainer .feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+#knnAnimationContainer .feature-card {
+  background: rgba(30, 35, 33, 0.6);
+  border: 1px solid rgba(43, 185, 207, 0.2);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  cursor: zoom-in;
+  transition: all 0.2s ease;
+}
+
+#knnAnimationContainer .feature-card:hover {
+  border-color: rgba(76, 175, 80, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+}
+
+#knnAnimationContainer .feature-card h4 {
+  color: #b0bec5;
+  font-size: 0.85em;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+#knnAnimationContainer .feature-canvas {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+#knnAnimationContainer .feature-canvas.clickable {
+  cursor: crosshair;
+}
+
+/* ==================== SCROLLBAR ==================== */
+#knnAnimationContainer ::-webkit-scrollbar {
+  width: 8px;
+}
+
+#knnAnimationContainer ::-webkit-scrollbar-track {
+  background: #1a1d21;
+}
+
+#knnAnimationContainer ::-webkit-scrollbar-thumb {
+  background: rgba(76, 175, 80, 0.3);
+  border-radius: 4px;
+}
+
+#knnAnimationContainer ::-webkit-scrollbar-thumb:hover {
+  background: rgba(76, 175, 80, 0.5);
+}
+
+/* ==================== ZOOM MODAL ==================== */
+#knnAnimationContainer .zoom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.01);
+  /* More transparent as requested */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  cursor: zoom-out;
+  backdrop-filter: blur(5px);
+  /* Adding blur for nicer effect */
+}
+
+#knnAnimationContainer .zoom-content {
+  position: relative;
+  max-width: 95vw;
+  max-height: 95vh;
+  cursor: default;
+}
+
+#knnAnimationContainer .zoom-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: rgba(239, 83, 80, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5em;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#knnAnimationContainer .zoom-close:hover {
+  background: #ef5350;
+  transform: rotate(90deg);
+}
+
+#knnAnimationContainer .zoom-canvas {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 8px;
+}
+
+#knnAnimationContainer .zoom-canvas.clickable {
+  cursor: crosshair;
+}
+
+#knnAnimationContainer .zoom-hint {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #888;
+  font-size: 0.85em;
+  white-space: nowrap;
+  font-style: italic;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1400px) {
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .visualization-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+
+  .viz-panel.large {
+    grid-row: span 1;
+  }
+}
+
+/* ==================== FEATURE CARD HEADER ==================== */
+#knnAnimationContainer .feature-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+#knnAnimationContainer .feature-card h4 {
+  margin-bottom: 0;
+  text-align: left;
+}
+
+#knnAnimationContainer .card-zoom-btn {
+  background: rgba(76, 175, 80, 0.15);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 4px;
+  padding: 2px 6px;
+  cursor: pointer;
+  color: #81C784;
+  font-size: 0.9em;
+  transition: all 0.2s ease;
+}
+
+#knnAnimationContainer .card-zoom-btn:hover {
+  background: rgba(76, 175, 80, 0.25);
+  transform: scale(1.1);
+}
+
+#knnAnimationContainer .feature-card {
+  cursor: default;
+  /* No longer triggers zoom on body click */
+}
+
+/* ==================== LEGEND PANEL ==================== */
+#knnAnimationContainer .legend-panel {
+  background: rgba(13, 13, 13, 0.9);
+  border: 1px solid rgba(76, 175, 80, 0.2);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-top: 10px;
+  flex-shrink: 0;
+}
+
+#knnAnimationContainer .legend-title {
+  color: #81C784;
+  font-size: 0.75em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+#knnAnimationContainer .legend-items {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+#knnAnimationContainer .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#knnAnimationContainer .legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+#knnAnimationContainer .legend-dot.train {
+  border: 2px solid #000;
+}
+
+#knnAnimationContainer .legend-dot.test {
+  border: 2px solid #fff;
+}
+
+#knnAnimationContainer .legend-dot.marker-train {
+  background-color: transparent;
+  border: 2px solid #888;
+}
+
+#knnAnimationContainer .legend-dot.marker-test-correct {
+  background-color: transparent;
+  border: 2.5px solid #fff;
+}
+
+#knnAnimationContainer .legend-dot.marker-test-wrong {
+  background-color: transparent;
+  border: 1.5px solid #ff6b6b;
+}
+
+#knnAnimationContainer .legend-name {
+  color: #e0e0e0;
+  font-size: 0.8em;
+}
+
+#knnAnimationContainer .legend-marker-types {
+  display: flex;
+  gap: 15px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#knnAnimationContainer .marker-type {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#knnAnimationContainer .marker-label {
+  color: #888;
+  font-size: 0.7em;
+}
+
+#knnAnimationContainer .legend-hint {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #666;
+  font-size: 0.7em;
+  font-style: italic;
+}
+
+/* ==================== CANVAS WITH LEGEND ==================== */
+#knnAnimationContainer .canvas-with-legend {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+#knnAnimationContainer .canvas-with-legend .viz-canvas {
+  flex: 1;
+  min-height: 0;
+}
+
+#knnAnimationContainer .viz-canvas.clickable {
+  cursor: crosshair;
+}
+
+#knnAnimationContainer .canvas-wrapper {
+  cursor: default;
+  /* No longer zoom cursor by default */
+}
+
+/* ==================== FEATURE LEGEND ==================== */
+#knnAnimationContainer .feature-legend {
+  background: rgba(13, 13, 13, 0.8);
+  border: 1px solid rgba(76, 175, 80, 0.2);
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+#knnAnimationContainer .feature-legend-classes {
+  display: flex;
+  gap: 20px;
+}
+
+#knnAnimationContainer .feature-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #e0e0e0;
+  font-size: 0.85em;
+}
+
+#knnAnimationContainer .feature-legend-markers {
+  display: flex;
+  gap: 15px;
+}
+
+#knnAnimationContainer .marker-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#knnAnimationContainer .marker-info {
+  color: #888;
+  font-size: 0.75em;
+}
+
+/* ==================== INFO BUTTONS & POPUPS ==================== */
+#knnAnimationContainer .header-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  position: relative;
+  text-align: center;
+  flex: 1;
+  width: 100%;
+}
+
+#knnAnimationContainer .header-center p {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+#knnAnimationContainer .info-btn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  color: #4fc3f7;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: monospace;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+#knnAnimationContainer .info-btn:hover {
+  background: rgba(79, 195, 247, 0.2);
+  border-color: #4fc3f7;
+}
+
+#knnAnimationContainer .panel-info-btn {
+  font-size: 0.75em;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border: 1px solid rgba(129, 199, 132, 0.5);
+  color: #81C784;
+}
+
+#knnAnimationContainer .info-popup {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 10px;
+  background: rgba(15, 18, 20, 0.98);
+  border: 1px solid rgba(76, 175, 80, 0.4);
+  border-radius: 8px;
+  padding: 12px;
+  width: 300px;
+  max-width: calc(100vw - 40px);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 99999;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  text-align: left;
+  backdrop-filter: blur(12px);
+  color: #e0e0e0;
+  font-size: 0.85em;
+  line-height: 1.5;
+}
+
+#knnAnimationContainer .info-popup.active {
+  display: block;
+}
+
+#knnAnimationContainer .info-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+#knnAnimationContainer .info-popup-header strong {
+  color: #4fc3f7;
+}
+
+#knnAnimationContainer .info-popup-close {
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  line-height: 1;
+}
+
+#knnAnimationContainer .info-popup-close:hover {
+  color: #fff;
+}
+
+#knnAnimationContainer .panel-info-popup {
+  width: 280px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 100000;
+}
+
+#knnAnimationContainer .header-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+/* ==================== MODE SELECTION / CHOICE LOADING Z-INDEX ==================== */
+/* These overlays must be above knnLoadingScreen (z-index: 9999) */
+
+#modeSelectionLoading {
+  z-index: 10002 !important;
+}
+
+#choiceLoadingScreen {
+  z-index: 10002 !important;
+}
+
+/* ==================== MODE SELECTION SCREEN ==================== */
+
+#knnAnimationContainer .mode-selection-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, #1e2520, #1a1d21);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 10001;
+  overflow-y: auto;
+  padding: 24px 0;
+}
+
+#knnAnimationContainer .mode-selection-wrapper {
+  text-align: center;
+  max-width: 900px;
+  width: 90%;
+  position: relative;
+  margin: auto 0;
+}
+
+#knnAnimationContainer .mode-selection-header h1 {
+  font-size: 2.2em;
+  font-weight: 700;
+  background: linear-gradient(135deg, #4CAF50, #81C784);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+
+#knnAnimationContainer .mode-selection-subtitle {
+  color: #888;
+  font-size: 1em;
+  margin-bottom: 40px;
+}
+
+#knnAnimationContainer .mode-cards-container {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+#knnAnimationContainer .mode-card {
+  background: rgba(30, 37, 32, 0.9);
+  border: 1px solid rgba(76, 175, 80, 0.25);
+  border-radius: 16px;
+  padding: 35px 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  width: 380px;
+  position: relative;
+  overflow: hidden;
+}
+
+#knnAnimationContainer .mode-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #4CAF50, #81C784);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#knnAnimationContainer .mode-card:hover {
+  background: rgba(40, 55, 42, 0.95);
+  border-color: rgba(76, 175, 80, 0.5);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(76, 175, 80, 0.15);
+}
+
+#knnAnimationContainer .mode-card:hover::before {
+  opacity: 1;
+}
+
+#knnAnimationContainer .mode-card-icon {
+  color: #81C784;
+  margin-bottom: 18px;
+}
+
+#knnAnimationContainer .mode-card-title {
+  font-size: 1.2em;
+  font-weight: 700;
+  color: #e0e0e0;
+  margin-bottom: 10px;
+}
+
+#knnAnimationContainer .mode-card-desc {
+  font-size: 0.85em;
+  color: #999;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+#knnAnimationContainer .mode-card-tags {
+  display: flex;
+  gap: 8px;
+}
+
+#knnAnimationContainer .mode-tag {
+  font-size: 0.72em;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(76, 175, 80, 0.12);
+  color: #81C784;
+  border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+#knnAnimationContainer .mode-back-btn {
+  position: static;
+  transform: none;
+  margin-top: 20px;
+}
+
+#knnAnimationContainer .mode-back-btn:hover {
+  transform: translateX(-2px);
+}
+
+/* ==================== PARAMETRIC ANALYSIS SCREEN ==================== */
+
+#knnAnimationContainer .parametric-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, #1e2520, #1a1d21);
+  display: flex;
+  flex-direction: column;
+  z-index: 10001;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#knnAnimationContainer .parametric-header {
+  background: linear-gradient(135deg, #1f2823, #242830);
+  color: #ffffff;
+  padding: 15px 20px;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+#knnAnimationContainer .parametric-header h1 {
+  font-size: 1.4em;
+  margin: 0;
+  font-weight: 700;
+  background: linear-gradient(135deg, #4CAF50, #81C784);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#knnAnimationContainer .parametric-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Parametric Controls (Left Panel) */
+#knnAnimationContainer .parametric-controls {
+  width: 300px;
+  flex-shrink: 0;
+  background: #111;
+  border-right: 1px solid #333;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#knnAnimationContainer .parametric-control-group h3 {
+  color: #81C784;
+  font-size: 0.8em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+/* Sample Buttons */
+#knnAnimationContainer .param-sample-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+#knnAnimationContainer .param-sample-btn {
+  padding: 10px;
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.25);
+  border-radius: 6px;
+  color: #b0bec5;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+#knnAnimationContainer .param-sample-btn:hover {
+  background: rgba(76, 175, 80, 0.2);
+  transform: translateY(-1px);
+}
+
+#knnAnimationContainer .param-sample-btn.active {
+  background: rgba(76, 175, 80, 0.25);
+  border-color: #4CAF50;
+  color: #4CAF50;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+}
+
+/* Radio Buttons */
+#knnAnimationContainer .param-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#knnAnimationContainer .param-radio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+#knnAnimationContainer .param-radio:hover {
+  background: rgba(76, 175, 80, 0.08);
+}
+
+#knnAnimationContainer .param-radio input[type="radio"] {
+  display: none;
+}
+
+#knnAnimationContainer .param-radio-custom {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(76, 175, 80, 0.4);
+  position: relative;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+#knnAnimationContainer .param-radio input[type="radio"]:checked + .param-radio-custom {
+  border-color: #4CAF50;
+}
+
+#knnAnimationContainer .param-radio input[type="radio"]:checked + .param-radio-custom::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4CAF50;
+}
+
+#knnAnimationContainer .param-radio-label {
+  color: #b0bec5;
+  font-size: 0.85em;
+}
+
+/* Train Button */
+#knnAnimationContainer .param-train-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #2e7d32, #388e3c);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  font-size: 1em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+#knnAnimationContainer .param-train-btn:hover {
+  background: linear-gradient(135deg, #388e3c, #43a047);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+}
+
+#knnAnimationContainer .param-train-btn.training {
+  background: #555;
+  cursor: wait;
+}
+
+@keyframes paramSpinner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#knnAnimationContainer .train-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  display: inline-block;
+  animation: paramSpinner 0.6s linear infinite;
+}
+
+/* Config Summary */
+#knnAnimationContainer .param-config-summary {
+  margin-top: auto;
+  padding-top: 15px;
+  border-top: 1px solid rgba(76, 175, 80, 0.15);
+}
+
+#knnAnimationContainer .param-config-summary h3 {
+  color: #81C784;
+  font-size: 0.75em;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-bottom: 10px;
+}
+
+#knnAnimationContainer .config-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#knnAnimationContainer .config-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82em;
+  color: #999;
+}
+
+#knnAnimationContainer .config-item span:last-child {
+  color: #a2cf6e;
+  font-weight: 600;
+  font-family: 'Consolas', monospace;
+}
+
+/* Parametric Viz Area (Center) */
+#knnAnimationContainer .parametric-viz-area {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+#knnAnimationContainer .parametric-viz-panel {
+  flex: 1;
+  background: rgba(30, 35, 33, 0.6);
+  border: 1px solid rgba(76, 175, 80, 0.2);
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  min-height: 0;
+}
+
+#knnAnimationContainer .parametric-canvas-wrapper {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Parametric Metrics Panel */
+#knnAnimationContainer .parametric-metrics-panel {
+  flex-shrink: 0;
+  background: rgba(30, 35, 33, 0.6);
+  border: 1px solid rgba(76, 175, 80, 0.2);
+  border-radius: 12px;
+  padding: 15px;
+  backdrop-filter: blur(8px);
+}
+
+#knnAnimationContainer .param-metrics-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 10px 0;
+}
+
+#knnAnimationContainer .param-metric-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#knnAnimationContainer .param-metric-label {
+  width: 80px;
+  font-size: 0.82em;
+  color: #b0bec5;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+#knnAnimationContainer .param-bar-track {
+  flex: 1;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#knnAnimationContainer .param-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #4CAF50, #81C784);
+  border-radius: 4px;
+  transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#knnAnimationContainer .param-metric-val {
+  width: 60px;
+  font-size: 0.82em;
+  color: #a2cf6e;
+  font-weight: 700;
+  font-family: 'Consolas', monospace;
+  flex-shrink: 0;
+}
+
+#knnAnimationContainer .param-no-data-msg {
+  text-align: center;
+  color: #666;
+  font-size: 0.9em;
+  padding: 20px;
+  font-style: italic;
+}
+
+/* Parametric Guide (Right Panel) */
+#knnAnimationContainer .parametric-guide {
+  width: 360px;
+  flex-shrink: 0;
+  background: #111;
+  border-left: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+#knnAnimationContainer .guide-title {
+  color: #81C784;
+  font-size: 0.9em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 20px 20px 15px;
+  border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+  flex-shrink: 0;
+}
+
+#knnAnimationContainer .guide-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#knnAnimationContainer .guide-scroll-area::-webkit-scrollbar {
+  width: 5px;
+}
+
+#knnAnimationContainer .guide-scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#knnAnimationContainer .guide-scroll-area::-webkit-scrollbar-thumb {
+  background: rgba(76, 175, 80, 0.3);
+  border-radius: 3px;
+}
+
+/* Scenario Cards */
+#knnAnimationContainer .scenario-card {
+  background: rgba(30, 37, 32, 0.7);
+  border: 1px solid rgba(76, 175, 80, 0.15);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+  flex-shrink: 0;
+}
+
+#knnAnimationContainer .scenario-card:hover {
+  border-color: rgba(76, 175, 80, 0.35);
+}
+
+#knnAnimationContainer .scenario-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: rgba(76, 175, 80, 0.06);
+  border-bottom: 1px solid rgba(76, 175, 80, 0.1);
+}
+
+#knnAnimationContainer .scenario-number {
+  font-size: 1.4em;
+  font-weight: 800;
+  color: rgba(76, 175, 80, 0.3);
+  font-family: 'Consolas', monospace;
+  line-height: 1;
+}
+
+#knnAnimationContainer .scenario-header h4 {
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #e0e0e0;
+  margin: 0;
+}
+
+#knnAnimationContainer .scenario-body {
+  padding: 14px 16px;
+}
+
+#knnAnimationContainer .scenario-procedure,
+#knnAnimationContainer .scenario-observations {
+  margin-bottom: 10px;
+}
+
+#knnAnimationContainer .scenario-procedure:last-child,
+#knnAnimationContainer .scenario-observations:last-child {
+  margin-bottom: 0;
+}
+
+#knnAnimationContainer .scenario-body strong {
+  font-size: 0.78em;
+  color: #81C784;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#knnAnimationContainer .scenario-body ol,
+#knnAnimationContainer .scenario-body ul {
+  margin: 8px 0 0 0;
+  padding-left: 20px;
+}
+
+#knnAnimationContainer .scenario-body li {
+  font-size: 0.78em;
+  color: #b0bec5;
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
+/* ==================== FEATURE AXIS SELECTORS ==================== */
+
+#knnAnimationContainer .feature-axis-selectors {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+#knnAnimationContainer .axis-selector-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#knnAnimationContainer .axis-selector-group label {
+  font-size: 0.75em;
+  color: #888;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#knnAnimationContainer .feature-select {
+  padding: 4px 8px;
+  background: rgba(30, 37, 32, 0.9);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 4px;
+  color: #b0bec5;
+  font-family: 'Consolas', monospace;
+  font-size: 0.75em;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#knnAnimationContainer .feature-select:hover {
+  border-color: rgba(76, 175, 80, 0.6);
+}
+
+#knnAnimationContainer .feature-select:focus {
+  border-color: #4CAF50;
+}
+
+#knnAnimationContainer .feature-select option {
+  background: #1a1d21;
+  color: #b0bec5;
+}
+
+/* ==================== PARAMETRIC INFO BUTTONS ==================== */
+
+#knnAnimationContainer .param-info-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(76, 175, 80, 0.4);
+  background: rgba(76, 175, 80, 0.1);
+  color: #81C784;
+  font-size: 0.65em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  flex-shrink: 0;
+  position: relative;
+}
+
+#knnAnimationContainer .param-info-btn:hover {
+  background: rgba(76, 175, 80, 0.25);
+  border-color: #4CAF50;
+}
+
+#knnAnimationContainer .param-info-popup {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 15, 20, 0.95);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 8px;
+  padding: 12px 14px;
+  width: 260px;
+  z-index: 10010;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  display: none;
+  font-style: normal;
+}
+
+#knnAnimationContainer .param-info-popup.visible {
+  display: block;
+}
+
+#knnAnimationContainer .param-info-popup p {
+  font-size: 0.78em;
+  color: #b0bec5;
+  line-height: 1.5;
+  margin: 0;
+}
+
+#knnAnimationContainer .param-info-popup .popup-title {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: #81C784;
+  margin-bottom: 6px;
+}
+
+/* ==================== PARAMETRIC CLICK HINT ==================== */
+
+#knnAnimationContainer .param-click-hint {
+  text-align: center;
+  color: #ffff00;
+  font-size: 0.8em;
+  padding: 6px 0 0;
+  font-weight: bold;
+}
+
+/* ==================== CONTROL DESCRIPTIONS ==================== */
+#knnAnimationContainer .control-description {
+  font-size: 0.85em;
+  color: #ffffff;
+  font-weight: bold;
+  padding-top: 10px;
+  margin-top: 6px;
+  margin-bottom: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  line-height: 1.5;
+  letter-spacing: 0.2px;
+}
+
+#knnAnimationContainer .panel-description {
+  font-size: 0.85em;
+  color: #ffffff;
+  font-weight: bold;
+  padding: 10px 15px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  line-height: 1.5;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+#knnAnimationContainer .control-header h3 {
+  margin-bottom: 0;
+}
+
+#knnAnimationContainer .panel-header {
+  border-bottom: none; /* We use panel-description border instead */
+}
