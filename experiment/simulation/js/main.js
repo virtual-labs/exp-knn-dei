@@ -866,7 +866,7 @@ function showCompletionMessage() {
             " onmouseover="this.style.background='#334155'; this.style.transform='translateY(-2px)'" 
                onmouseout="this.style.background='#1e293b'; this.style.transform='translateY(0)'">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                Enter Interactive Animation
+                Launch Interactive Animation
             </button>
         </div>
     `;
