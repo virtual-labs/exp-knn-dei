@@ -1,0 +1,747 @@
+<!DOCTYPE html><html lang="en"><head>
+      <!--Google Tag Manager-->
+      <script class="gtm">
+        var dataLayer = [{
+        'labName': 'Virtual Lab',
+        'discipline': 'Test',
+        'college': 'DLBG',
+        'phase': 'Testing',
+        'expName': 'K-NEAREST NEIGHBORS (KNN)',
+        'expShortName': 'knn'
+        }];
+    
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-5NMQ9NQ');
+      </script>
+      <!--End Google Tag Manager-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="" name="description">
+    <meta content="" name="author">
+    
+    	<meta name="experiment-short-name" content="knn">
+    	<meta name="developer-institute" content="DLBG">
+    	<meta name="learning-unit" content="K-NEAREST NEIGHBORS (KNN)">
+    	<meta name="task-name" content="Theory">
+    
+    <!-- For iPhone -->
+    <meta name="msapplication-TileColor" content="#4076e0">
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#4076e0">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#4076e0">
+    <title>Virtual Labs</title>
+    <link rel="shortcut icon" href="./assets/images/favicon.ico">
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css" integrity="sha512-Oy18vBnbSJkXTndr2n6lDMO5NN31UljR8e/ICzVPrGpSud4Gkckb8yUpqhKuUNoE+o9gAb4O/rAxxw1ojyUVzg==" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&amp;family=Raleway&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./assets/css/github-markdown.min.css">
+    <link rel="stylesheet" href="./assets/css/vlabs-style.css">
+    <link rel="stylesheet" href="./assets/css/toast.css">
+    <link rel="stylesheet" href="./assets/katex_assets/katex.min.css">
+    
+    <script src="./assets/js/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+      h1 {
+      font-size: 1.8rem;
+      }
+      h2 {
+      font-size: 1.4rem;
+      }
+      h3 {
+      font-size: 1.2rem;
+      }
+
+      h2, h3 {
+      font-weight: 800;
+      }
+    </style>
+    
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"></head>
+  <body class="p-0 container-fluid vlabs-page d-flex flex-column justify-content-between">
+      <!--Google Tag Manager (noscript)-->
+      <noscript class="gtm">
+        <iframe height="0" src="https://www.googletagmanager.com/ns.html?id=GTM-5NMQ9NQ" style="display:none;visibility:hidden" width="0">
+        </iframe>
+      </noscript>
+      <!--End Google Tag Manager (noscript)-->
+  
+      <header class="vlabs-header sticky-top bg-white">
+        <nav class="p-0 navbar navbar-light d-flex align-items-stretch">
+          
+          <button class="navbar-toggler px-4" type="button" onclick="toggle()">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+      
+          <div class="d-flex justify-content-center">        
+            <a href="https://vlab.co.in" class="navbar-brand">
+              <img src="./assets/images/vlabs-color-small-moe.jpg" alt="vlabs logo" class="vlabs-logo">
+            </a>
+          </div>
+          
+          <div id="headerNavbar" class="d-none border-top flex-grow-1 d-lg-flex align-items-center justify-content-end">
+            <div class="svc-rating-display">
+                <rating-display spreadsheetid="1x12nhpp0QvnsA6x-O1sV4IA9SAbfVsq_wiexWkutOmU" sheetname="Experiment-Database" columnname="Experiment Short Name" columnvalue="knn" imagesdirectory="/plugins/svc-rating/images/">
+                </rating-display>
+            </div>      <div class="svc-rating-submit">
+                <rating-submit title="Rate" this="" experiment="">
+                </rating-submit>
+            </div>      <bug-report id="bug-report" title="[BUG REPORT] K-NEAREST NEIGHBORS (KNN)" page-type="text" context-info="{&quot;organisation&quot;:&quot;Virtual Labs&quot;,&quot;developer_institute&quot;:&quot;DLBG&quot;,&quot;expname&quot;:&quot;K-NEAREST NEIGHBORS (KNN)&quot;,&quot;labname&quot;:&quot;Virtual Lab&quot;,&quot;phase&quot;:&quot;Testing&quot;}" checkbox-json="{&quot;text&quot;:[&quot;Insufficient Content&quot;],&quot;video&quot;:[&quot;Insufficient Content&quot;],&quot;assesment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;assessment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;simulation&quot;:[&quot;Simulation Not Working&quot;,&quot;Incorrect Results/Observations&quot;,&quot;Insufficient/Incorrect Instructions&quot;],&quot;DEFAULT&quot;:[&quot;Page Not Loading&quot;,&quot;Content Not Visible&quot;,&quot;Incorrect Content&quot;]}" button_style="border: none; color: #fff; background-color: #288ec8; text-align: center; font-size: 1.05rem; border-radius: 1em;padding: 0.6em 1.2em; margin: 0 10px" position="override" custom_button_class="v-button"></bug-report>
+          </div>
+        </nav>
+      </header>
+      <div class="container-fluid flex-fill d-flex flex-column vlabs-page-main">
+        <div class="row d-flex justify-content-between">
+          <div class="flex-column">
+          <div class="row py-4 px-4 breadcrumbs">
+          	<div class="title is-4 tools">Tools</div>
+          	<span class="mx-2">
+          		<i aria-hidden="true" class="fa fa-angle-right"></i>
+          	</span>
+          	<a href="performance-report.html" class="my-2 mx-3" target="_blank">
+          		<button class="v-button">Performance Tool</button>
+          	</a>
+          	<a href="validator-report.html" class="my-2 mx-3" target="_blank">
+          		<button class="v-button">Validation Tool</button>
+          	</a>
+          </div>
+          </div>
+        </div>
+        <div class="row flex-grow-1 d-flex flex-nowrap flex-column flex-lg-row">
+          <div class="modal fade popupmenu" id="popupMenu" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">
+                              <a href="https://vlab.co.in" class="navbar-brand">
+                                  <img src="./assets/images/vlabs-color-small-moe.jpg" alt="vlabs logo" class="vlabs-logo">
+                              </a>
+                          </h5>
+                          <button type="button" class="btn-close align-self-center" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body nav-menu">
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="index.html" class="p-2 ">
+                                      Aim
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="theory.html" class="p-2  current-item ">
+                                      Theory
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="pretest.html" class="p-2 ">
+                                      Pretest
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="procedure.html" class="p-2 ">
+                                      Procedure
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="simulation.html" class="p-2 ">
+                                      Simulation
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="posttest.html" class="p-2 ">
+                                      Posttest
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="references.html" class="p-2 ">
+                                      References
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="contributors.html" class="p-2 ">
+                                      Contributors
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="feedback.html" class="p-2 ">
+                                      Feedback
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="nav flex-column sidebar nav-menu flex-shrink-0 px-lg-4 align-items-center align-items-lg-start hidden d-none d-lg-flex" id="menu">
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="index.html" class="p-2 ">
+                        Aim
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="theory.html" class="p-2  current-item ">
+                        Theory
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="pretest.html" class="p-2 ">
+                        Pretest
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="procedure.html" class="p-2 ">
+                        Procedure
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="simulation.html" class="p-2 ">
+                        Simulation
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="posttest.html" class="p-2 ">
+                        Posttest
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="references.html" class="p-2 ">
+                        References
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="contributors.html" class="p-2 ">
+                        Contributors
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="feedback.html" class="p-2 ">
+                        Feedback
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+          </div>          <div class="vlabs-page-content px-5 pb-4 flex-grow-1 markdown-body">
+            <div class="text-center fix-spacing">
+              <h2 id="k-nearest-neighbors-knn">k-Nearest Neighbors (KNN)</h2>
+          
+            </div>
+              <style>
+          .formula-block {
+              text-align: center;
+              margin: 22px 0;
+          }
+          
+          .equation-card {
+              display: inline-block;
+              padding: 16px 28px;
+              background: #f3f3f3;
+              border-radius: 2px;
+              box-shadow: inset 0 0 0 1px rgba(0,0,0,0.04);
+          }
+          
+          .formula-svg {
+              display: block;
+              height: auto;
+              max-width: 100%;
+          }
+          
+          .equation-card math {
+              font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+              font-size: 1.85rem;
+              color: #222;
+          }
+          
+          .equation-card math[display="block"] {
+              display: block;
+          }
+          
+          .math-inline {
+              font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+              font-style: italic;
+              font-size: 1.02em;
+              white-space: nowrap;
+          }
+          
+          .math-inline sub,
+          .math-inline sup {
+              font-size: 0.72em;
+              font-style: normal;
+          }
+          
+          .figure-block {
+              text-align: center;
+              margin: 18px 0;
+          }
+          
+          .figure-block img {
+              max-height: 320px;
+              width: auto;
+          }
+          
+          .figure-caption {
+              color: #64748b;
+              font-size: 0.92rem;
+              margin-top: 8px;
+              font-style: italic;
+          }
+          </style>
+          
+          <h3 id="1-overview">1. Overview</h3>
+          <p>The k-Nearest Neighbours (KNN) algorithm is a supervised machine learning algorithm that is commonly used for both classification and regression tasks. It is considered a non-parametric method because it does not assume any predefined distribution for the data. Instead of learning a mathematical model during training, KNN makes predictions by comparing new data points with the existing training samples based on their similarity. This similarity is typically measured using distance metrics such as Euclidean distance, which determine how close one data point is to another in the feature space.</p>
+          <p>The concept of nearest neighbour classification was originally introduced by Fix and Hodges and later extended by Cover and Hart. In this method, when a new test sample is given, the algorithm identifies the k nearest training samples in the dataset and assigns a class label based on majority voting among those neighbours. The value of k represents the number of neighbouring data points considered during classification and plays an important role in determining the accuracy of the model.</p>
+          <p>Unlike many other machine learning algorithms, KNN does not involve an explicit training phase. Instead, it simply stores the entire training dataset and performs calculations only when a prediction is required. For this reason, it is often referred to as a lazy learning or instance-based learning algorithm. Since KNN relies on distance calculations, feature scaling is important to ensure that all features contribute equally to the distance measurement. Without proper scaling, features with larger numerical ranges may dominate the calculation and affect the performance of the algorithm.</p>
+          <h3 id="2-working-of-knn">2. Working of KNN</h3>
+          <p>The working of the KNN algorithm involves identifying the nearest neighbours of a given data point and determining its class based on those neighbours. The basic steps followed by the algorithm are:</p>
+          <ol>
+          <li>Choose the number of neighbours k.</li>
+          <li>Calculate the distance between the new data point and all points in the training dataset.</li>
+          <li>Sort the distances and identify the k nearest neighbours.</li>
+          <li>Count the class labels of these neighbours.</li>
+          <li>Assign the class that appears most frequently among them to the new data point.</li>
+          </ol>
+          <p>Thus, the classification of a new data sample is determined by the majority class among its nearest neighbours.</p>
+          <h3 id="3-determining-the-value-of-k">3. Determining the Value of k</h3>
+          <p>The parameter <span class="math-inline">k</span> represents the number of nearest neighbors considered for classification. Choosing an appropriate value of <span class="math-inline">k</span> is important for the performance of the algorithm. If <span class="math-inline">k</span> is too small, the model becomes sensitive to noise and may lead to overfitting. If <span class="math-inline">k</span> is too large, the model may include many distant points, which can reduce accuracy. In practice, the value of <span class="math-inline">k</span> is selected by testing different values and choosing the one that provides the best classification performance for the dataset.</p>
+          <h3 id="4-distance-metrics-in-knn">4. Distance Metrics in KNN</h3>
+          <h4 id="41-euclidean-distance-l2-norm">4.1 Euclidean Distance (L2 norm)</h4>
+          <p>Euclidean distance (L2 norm) is the most commonly used distance metric in KNN, where the distance between two data points is computed as the straight-line distance in feature space. It is given by:</p>
+          <div class="formula-block">
+          <div class="equation-card">
+          <math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+            <mrow>
+              <mi>d</mi>
+              <mo>=</mo>
+              <msqrt>
+                <munderover>
+                  <mo>∑</mo>
+                  <mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow>
+                  <mi>n</mi>
+                </munderover>
+                <msup>
+                  <mrow>
+                    <mo>(</mo>
+                    <msub><mi>x</mi><mi>i</mi></msub>
+                    <mo>-</mo>
+                    <msub><mi>y</mi><mi>i</mi></msub>
+                    <mo>)</mo>
+                  </mrow>
+                  <mn>2</mn>
+                </msup>
+              </msqrt>
+            </mrow>
+          </math>
+          </div>
+          </div>
+          
+          <p>where <span class="math-inline">x<sub>i</sub></span> and <span class="math-inline">y<sub>i</sub></span> represent the values of the <span class="math-inline">ith</span> feature of data points X and Y, and <span class="math-inline">n</span> is the total number of features. In a two-dimensional space, this simplifies to:</p>
+          <div class="formula-block">
+          <div class="equation-card">
+          <math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+            <mrow>
+              <mi>d</mi>
+              <mo>=</mo>
+              <msqrt>
+                <msup>
+                  <mrow>
+                    <mo>(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>-</mo><msub><mi>y</mi><mn>1</mn></msub><mo>)</mo>
+                  </mrow>
+                  <mn>2</mn>
+                </msup>
+                <mo>+</mo>
+                <msup>
+                  <mrow>
+                    <mo>(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>-</mo><msub><mi>y</mi><mn>2</mn></msub><mo>)</mo>
+                  </mrow>
+                  <mn>2</mn>
+                </msup>
+              </msqrt>
+            </mrow>
+          </math>
+          </div>
+          </div>
+          
+          <p>This metric is intuitive and works well when features are continuous and on similar scales, as it captures the true geometric distance between points, making it effective for identifying the nearest neighbors in KNN classification.</p>
+          <p>Where:</p>
+          <ul>
+          <li><span class="math-inline">x<sub>i</sub></span>: value of the <span class="math-inline">ith</span> feature of data point X</li>
+          <li><span class="math-inline">y<sub>i</sub></span>: value of the <span class="math-inline">ith</span> feature of data point Y</li>
+          <li><span class="math-inline">n</span>: total number of features (dimensions)</li>
+          <li>For 2D: same reduced expression shown above</li>
+          </ul>
+          <h4 id="42-manhattan-distance-l1-norm">4.2 Manhattan Distance (L1 norm)</h4>
+          <p>Manhattan distance (L1 norm) is another widely used distance metric in KNN, where the distance between two data points is calculated as the sum of the absolute differences of their corresponding feature values. It is defined as:</p>
+          <div class="formula-block">
+          <div class="equation-card">
+          <math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+            <mrow>
+              <mi>d</mi>
+              <mo>=</mo>
+              <munderover>
+                <mo>∑</mo>
+                <mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow>
+                <mi>n</mi>
+              </munderover>
+              <mo stretchy="false">|</mo><msub><mi>x</mi><mi>i</mi></msub><mo>-</mo><msub><mi>y</mi><mi>i</mi></msub><mo stretchy="false">|</mo>
+            </mrow>
+          </math>
+          </div>
+          </div>
+          
+          <p>where <span class="math-inline">x<sub>i</sub></span> and <span class="math-inline">y<sub>i</sub></span> denote the values of the <span class="math-inline">ith</span> feature of data points X and Y, and <span class="math-inline">n</span> represents the total number of features. In a two-dimensional space, this simplifies to:</p>
+          <div class="formula-block">
+          <div class="equation-card">
+          <math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+            <mrow>
+              <mi>d</mi>
+              <mo>=</mo>
+              <mo stretchy="false">|</mo><msub><mi>x</mi><mn>1</mn></msub><mo>-</mo><msub><mi>y</mi><mn>1</mn></msub><mo stretchy="false">|</mo>
+              <mo>+</mo>
+              <mo stretchy="false">|</mo><msub><mi>x</mi><mn>2</mn></msub><mo>-</mo><msub><mi>y</mi><mn>2</mn></msub><mo stretchy="false">|</mo>
+            </mrow>
+          </math>
+          </div>
+          </div>
+          
+          <p>Unlike Euclidean distance, Manhattan distance measures movement along the axes, similar to navigating a grid, making it more robust to outliers and suitable for high-dimensional data or scenarios where feature differences are more meaningful than direct geometric distance.</p>
+          <p>Where:</p>
+          <ul>
+          <li><span class="math-inline">x<sub>i</sub></span>: value of the <span class="math-inline">ith</span> feature of data point X</li>
+          <li><span class="math-inline">y<sub>i</sub></span>: value of the <span class="math-inline">ith</span> feature of data point Y</li>
+          <li><span class="math-inline">n</span>: total number of features</li>
+          <li>For 2D: same reduced expression shown above</li>
+          </ul>
+          <h3 id="5-non-parametric-nature-of-knn">5. Non-Parametric Nature of KNN</h3>
+          <p>The k-Nearest Neighbours algorithm is called a non-parametric model because it does not assume any specific mathematical distribution for the data. Instead of estimating parameters of a predefined equation, the algorithm stores the training samples and performs predictions by comparing new data points with the stored examples. Because no explicit model is learned during training, KNN is also considered an instance-based learning method where predictions are made directly using the training instances.</p>
+          <h3 id="6-hyperparameter-selection-choosing-the-value-of-k">6. Hyperparameter Selection (Choosing the Value of k)</h3>
+          <p>The value of k is a hyperparameter that determines how many neighbours participate in the classification decision. Choosing an appropriate value of <span class="math-inline">k</span> is important for achieving good performance.</p>
+          <ul>
+          <li>Small values of <span class="math-inline">k</span> such as <span class="math-inline">k = 1</span> may make the model sensitive to noise and lead to overfitting.</li>
+          <li>Large values of <span class="math-inline">k</span> may smooth the decision boundary too much and lead to underfitting.</li>
+          </ul>
+          <p>Therefore, selecting a suitable value of <span class="math-inline">k</span> is necessary to balance bias and variance in the model. Typically, cross-validation techniques are used to determine the optimal value of <span class="math-inline">k</span>.</p>
+          <div class="figure-block">
+          <img src="images/fig1_knn.png" alt="Illustration of K-Nearest Neighbours classification showing reassignment of a new data point based on nearest neighbours">
+          <p class="figure-caption">Figure 1: Illustration of K-Nearest Neighbors (K-NN) classification showing reassignment of a new data point based on nearest neighbors</p>
+          </div>
+          
+          <p>The figure illustrates how the K-Nearest Neighbors (K-NN) algorithm classifies a new data point based on the majority class of its nearest neighbors. In the left panel (Before K-NN), two clusters are shown: Category A (green "+" points) and Category B (orange triangles). A new data point (shown in a different color and shape) lies between the two categories, and its class is initially unknown. In the right panel (After K-NN), the algorithm evaluates the nearest neighbors of the new data point. Since most of its closest points belong to Category A, the new data point is assigned to Category A. This is reflected by changing its color and shape to match Category A. This demonstrates how the KNN algorithm uses proximity and majority voting to classify new data samples.</p>
+          <h3 id="7-algorithm">7. Algorithm</h3>
+          <p>Step 1: Store all training data<br>Step 2: Choose the value of K<br>Step 3: When a new data point arrives for classification:<br>Step 4: Calculate distance from new point to all training points<br>Step 5: Sort all training points by distance in ascending order<br>Step 6: Select the K nearest neighbours<br>Step 7: For Classification, use majority voting by counting how many of the K neighbours belong to each class</p>
+          <p>Step 8: For Regression, take the average of target values of K neighbours and compute prediction as:</p>
+          <div class="formula-block">
+          <div class="equation-card">
+          <math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+            <mrow>
+              <mtext>Prediction</mtext>
+              <mo>=</mo>
+              <mfrac>
+                <mrow>
+                  <msub><mtext>value</mtext><mn>1</mn></msub>
+                  <mo>+</mo>
+                  <msub><mtext>value</mtext><mn>2</mn></msub>
+                  <mo>+</mo>
+                  <mo>…</mo>
+                  <mo>+</mo>
+                  <msub><mtext>value</mtext><mi>k</mi></msub>
+                </mrow>
+                <mi>K</mi>
+              </mfrac>
+            </mrow>
+          </math>
+          </div>
+          </div>
+          
+          <h3 id="8-practical-considerations-in-k-nearest-neighbors-knn">8. Practical Considerations in K-Nearest Neighbors (KNN)</h3>
+          <h4 id="81-handling-ties">8.1 Handling Ties</h4>
+          <p>When K neighbours have equal votes:</p>
+          <ul>
+          <li>Reduce K by 1 and re-vote</li>
+          <li>Or choose the class of the nearest neighbour among tied classes</li>
+          <li>Or randomly select among tied classes</li>
+          </ul>
+          <h4 id="82-feature-scaling-critical-for-knn">8.2 Feature Scaling (Critical for KNN)</h4>
+          <p>Why needed: KNN uses distance, so features with larger ranges dominate. Before applying KNN:</p>
+          <ul>
+          <li>Apply Min-Max Scaling:</li>
+          </ul>
+          <div class="formula-block">
+          <div class="equation-card">
+          <math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+            <mrow>
+              <msup><mi>x</mi><mo>′</mo></msup>
+              <mo>=</mo>
+              <mfrac>
+                <mrow><mi>x</mi><mo>-</mo><msub><mi>x</mi><mtext>min</mtext></msub></mrow>
+                <mrow><msub><mi>x</mi><mtext>max</mtext></msub><mo>-</mo><msub><mi>x</mi><mtext>min</mtext></msub></mrow>
+              </mfrac>
+            </mrow>
+          </math>
+          </div>
+          </div>
+          
+          <ul>
+          <li>Or Z-Score Normalization:</li>
+          </ul>
+          <div class="formula-block">
+          <div class="equation-card">
+          <math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+            <mrow>
+              <mi>z</mi>
+              <mo>=</mo>
+              <mfrac>
+                <mrow><mi>x</mi><mo>-</mo><mi>μ</mi></mrow>
+                <mi>σ</mi>
+              </mfrac>
+            </mrow>
+          </math>
+          </div>
+          </div>
+          
+          <h4 id="83-choosing-optimal-k-cross-validation-method">8.3 Choosing Optimal K: Cross-Validation Method</h4>
+          <ol>
+          <li>Split data into training and validation sets.</li>
+          <li>For <span class="math-inline">K = 1, 3, 5, 7, ...</span> try multiple values.</li>
+          <li>Train KNN with that K.</li>
+          <li>Measure accuracy on validation set.</li>
+          <li>Select K with highest validation accuracy.</li>
+          </ol>
+          <h3 id="9-merits-and-demerits-of-k-nearest-neighbours-knn">9. Merits and Demerits of k-Nearest Neighbours (KNN)</h3>
+          <table>
+          <thead>
+          <tr>
+          <th>Merits of KNN</th>
+          <th>Demerits of KNN</th>
+          </tr>
+          </thead>
+          <tbody><tr>
+          <td>Simple and easy to understand</td>
+          <td>High computational cost during prediction</td>
+          </tr>
+          <tr>
+          <td>Does not require an explicit training phase</td>
+          <td>Requires large memory to store training data</td>
+          </tr>
+          <tr>
+          <td>Makes no assumption about data distribution</td>
+          <td>Highly sensitive to feature scaling</td>
+          </tr>
+          <tr>
+          <td>Works well for small and well-separated datasets</td>
+          <td>Performance degrades in high-dimensional data</td>
+          </tr>
+          <tr>
+          <td>Can be used for both classification and regression</td>
+          <td>Sensitive to noise and outliers</td>
+          </tr>
+          </tbody></table>
+          <h3 id="10-applications">10. Applications</h3>
+          <p>The K-Nearest Neighbours (KNN) algorithm is widely used in many real-world applications because of its simplicity and effectiveness in classification and prediction tasks. Some common applications include:</p>
+          <ul>
+          <li>Image Recognition: KNN is used in image classification systems where images are categorized based on similarities with labelled images in the dataset.</li>
+          <li>Recommendation Systems: It helps recommend products, movies, or music by finding users with similar preferences.</li>
+          <li>Medical Diagnosis: KNN can assist in disease prediction by comparing a patient's data with similar cases in medical datasets.</li>
+          <li>Pattern Recognition: It is used to recognize patterns in data such as handwriting recognition or speech recognition.</li>
+          <li>Credit Scoring and Fraud Detection: Financial institutions use KNN to classify transactions and detect unusual or fraudulent activities.</li>
+          </ul>
+          <p>These applications demonstrate how KNN can effectively classify data based on similarity and proximity in different domains.</p>
+          
+          </div>
+          <div class="bug-report-mobile">
+              <bug-report id="bug-report" title="[BUG REPORT] K-NEAREST NEIGHBORS (KNN)" page-type="text" context-info="{&quot;organisation&quot;:&quot;Virtual Labs&quot;,&quot;developer_institute&quot;:&quot;DLBG&quot;,&quot;expname&quot;:&quot;K-NEAREST NEIGHBORS (KNN)&quot;,&quot;labname&quot;:&quot;Virtual Lab&quot;,&quot;phase&quot;:&quot;Testing&quot;}" checkbox-json="{&quot;text&quot;:[&quot;Insufficient Content&quot;],&quot;video&quot;:[&quot;Insufficient Content&quot;],&quot;assesment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;assessment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;simulation&quot;:[&quot;Simulation Not Working&quot;,&quot;Incorrect Results/Observations&quot;,&quot;Insufficient/Incorrect Instructions&quot;],&quot;DEFAULT&quot;:[&quot;Page Not Loading&quot;,&quot;Content Not Visible&quot;,&quot;Incorrect Content&quot;]}" position="override" button_style="
+                          position: fixed; 
+                          bottom: 20px;
+                          right: 20px;
+                          z-index: 1;
+                          font-size: 0;
+                          padding: 25px;
+                          border-radius: 50%;
+                          border: none;
+                          background-color: #0fc0ff;
+                          background-image: url(data:image/png;base64,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);
+                          background-repeat: no-repeat;
+                          background-position: center;
+                          background-size: 30px;
+                          filter: invert(1);">
+              </bug-report>
+          </div>        </div>
+      </div>
+      <footer class="text-light pt-2 vlabs-footer d-flex flex-column">
+        <div class="row px-5 mx-0">
+          <div class="col d-flex flex-column">
+            <span class="font-weight-bold vlabs-footer-sect-name pb-2 mb-3">Community Links</span>
+            <a href="https://www.sakshat.ac.in/" class="text-light">Sakshat Portal</a>
+            <a href="http://outreach.vlabs.ac.in/" class="text-light">Outreach Portal</a>
+            <a href="https://vlab.co.in/faq" class="text-light">FAQ: Virtual Labs</a>
+          </div>
+          <div class="col d-flex flex-column">
+            <span class="font-weight-bold vlabs-footer-sect-name pb-2 mb-3">Contact Us</span>
+            <span> Phone: General Information: 011-26582050 </span>
+            <span> Email: support@vlabs.ac.in </span>
+          </div>
+          <div class="col d-flex flex-column">
+            <span class="font-weight-bold vlabs-footer-sect-name pb-2 mb-3">Follow Us</span>
+            <div class="social-links">
+      	<a class="p-2 mt-1 mr-2 d-inline-flex justify-content-center align-items-center" style="background: #55acee;" href="https://twitter.com/TheVirtualLabs">
+      	  <i class="fab fa-twitter"></i>
+      	</a>
+      	<a class="p-2 mt-1 mr-2 d-inline-flex justify-content-center align-items-center" style="background: #3b5998;" href="https://www.facebook.com/Virtual-Labs-IIT-Delhi-301510159983871/">
+      	  <i class="fab fa-facebook"></i>
+      	</a>
+      	<a class="p-2 mt-1 mr-2 d-inline-flex justify-content-center align-items-center" style="background: #e52d27;" href="https://www.youtube.com/watch?v=asxRaOgk6a0">
+      	  <i class="fab fa-youtube"></i>
+      	</a>
+      	<a class="p-2 mt-1 mr-2 d-inline-flex justify-content-center align-items-center" style="background: #2867B2;" href="https://in.linkedin.com/in/virtual-labs-008ba9136">
+      	  <i class="fab fa-linkedin"></i>
+      	</a>
+            </div>
+          </div>
+        </div>
+        <div class="m-0 py-2 text-center" style="font-family: &quot;Open Sans&quot;, sans-serif; background: #212121;">
+          <a class="text-primary font-weight-bold" href="https://www.gnu.org/licenses/agpl-3.0.en.html"> AGPL 3.0 </a>
+          &nbsp;&amp;&nbsp;
+          <a class="text-primary font-weight-bold" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"> Creative Commons (CC BY-NC-SA 4.0) </a>
+        </div>
+      </footer>
+    <script src="./assets/js/toggleSidebar.js"></script>
+    <script src="./assets/js/event-handler.js"></script>
+
+
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register("sw.js");
+        });
+      }
+    </script>
+  
+
+<script type="module" src="https://cdn.vlabs.ac.in/bug-report/vlabs-bug-report.js"></script><script type="module" src="/exp-knn-dei/plugins/svc-rating/index.js"></script><script type="module" src="/exp-knn-dei/plugins/svc-rating/config.js"></script><script type="module" src="https://apis.google.com/js/api.js"></script></body></html>

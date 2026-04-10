@@ -1,0 +1,175 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "In this experiment, the KNN classifier was trained using which dataset?",
+      "answers": {
+        "a": "Wine dataset",
+        "b": "Iris dataset",
+        "c": "MNIST dataset",
+        "d": "CIFAR-10 dataset"
+      },
+      "explanations": {
+        "a": "Incorrect because the Wine dataset is used for other classification experiments, not this simulation.",
+        "b": "Correct because the Iris dataset was used to train and evaluate the KNN classifier.",
+        "c": "Incorrect because MNIST is an image dataset used for digit recognition.",
+        "d": "Incorrect because CIFAR-10 is an image classification dataset."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "How many features were used as input variables in the KNN model for this experiment?",
+      "answers": {
+        "a": "2",
+        "b": "3",
+        "c": "4",
+        "d": "5"
+      },
+      "explanations": {
+        "a": "Incorrect because the Iris dataset contains more than two attributes.",
+        "b": "Incorrect because the dataset contains four measurement features.",
+        "c": "Correct because the features used were sepal length, sepal width, petal length, and petal width.",
+        "d": "Incorrect because the Iris dataset does not contain five features."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "In the experiment, the dataset was divided into training and testing sets using which ratio?",
+      "answers": {
+        "a": "50:50",
+        "b": "70:30",
+        "c": "80:20",
+        "d": "90:10"
+      },
+      "explanations": {
+        "a": "Incorrect because the dataset was not split equally.",
+        "b": "Correct because 70% of the data was used for training and 30% for testing.",
+        "c": "Incorrect because this split was not used in this simulation.",
+        "d": "Incorrect because the testing dataset would be too small for evaluation."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Why was StandardScaler used before training the KNN model?",
+      "answers": {
+        "a": "To increase the number of samples",
+        "b": "To normalize feature ranges for fair distance calculation",
+        "c": "To remove missing values",
+        "d": "To change class labels"
+      },
+      "explanations": {
+        "a": "Incorrect because scaling does not change dataset size.",
+        "b": "Correct because KNN relies on distance metrics that are affected by feature magnitude.",
+        "c": "Incorrect because scaling does not handle missing data.",
+        "d": "Incorrect because scaling only affects feature values."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What does the parameter k represent in the KNN classifier used in this experiment?",
+      "answers": {
+        "a": "The number of clusters in the dataset",
+        "b": "The number of nearest neighbours considered for prediction",
+        "c": "The number of features used in the dataset",
+        "d": "The number of training samples in the dataset"
+      },
+      "explanations": {
+        "a": "Incorrect because clustering refers to unsupervised algorithms such as K-Means, not KNN classification.",
+        "b": "Correct because k determines how many neighbouring data points participate in majority voting during classification.",
+        "c": "Incorrect because features describe attributes of the data and are not controlled by the parameter k.",
+        "d": "Incorrect because k only specifies how many neighbours are used for prediction, not the dataset size."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "In this experiment, the confusion matrix was used to:",
+      "answers": {
+        "a": "Increase model accuracy",
+        "b": "Visualize correct and incorrect predictions for each class",
+        "c": "Scale feature values",
+        "d": "Split the dataset into training and testing sets"
+      },
+      "explanations": {
+        "a": "Incorrect because confusion matrices do not modify model performance.",
+        "b": "Correct because the confusion matrix compares predicted and actual class labels.",
+        "c": "Incorrect because scaling is done using preprocessing techniques.",
+        "d": "Incorrect because dataset splitting is done earlier in preprocessing."
+      },
+      "correctAnswer": "b",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "Which evaluation metric indicates the overall proportion of correctly classified samples?",
+      "answers": {
+        "a": "Precision",
+        "b": "Recall",
+        "c": "Accuracy",
+        "d": "F1-Score"
+      },
+      "explanations": {
+        "a": "Incorrect because precision measures the proportion of correct positive predictions.",
+        "b": "Incorrect because recall measures the ability to detect actual positives.",
+        "c": "Correct because accuracy represents the overall proportion of correct predictions.",
+        "d": "Incorrect because F1-Score is the harmonic mean of precision and recall."
+      },
+      "correctAnswer": "c",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "ROC-AUC in this experiment was computed using which strategy?",
+      "answers": {
+        "a": "One-vs-Rest (OvR)",
+        "b": "Linear regression",
+        "c": "Clustering method",
+        "d": "Gradient descent optimization"
+      },
+      "explanations": {
+        "a": "Correct because multi-class ROC-AUC was calculated using the One-vs-Rest approach.",
+        "b": "Incorrect because regression is not used to compute ROC curves.",
+        "c": "Incorrect because clustering is unrelated to ROC evaluation.",
+        "d": "Incorrect because ROC-AUC does not involve gradient optimization."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "Based on the experiment results, high accuracy indicates that:",
+      "answers": {
+        "a": "The classifier correctly predicts most samples in the dataset",
+        "b": "The dataset size increases",
+        "c": "The number of features changes",
+        "d": "The model becomes unsupervised"
+      },
+      "explanations": {
+        "a": "Correct because high accuracy means a large proportion of predictions match the true labels.",
+        "b": "Incorrect because accuracy does not affect dataset size.",
+        "c": "Incorrect because features remain fixed.",
+        "d": "Incorrect because the model remains a supervised learning algorithm."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "Why is stratified sampling used while splitting the dataset in this experiment?",
+      "answers": {
+        "a": "To increase the number of samples in the dataset",
+        "b": "To ensure each class is proportionally represented in training and testing sets",
+        "c": "To reduce the number of features in the dataset",
+        "d": "To normalize the feature values"
+      },
+      "explanations": {
+        "a": "Incorrect because stratified sampling does not change the dataset size.",
+        "b": "Correct because stratified sampling maintains the same class distribution in both subsets.",
+        "c": "Incorrect because feature selection and stratified sampling are different processes.",
+        "d": "Incorrect because normalization is performed during feature scaling."
+      },
+      "correctAnswer": "b",
+      "difficulty": "advanced"
+    }
+  ]
+}
