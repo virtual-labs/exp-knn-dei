@@ -1,7 +1,0 @@
-/* Code Highlighting Styles */
-.kw { color: #d63384; font-weight: bold; } /* Keywords */
-.func { color: #0077b6; } /* Functions */
-.comment { color: #6b7280; font-style: italic; } /* Comments */
-.string { color: #22863a; } /* Strings */
-.number { color: #005cc5; } /* Numbers */
-.op { color: #d73a49; } /* Operators */
